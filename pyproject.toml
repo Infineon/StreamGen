@@ -1,14 +1,49 @@
 [tool.poetry]
 name = "streamgen"
 version = "0.0.1"
-description = "Framework for simulating stream datasets"
+description = "Framework for simulating data streams."
 authors = ["Laurenz Farthofer <laurenz@hey.com>"]
 packages = [{ include = "streamgen" }]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+anytree = "^2.12.1"
+beartype = "^0.17.2"
+numpy = "^1.26.4"
+matplotlib = "^3.8.3"
+seaborn = "^0.13.2"
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.2"
+ruff = "^0.2.2"
+jupyter = "^1.0.0"
+ipywidgets = "^8.1.2"
+
+[tool.ruff]
+exclude = [".git", ".mypy_cache", ".ruff_cache", ".tox", ".venv", "__pypackages__", "dist", "venv"]
+line-length = 140
+target-version = "py311"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN101",
+    "D211",
+    "D213",
+    "TCH003",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
 
 [build-system]
 requires = ["poetry-core"]
