@@ -1,3 +1,3 @@
-# StreamGen
+# 🌌 StreamGen
 
-A framework and implementation for simulating stream datasets
+A framework and implementation for simulating stream datasets.

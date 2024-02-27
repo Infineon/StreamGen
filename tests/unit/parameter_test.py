@@ -12,9 +12,10 @@ from streamgen.parameter import Parameter
 
 def test_constant_parameter() -> None:
     """Tests the behavior of a parameter without a schedule."""
-    param = Parameter("test", 42, None)
+    param = Parameter("test", 42, None, emoji="⚗️")
 
     assert param.name == "test"
+    assert str(param) == "⚗️ test: 42"
     assert param.value == 42, "initial value should be 42"
     assert param.update() == 42, "1st updated value should be 42 due to the `hold` strategy"
 

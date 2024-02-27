@@ -13,6 +13,8 @@ beartype = "^0.17.2"
 numpy = "^1.26.4"
 matplotlib = "^3.8.3"
 seaborn = "^0.13.2"
+pandas = "^2.2.1"
+loguru = "^0.7.2"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -40,6 +42,7 @@ ignore = [
     "D211",
     "D213",
     "TCH003",
+    "PD901",
 ]
 
 [tool.ruff.lint.pydocstyle]

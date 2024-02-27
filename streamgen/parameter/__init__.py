@@ -20,7 +20,7 @@ class Parameter(Generic[T]):
     """⚙️ parameters are variables that change over time according to a schedule.
 
     Args:
-        name (str): variable name of the parameter.
+        name (str): variable name of the parameter. Defaults to "param".
         value (Generic[T] | None): the value of the parameter.
             if None and schedule is defined, use the first value of the schedule.
             Defaults to None.
@@ -31,17 +31,20 @@ class Parameter(Generic[T]):
             strategy which defines what happens when calling `update` and there is
             no valid next value available. Defaults to `"hold"`, where the last
             valid value is held (not updated).
+        emoji (str): emoji used for the str representation of the parameter. Defaults to ⚙️.
     """
 
     @beartype()
-    def __init__(  # noqa: D107
+    def __init__(  # noqa: D107, PLR0913
         self,
-        name: str | None = None,
+        name: str = "param",
         value: T | None = None,
         schedule: Iterable[T] | None = None,
         strategy: ParameterOutOfRangeStrategy | ParameterOutOfRangeStrategyLit = "hold",
+        emoji: str = "⚙️",
     ) -> None:
         self.name = name
+        self.emoji = emoji
         self.value = value
         self.schedule = iter(schedule) if schedule is not None else None
 
@@ -73,6 +76,14 @@ class Parameter(Generic[T]):
 
         return self.value
 
+    def __str__(self) -> str:
+        """🏷️ Returns the string representation `str(self)`.
+
+        Returns:
+            str: string representation of self
+        """
+        return f"{self.emoji} {self.name}: {self.value}"
+
 
 class ParameterDictEntry(Generic[T], TypedDict, total=False):
     """📖 typed dictionary of `streamgen.parameter.Parameter`."""
@@ -81,6 +92,7 @@ class ParameterDictEntry(Generic[T], TypedDict, total=False):
     value: T | None
     schedule: Iterable[T] | None
     strategy: ParameterOutOfRangeStrategy | ParameterOutOfRangeStrategyLit | None
+    emoji: str
 
 
 ParameterDict = dict[str, ParameterDictEntry]
