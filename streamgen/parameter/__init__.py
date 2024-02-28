@@ -16,6 +16,7 @@ from streamgen.exceptions import ParameterOutOfRangeError
 T = TypeVar("T")
 
 
+@beartype()
 class Parameter(Generic[T]):
     """⚙️ parameters are variables that change over time according to a schedule.
 
@@ -34,7 +35,6 @@ class Parameter(Generic[T]):
         emoji (str): emoji used for the str representation of the parameter. Defaults to ⚙️.
     """
 
-    @beartype()
     def __init__(  # noqa: D107, PLR0913
         self,
         name: str = "param",
@@ -43,6 +43,7 @@ class Parameter(Generic[T]):
         strategy: ParameterOutOfRangeStrategy | ParameterOutOfRangeStrategyLit = "hold",
         emoji: str = "⚙️",
     ) -> None:
+        assert "." not in name, "`.` in parameter names are reserved for scopes."  # noqa: S101
         self.name = name
         self.emoji = emoji
         self.value = value
@@ -85,7 +86,7 @@ class Parameter(Generic[T]):
         return f"{self.emoji} {self.name}: {self.value}"
 
 
-class ParameterDictEntry(Generic[T], TypedDict, total=False):
+class ParameterDict(Generic[T], TypedDict, total=False):
     """📖 typed dictionary of `streamgen.parameter.Parameter`."""
 
     name: str | None
@@ -95,21 +96,29 @@ class ParameterDictEntry(Generic[T], TypedDict, total=False):
     emoji: str
 
 
-ParameterDict = dict[str, ParameterDictEntry]
-"""📖 representation of multiple `streamgen.parameter.Parameter` as a dictionary.
+ScopedParameterDict = dict[str, ParameterDict | dict[str, ParameterDict]]
+"""🔭📖 representation of multiple `streamgen.parameter.Parameter` as a dictionary.
 
-The names of the parameters are the keys. The rest of the entries are the values.
+The dictionary can be nested one level to create parameter scopes.
+All top-level parameters are considered as having `scope=None`.
 
 Examples:
     >>> params = {
-        "var1": {
-            "value": 1,
-            "schedule": [2,3],
-            "strategy": "cycle"
-        },
-        "var2": {
-            "name": "var2" # can be present, but is not needed
-            "schedule": [0.1, 0.2, 0.3]
+            "var1": {
+                "value": 1,
+                "schedule": [2,3],
+                "strategy": "cycle",
+            },
+            "var2": {
+                "name": "var2", # can be present, but is not needed
+                "schedule": [0.1, 0.2, 0.3],
+            },
+            "scope1": {
+                "var1": { # var1 can be used again since its inside a scope
+                    "value": 1,
+                    "schedule": [2,3],
+                    "strategy": "cycle",
+                },
+            },
         }
-    }
 """

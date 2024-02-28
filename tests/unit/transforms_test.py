@@ -17,11 +17,11 @@ def pure_transform(x):
 
 
 def parametric_transform(x, params):
-    return x + params["inc"]
+    return x + params["inc"].value
 
 
 def multi_params_transform(x, params):
-    return (x + params["inc"]) * params["factor"]
+    return (x + params["inc"].value) * params["factor"].value
 
 
 # ---------------------------------------------------------------------------- #
@@ -65,7 +65,7 @@ def test_parametric_transform(single_param):
     node = TransformNode(parametric_transform, params=single_param, name="increment", emoji="👆")
 
     assert node.name == "increment"
-    assert str(node) == "👆 `increment` with 🗃️ = {\n\t👆 inc: 2\n}"
+    assert str(node) == "👆 `increment` with 🗃️ = {👆 inc: 2}"
 
     out, next_node = node.traverse(0)
 

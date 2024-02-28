@@ -8,6 +8,15 @@ from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
 
 
+def test_parameter_empty_list_initialization() -> None:
+    """Tests the empty list initialization behavior of a parameter store."""
+    store = ParameterStore([])
+
+    assert store.parameters == {}
+    assert store.parameter_names == set()
+    assert store.scopes == set()
+
+
 def test_parameter_list_initialization() -> None:
     """Tests the list initialization behavior of a parameter store."""
     params = [
@@ -18,21 +27,17 @@ def test_parameter_list_initialization() -> None:
     store = ParameterStore(params)
 
     logger.debug("\n" + str(store))
-    assert (
-        str(store)
-        == """🗃️ = {
-\t⚙️ var1: 1
-\t📉 var2: 0.0
-}"""
-    )
+    assert str(store) == "🗃️ = {⚙️ var1: 1, 📉 var2: 0.0}"
 
-    assert store["var1"] == 1
-    assert store["var2"] == 0.0
+    assert store.parameter_names == {"var1", "var2"}
+
+    assert store["var1"].value == 1
+    assert store["var2"].value == 0.0
 
     store.update()
 
-    assert store["var1"] == 2
-    assert store["var2"] == 1.0
+    assert store["var1"].value == 2
+    assert store["var2"].value == 1.0
 
 
 def test_parameter_dict_initialization() -> None:
@@ -51,13 +56,48 @@ def test_parameter_dict_initialization() -> None:
 
     store = ParameterStore(params)
 
-    assert store["var1"] == 1
-    assert store["var2"] == 0.0
+    assert store["var1"].value == 1
+    assert store["var2"].value == 0.0
 
     store.update()
 
-    assert store["var1"] == 2
-    assert store["var2"] == 1.0
+    assert store["var1"].value == 2
+    assert store["var2"].value == 1.0
+
+
+def test_scoped_parameter_dict_initialization() -> None:
+    """Tests the dict initialization behavior of a parameter store."""
+    params = {
+        "var1": {
+            "value": 1,
+            "schedule": [2, 3],
+            "strategy": "cycle",
+        },
+        "var2": {
+            "name": "var2",  # can be present, but is not needed
+            "schedule": [0.1, 0.2, 0.3],
+        },
+        "scope1": {
+            "var1": {  # var1 can be used again since its inside a scope
+                "value": -1,
+                "schedule": [-2, -3],
+                "strategy": "cycle",
+            },
+        },
+    }
+
+    store = ParameterStore(params)
+
+    assert store["var1"].value == 1
+    assert store["var2"].value == 0.1
+    assert store["scope1.var1"].value == -1
+    assert store.scopes == {"scope1"}
+
+    store.update()
+
+    assert store["var1"].value == 2
+    assert store["var2"].value == 0.2
+    assert store["scope1.var1"].value == -2
 
 
 def test_to_dataframe():
