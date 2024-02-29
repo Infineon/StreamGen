@@ -3,25 +3,28 @@
 
 import pytest
 
-from streamgen.nodes import BranchingNode, TransformNode
+from streamgen.nodes import BranchingNode, ClassLabelNode, TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
+from streamgen.samplers.tree import SamplingTree
+from streamgen.transforms import operate_on_key
 
 # ---------------------------------------------------------------------------- #
 # *                             helper functions                               #
 # ---------------------------------------------------------------------------- #
 
-
 def pure_transform(x):
     return x + 1
-
 
 def parametric_transform(x, inc):
     return x + inc
 
-
 def multi_params_transform(x, inc, factor):
     return (x + inc) * factor
+
+@operate_on_key("input")
+def add(input: int, number):  # noqa: A002
+    return input + number
 
 
 # ---------------------------------------------------------------------------- #
@@ -125,3 +128,33 @@ def test_branching_node(single_param):
 
     assert out == 0
     assert next_node.name == "pure_transform", "should be `pure_transform`, since its sampling probability is 100%."
+
+def test_class_label_node():
+    """🏷️tests the labelling process using `ClassLabelNode`."""
+    tree = SamplingTree(
+        [
+            lambda input: {"input": 0, "target": None},  # noqa: A002, ARG005
+            {
+                "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
+                "1": [
+                    TransformNode(add, Parameter("number", 1)),
+                    ClassLabelNode("one"),
+                ],
+                "2": [
+                    TransformNode(add, Parameter("number", 2)),
+                    ClassLabelNode("two"),
+                ],
+            },
+        ],
+    )
+
+    sample = tree.sample()
+
+    assert sample["input"] == 1
+    assert sample["target"] == "one"
+
+    tree.update()
+    sample = tree.sample()
+
+    assert sample["input"] == 2
+    assert sample["target"] == "two"

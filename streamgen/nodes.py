@@ -1,6 +1,7 @@
 """🪢 different node implementations using [anytree](https://anytree.readthedocs.io/en/stable/) `NodeMixin`."""
 
 from collections.abc import Callable
+from functools import partial
 from typing import Any, Protocol
 
 import anytree
@@ -11,7 +12,7 @@ from loguru import logger
 from streamgen.enums import ArgumentPassingStrategy, ArgumentPassingStrategyLit
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
-from streamgen.transforms import noop
+from streamgen.transforms import noop, set_value_in_dict
 
 
 class Traverse(Protocol):
@@ -192,6 +193,38 @@ class BranchingNode(TransformNode):
         for branch in self.branches.values():
             for node in branch:
                 node.fetch_params(params)
+
+class ClassLabelNode(TransformNode):
+    """🏷️ node which sets the class label.
+
+    Args:
+        label (str | int): class label or index
+    """
+
+    def __init__(  # noqa: D107
+        self,
+        label: str | int,
+        set_label: Callable[[dict, str | int], dict] = partial(set_value_in_dict, key="target"),  # noqa: B008
+    ) -> None:
+        self.label = label
+        self.set_label = set_label
+
+        super().__init__(transform=noop, name=f"label={self.label}", emoji="🏷️")
+
+    def traverse(self, input: Any) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
+        """🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
+
+        During traversal, a label node sets the label in `input` with `self.set_label`.
+
+        Args:
+            input (Any): any input
+
+        Returns:
+            tuple[Any, anytree.NodeMixin | None]: output and next node to traverse
+        """
+        output = self.set_label(input, self.label)
+
+        return super().traverse(output)
 
 
 @beartype()
