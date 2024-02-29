@@ -3,6 +3,7 @@
 
 import numpy as np
 from loguru import logger
+import pandas as pd
 
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
@@ -141,3 +142,28 @@ def test_to_dataframe():
     assert len(df) == 1
     assert df["var1"][0] == 3
     assert df["var2"][0] == 1.0
+
+
+def test_from_dataframe():
+    """Tests construction from a dataframe."""
+    df = pd.DataFrame(
+        {
+            "var1": [1, 2, 3],
+            "var2": [4, 5, 6],
+            "scope1.var1": [-1, -2, -3],
+            "scope2.var2": [-4, -5, -6],
+        },
+    )
+
+    store = ParameterStore.from_dataframe(df)
+
+    assert store["var1"].value == 1
+    assert store["var2"].value == 4
+    assert store["scope1.var1"].value == -1
+    assert store.scopes == {"scope1", "scope2"}
+
+    store.update()
+
+    assert store["var1"].value == 2
+    assert store["var2"].value == 5
+    assert store["scope1.var1"].value == -2

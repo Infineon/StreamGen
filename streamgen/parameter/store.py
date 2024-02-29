@@ -165,6 +165,37 @@ class ParameterStore:
             [self.get_params()] + ([self.update() for _ in range(number_of_update_steps)] if number_of_update_steps > 0 else []),
         )
 
+    @staticmethod
+    def from_dataframe(df: pd.DataFrame) -> Self:  # noqa: ARG004
+        """📅🐼 constructs a `ParameterStore` from a dataframe.
+
+        Each columns represents a parameter.
+        columns can be namespaced following the same "{scope}.{parameter.name}" rules as `ParameterStore.__getitem__`.
+
+        Args:
+            df (pd.DataFrame): dataframe
+
+        Returns:
+            ParameterStore: parameter store
+        """
+        scopes: set[str] = {name.split(".")[0] for name in df.columns if "." in name}
+
+        params = {}
+        for scope in scopes:
+            params[scope] = {}
+            for name in df.columns:
+                if not name.startswith(f"{scope}."):
+                    continue
+                parameter_name = name.split(".")[1]
+                params[scope][parameter_name] = {"schedule": df[name]}
+
+        for name in df.columns:
+            if "." in name:
+                continue
+            params[name] = {"schedule": df[name]}
+
+        return ParameterStore(params)
+
     def __str__(self) -> str:
         """🏷️ Returns the string representation `str(self)`.
 

@@ -1,11 +1,11 @@
-"""🧪 `streamgen.transforms` tests."""
+"""🧪 `streamgen.nodes` tests."""
 # ruff: noqa: S101, D103, ANN001, ANN201, PLR2004
 
 import pytest
 
+from streamgen.nodes import BranchingNode, TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
-from streamgen.transforms import BranchingNode, TransformNode
 
 # ---------------------------------------------------------------------------- #
 # *                             helper functions                               #
@@ -16,12 +16,12 @@ def pure_transform(x):
     return x + 1
 
 
-def parametric_transform(x, params):
-    return x + params["inc"].value
+def parametric_transform(x, inc):
+    return x + inc
 
 
-def multi_params_transform(x, params):
-    return (x + params["inc"].value) * params["factor"].value
+def multi_params_transform(x, inc, factor):
+    return (x + inc) * factor
 
 
 # ---------------------------------------------------------------------------- #
@@ -101,16 +101,25 @@ def test_connected_nodes(single_param):
 
 def test_branching_node(single_param):
     """🪴 tests the behavior of `streamgen.transforms.BranchingNode`."""
-    branches = [
-        TransformNode(pure_transform),
-        TransformNode(parametric_transform, params=single_param),
-    ]
+    branches = {
+        "1": pure_transform,
+        "2": [
+            TransformNode(parametric_transform, params=single_param),
+            {  # nested branching node
+                "name": "nested decision",
+                "probs": Parameter("probs", value=[0.5, 0.5], emoji="🎲"),
+                "seed": 1,
+                "1": pure_transform,
+                "2": pure_transform,
+            },
+        ],
+    }
     probs = Parameter("probs", value=[1.0, 0.0], emoji="🎲")
 
     node = BranchingNode(branches, probs)
 
-    assert node.name == "branching node"
-    assert str(node) == "🪴 `branching node`"
+    assert node.name == "branching point"
+    assert str(node) == "🪴 `branching point`"
 
     out, next_node = node.traverse(0)
 

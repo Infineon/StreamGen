@@ -1,36 +1,34 @@
 """🌳 sampling trees are trees of transformations that you can traverse from root to leaf to create samples."""
 
+from collections.abc import Callable
 from typing import Any
 
 import anytree
 
+from streamgen.nodes import TransformNode, construct_graph
 from streamgen.parameter.store import ParameterStore
-from streamgen.transforms import Transform, TransformNode
 
 
 class SamplingTree:
     """🌳 a tree of `TransformNode`s, that can be sampled from.
 
+    The tree will be constructed using `streamgen.nodes.construct_graph(nodes)`.
+
     Args:
-        nodes (list[Transform | TransformNode]): list of transforms or transformation nodes
+        nodes (list[Callable  |  TransformNode  |  dict]): pythonic short-hand description of a graph/tree
         params (ParameterStore | None, optional): parameter store containing additional parameters
             that are passed to the nodes based on the scope. Defaults to None.
     """
 
-    def __init__(self, nodes: list[Transform | TransformNode], params: ParameterStore | None = None) -> None:  # noqa: D107
-        # if callables adhering to the `Transform` signature are passed, transform them to `TransformNode`
-        # TODO: add shorthand parsing (lists -> Decision Nodes, first str in nested list is decision node name)
-        self.nodes = [node if isinstance(node, TransformNode) else TransformNode(node) for node in nodes]
+    def __init__(self, nodes: list[Callable | TransformNode | dict], params: ParameterStore | None = None) -> None:  # noqa: D107
+        self.nodes = construct_graph(nodes)
+
         self.root = self.nodes[0]
         self.params = params if params else ParameterStore([])
 
         # pass parameters to nodes
         for node in self.nodes:
             node.fetch_params(self.params)
-
-        # connect the nodes to enable traversal
-        for idx, node in enumerate(self.nodes[:-1]):
-            node.children = [self.nodes[idx + 1]]
 
     def sample(self) -> Any:  # noqa: ANN401
         """🎲 generates a sample by traversing the tree from root to one leaf.
