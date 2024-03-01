@@ -32,20 +32,17 @@ class Parameter(Generic[T]):
             strategy which defines what happens when calling `update` and there is
             no valid next value available. Defaults to `"hold"`, where the last
             valid value is held (not updated).
-        emoji (str): emoji used for the str representation of the parameter. Defaults to ⚙️.
     """
 
-    def __init__(  # noqa: D107, PLR0913
+    def __init__(  # noqa: D107
         self,
         name: str = "param",
         value: T | None = None,
         schedule: Iterable[T] | None = None,
         strategy: ParameterOutOfRangeStrategy | ParameterOutOfRangeStrategyLit = "hold",
-        emoji: str = "⚙️",
     ) -> None:
         assert "." not in name, "`.` in parameter names are reserved for scopes."  # noqa: S101
         self.name = name
-        self.emoji = emoji
         self.value = value
         self.schedule = iter(schedule) if schedule is not None else None
 
@@ -77,13 +74,13 @@ class Parameter(Generic[T]):
 
         return self.value
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         """🏷️ Returns the string representation `str(self)`.
 
         Returns:
             str: string representation of self
         """
-        return f"{self.emoji} {self.name}: {self.value}"
+        return f"{self.name}={self.value}"
 
 
 class ParameterDict(Generic[T], TypedDict, total=False):
@@ -93,7 +90,6 @@ class ParameterDict(Generic[T], TypedDict, total=False):
     value: T | None
     schedule: Iterable[T] | None
     strategy: ParameterOutOfRangeStrategy | ParameterOutOfRangeStrategyLit | None
-    emoji: str
 
 
 ScopedParameterDict = dict[str, ParameterDict | dict[str, ParameterDict]]

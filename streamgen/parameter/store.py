@@ -6,6 +6,7 @@ import pandas as pd
 from beartype import beartype
 from beartype.typing import Self
 from loguru import logger
+from rich.pretty import pretty_repr
 
 from streamgen.parameter import Parameter, ScopedParameterDict
 
@@ -166,7 +167,7 @@ class ParameterStore:
         )
 
     @staticmethod
-    def from_dataframe(df: pd.DataFrame) -> Self:  # noqa: ARG004
+    def from_dataframe(df: pd.DataFrame) -> Self:
         """📅🐼 constructs a `ParameterStore` from a dataframe.
 
         Each columns represents a parameter.
@@ -196,13 +197,21 @@ class ParameterStore:
 
         return ParameterStore(params)
 
+    def __repr__(self) -> str:
+        """🏷️ Returns the debug string representation of self.
+
+        Returns:
+            str: string representation of self
+        """
+        s = "("
+        for name in sorted(self.parameter_names):
+            s += str(self[name]) + ", "
+        return s[:-2] + ")"
+
     def __str__(self) -> str:
         """🏷️ Returns the string representation `str(self)`.
 
         Returns:
             str: string representation of self
         """
-        s = "🗃️ = {"
-        for name in sorted(self.parameter_names):
-            s += str(self[name]) + ", "
-        return s[:-2] + "}"
+        return pretty_repr(self.get_params())

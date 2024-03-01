@@ -5,7 +5,6 @@ from functools import partial
 from typing import Any, Protocol
 
 import anytree
-import numpy as np
 from beartype import beartype
 from loguru import logger
 
@@ -106,93 +105,14 @@ class TransformNode(anytree.NodeMixin):
         if self.name in params.scopes:
             self.params = params.get_scope(self.name)
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         """🏷️ Returns the string representation `str(self)`.
 
         Returns:
             str: string representation of self
         """
-        s = f"{self.emoji} `{self.name}`"
+        return f"{self.emoji} `{self.name}({repr(self.params)[1:-1] if self.params else ''})`"
 
-        if self.params:
-            s += f" with {self.params}"
-
-        return s
-
-
-class BranchingNode(TransformNode):
-    """🪴 node with multiple children/branches.
-
-    When traversed, a random branch is selected based on the probabilities defined by `probs`.
-
-    Args:
-        branches (dict): dictionary, where each key:value pair represent label:branch.
-        probs (Parameter | None, optional): parameter containing the probabilities for selecting each branch.
-            `probs.value` is passed to `numpy.random.choice` as parameter `p`, which is documented as:
-            (1-D array_like, optional) the probabilities associated with each entry in a.
-            If not given the sample assumes a uniform distribution over all entries. Defaults to None.
-        name (str | None, optional): name of the node. Important for fetching the `probs` if not present. Defaults to "branching point".
-        seed (int, optional): random number generator seed. Defaults to 42.
-    """
-
-    def __init__(  # noqa: D107
-        self,
-        branches: dict,
-        probs: Parameter | None = None,
-        name: str | None = None,
-        seed: int = 42,
-    ) -> None:
-        self.name = name if name else "branching point"
-        self.probs = probs
-        self.rng = np.random.default_rng(seed)
-
-        self.branches = {branch_name: construct_graph(nodes) for branch_name, nodes in branches.items()}
-
-        self.children = [branch[0] for branch in self.branches.values()]
-
-        super().__init__(transform=noop, name=self.name, emoji="🪴")
-
-    def traverse(self, input: Any) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
-        """🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
-
-        During traversal, a branching node samples the next node from its children.
-
-        Args:
-            input (Any): any input
-
-        Returns:
-            tuple[Any, anytree.NodeMixin | None]: output and next node to traverse
-        """
-        key = self.rng.choice(list(self.branches.keys()), p=self.probs.value if self.probs else None)
-        next_node = self.branches[key][0]
-
-        return input, next_node
-
-    def update(self) -> None:
-        """🆙 updates every parameter."""
-        if self.probs:
-            self.probs.update()
-
-        for branch in self.branches.values():
-            for node in branch:
-                node.update()
-
-    def fetch_params(self, params: ParameterStore) -> None:
-        """⚙️ fetches params from a ParameterStore.
-
-        Args:
-            params (ParameterStore): parameter store to fetch the params from
-        """
-        if self.probs is None and self.name in params.scopes:
-            probs = list(params.get_scope(self.name).parameters.values())
-            assert (  # noqa: S101
-                len(probs) == 1
-            ), f'Make sure to only have a single parameter in the scope "{self.name}" when setting the parameters of a `BranchingNode` through `fetch_params`.'  # noqa: E501, S101
-            self.probs = probs[0]
-
-        for branch in self.branches.values():
-            for node in branch:
-                node.fetch_params(params)
 
 class ClassLabelNode(TransformNode):
     """🏷️ node which sets the class label.
@@ -226,44 +146,10 @@ class ClassLabelNode(TransformNode):
 
         return super().traverse(output)
 
+    def __repr__(self) -> str:
+        """🏷️ Returns the string representation `str(self)`.
 
-@beartype()
-def construct_graph(nodes: Callable | TransformNode | dict | list[Callable | TransformNode | dict]) -> list[TransformNode]:
-    """🏗️ assembles and links nodes into a graph/tree.
-
-    The following rules apply during construction:
-
-    1. Nodes are linked sequentially according to the ordering in the top-level list.
-    2. `TransformNode` and sub-classes are not modified.
-    3. `Callable`s are cast into `TransformNode`s.
-    4. dictionaries are interpreted as `BranchingNode`s, where each value represents a branch.
-        The keys `name`, `probs` and `seed` are reserved to describe the node itself.
-
-    Args:
-        nodes (Callable | TransformNode | dict | list[Callable | TransformNode | dict]): pythonic short-hand description of a graph/tree
-
-    Returns:
-        list[TransformNode]: list of linked nodes
-    """
-    # We need the next two lines to handle single element branches gracefully in the recursion.
-    if not isinstance(nodes, list):
-        nodes = [nodes]
-
-    graph = []
-    for node in nodes:
-        match node:
-            case Callable():
-                graph.append(TransformNode(node))
-            case TransformNode():
-                graph.append(node)
-            case dict():
-                name = node.pop("name", None)
-                probs = node.pop("probs", None)
-                seed = node.pop("seed", 42)
-                graph.append(BranchingNode(node, name=name, probs=probs, seed=seed))
-
-    # connect the nodes to enable traversal
-    for idx, node in enumerate(graph[:-1]):
-        node.children = [graph[idx + 1]]
-
-    return graph
+        Returns:
+            str: string representation of self
+        """
+        return f"🏷️ `{self.label}`"

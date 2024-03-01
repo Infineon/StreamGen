@@ -2,8 +2,8 @@
 # ruff: noqa: S101, D103, ANN001, ANN201, PLR2004
 
 import numpy as np
-from loguru import logger
 import pandas as pd
+from loguru import logger
 
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
@@ -22,13 +22,13 @@ def test_parameter_list_initialization() -> None:
     """Tests the list initialization behavior of a parameter store."""
     params = [
         Parameter("var1", 1, [2]),
-        Parameter("var2", schedule=[0.0, 1.0], emoji="📉"),
+        Parameter("var2", schedule=[0.0, 1.0]),
     ]
 
     store = ParameterStore(params)
 
     logger.debug("\n" + str(store))
-    assert str(store) == "🗃️ = {⚙️ var1: 1, 📉 var2: 0.0}"
+    assert str(store) == "{'var1': 1, 'var2': 0.0}"
 
     assert store.parameter_names == {"var1", "var2"}
 

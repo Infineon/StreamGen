@@ -20,6 +20,7 @@ class ParameterOutOfRangeStrategy(str, Enum):
     RAISE_EXCEPTION = "raise exception"
     """Raises a ParameterOutOfRangeError."""
 
+
 ParameterOutOfRangeStrategyLit: TypeAlias = Literal[
     "hold",
     "cycle",
@@ -34,6 +35,7 @@ class ArgumentPassingStrategy(str, Enum):
     """A dictionary as the second argument."""
     UNPACK = "unpack"
     """Unpack the arguments as kwargs (**params)."""
+
 
 ArgumentPassingStrategyLit: TypeAlias = Literal[
     "dict",
