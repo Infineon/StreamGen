@@ -2,7 +2,10 @@
     <img src="docs/images/stream_scene.png" alt="Banner"/></a>
 </p>
 
-# 🌌 StreamGen
+<h1 style="text-align: center;">
+    <img src="https://em-content.zobj.net/source/microsoft-teams/363/milky-way_1f30c.png" height="26pt">
+    StreamGen
+</h1>
 
 A framework and implementation for simulating stream datasets.
 
