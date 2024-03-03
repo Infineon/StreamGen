@@ -4,7 +4,7 @@ from collections.abc import Callable
 from copy import copy
 from itertools import pairwise
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 import anytree
 import numpy as np
@@ -220,7 +220,7 @@ class SamplingTree:
             file_path (Path, optional): path of the resulting file. Defaults to "./tree.dot".
         """
 
-        def _nodeattrfunc(node):
+        def _nodeattrfunc(node) -> str:  # noqa: ANN001
             """Builds the node attribute list for graphviz."""
             a = f'label="{node!s}"'
             match node:
@@ -238,6 +238,14 @@ class SamplingTree:
         )
 
         dot.to_dotfile(file_path)
+
+    def get_paths(self) -> list[Self]:
+        """🍃 constructs a deterministic path for each leaf in the tree.
+
+        Returns:
+            list[Self]: list of `SamplingTree`s without branches.
+        """
+        raise NotImplementedError
 
     def __str__(self) -> str:
         """🏷️ Returns the string representation `str(self)`.
