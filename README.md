@@ -3,7 +3,7 @@
 </p>
 
 <h1 style="text-align: center;">
-    <img src="docs/images/milky-way_animated.png" style="display: inline;height:1.0em">
+    <img src="docs/images/milky-way_animated.png" style="display:inline; height:1.0em">
     StreamGen
 </h1>
 

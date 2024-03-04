@@ -4,6 +4,7 @@
 from typing import Any
 
 import numpy as np
+import pandas as pd
 
 from streamgen.nodes import ClassLabelNode, TransformNode
 from streamgen.parameter import Parameter
@@ -366,3 +367,42 @@ def test_tree_visualization(tmp_path):
 }
 """
         )
+
+def test_get_paths():
+    """🍃 tests the extraction of deterministic paths to each leaf."""
+    params = pd.DataFrame(
+        {
+            "add.number": [1,2],
+            "branching point.probs": [[0.6, 0.4], [0.4, 0.6]],
+        },
+    )
+
+    tree = SamplingTree(
+        [
+            lambda input: {"input": 0, "target": None},  # noqa: A002, ARG005
+            {
+                "class": [
+                    add,
+                    ClassLabelNode("add"),
+                ],
+                "background": [
+                    ClassLabelNode("noop"),
+                ],
+            },
+        ],
+        params,
+    )
+
+    paths = tree.get_paths()
+
+    assert len(paths) == 2
+    assert len(paths[0].nodes) == 3
+    assert len(paths[1].nodes) == 2
+
+    sample = paths[0].sample()
+    assert sample["target"] == "add"
+    assert sample["input"] == 1
+
+    sample = paths[1].sample()
+    assert sample["target"] == "noop"
+    assert sample["input"] == 0

@@ -1,7 +1,7 @@
 """🌳 sampling trees are trees of transformations that you can traverse from root to leaf to create samples."""
 
 from collections.abc import Callable
-from copy import copy
+from copy import copy, deepcopy
 from itertools import pairwise
 from pathlib import Path
 from typing import Any, Self
@@ -10,6 +10,7 @@ import anytree
 import numpy as np
 from anytree.exporter import UniqueDotExporter
 from beartype import beartype
+from pandas import DataFrame
 
 from streamgen.nodes import ClassLabelNode, TransformNode
 from streamgen.parameter import Parameter
@@ -144,7 +145,7 @@ def construct_tree(nodes: Callable | TransformNode | dict | list[Callable | Tran
                     #       -> no, we need to check recursively for branching points.
                     #          fortunately, anytree makes this very easy with `node.leaves`
                     #   3. how does this affect the printing/representation of the tree?
-                    leaf.children = [copy(next_node)]
+                    leaf.children = [deepcopy(next_node)]
             case (_, _):
                 node.children = [next_node]
 
@@ -158,15 +159,22 @@ class SamplingTree:
 
     Args:
         nodes (list[Callable  |  TransformNode  |  dict]): pythonic short-hand description of a graph/tree
-        params (ParameterStore | None, optional): parameter store containing additional parameters
-            that are passed to the nodes based on the scope. Defaults to None.
+        params (ParameterStore | DataFrame | None, optional): parameter store containing additional parameters
+            that are passed to the nodes based on the scope. Dataframes will be converted to `ParameterStore`. Defaults to None.
     """
 
-    def __init__(self, nodes: list[Callable | TransformNode | dict], params: ParameterStore | None = None) -> None:  # noqa: D107
+    def __init__(self, nodes: list[Callable | TransformNode | dict], params: ParameterStore | DataFrame | None = None) -> None:  # noqa: D107
         self.nodes = construct_tree(nodes)
 
         self.root = self.nodes[0]
-        self.params = params if params else ParameterStore([])
+
+        match params:
+            case None:
+                self.params = ParameterStore([])
+            case DataFrame():
+                self.params = ParameterStore.from_dataframe(params)
+            case ParameterStore():
+                self.params = params
 
         # pass parameters to nodes
         for node in self.nodes:
@@ -245,7 +253,14 @@ class SamplingTree:
         Returns:
             list[Self]: list of `SamplingTree`s without branches.
         """
-        raise NotImplementedError
+        paths = []
+        for leaf in self.root.leaves:
+            path = [node for node in deepcopy(leaf.ancestors) if not isinstance(node, BranchingNode)] + [deepcopy(leaf)]
+            for node, next_node in pairwise(path):
+                node.children = [next_node]
+            paths.append(SamplingTree(path, self.params))
+
+        return paths
 
     def __str__(self) -> str:
         """🏷️ Returns the string representation `str(self)`.
