@@ -3,11 +3,13 @@
 </p>
 
 <h1 style="text-align: center;">
-    <img src="https://em-content.zobj.net/source/microsoft-teams/363/milky-way_1f30c.png" height="26pt">
+    <img src="docs/images/milky-way_animated.png" style="display: inline;height:1.0em">
     StreamGen
 </h1>
 
-A framework and implementation for simulating stream datasets.
+<p align="center">
+a 🐍 framework for generating labeled data streams
+</p>
 
 <p align="center">
     <img alt="Static Badge" src="https://img.shields.io/badge/📦_version-0.0.1-blue">

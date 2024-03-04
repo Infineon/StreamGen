@@ -67,8 +67,8 @@ edit_uri = "https://bitbucket.vih.infineon.com/users/hundgeburth/repos/streamgen
 
 [tool.portray.mkdocs.theme]
 name = "material"
-favicon = "https://em-content.zobj.net/source/microsoft-teams/363/milky-way_1f30c.png"
-logo = "https://em-content.zobj.net/source/microsoft-teams/363/milky-way_1f30c.png"
+favicon = "docs/images/milky-way_animated.png"
+logo = "docs/images/milky-way_animated.png"
 
 [tool.portray.mkdocs.theme.icon]
 repo = "material/bitbucket"
