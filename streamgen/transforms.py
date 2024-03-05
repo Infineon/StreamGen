@@ -65,3 +65,40 @@ def operate_on_key(key: str = "input") -> Callable:
         return wrapper
 
     return decorator
+
+
+def operate_on_index(idx: int = 0) -> Callable:
+    """#️⃣ function decorator, that converts `func(input: Sequence, ...)` to `func(input[idx], ...)`.
+
+    The other parts of the input sequence are not passed to the function, but still returned by the decorator.
+
+    This facilitates working with sequences (like tuples) as first arguments.
+
+    Examples:
+        >>> @operate_on_index()
+            def add(x, n):
+                return x + n
+
+        >>> add((1, "target"), 2)
+        (3, "target")
+
+    Args:
+        idx (int, optional): index for fetching the value from `input`. Defaults to 0 (the first element).
+
+    Returns:
+        Callable: modified function
+    """
+
+    def decorator(func):  # noqa: ANN202, ANN001
+        @wraps(func)
+        def wrapper(input, *args, **kwargs):  # noqa: ANN202, ANN001, A002, ANN002, ANN003
+            input_type = type(input)
+            input = list(input)  # noqa: A001
+            x = input[idx]
+            out = func(x, *args, **kwargs)
+            input[idx] = out
+            return input_type(input)
+
+        return wrapper
+
+    return decorator

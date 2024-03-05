@@ -25,7 +25,7 @@ class Parameter(Generic[T]):
         value (Generic[T] | None): the value of the parameter.
             if None and schedule is defined, use the first value of the schedule.
             Defaults to None.
-        schedule (list[T] | Schedule[T] | None): a schedule for the parameter.
+        schedule (Iterable[T] | None): a schedule for the parameter.
             Defaults to None.
         parameter_out_of_range_strategy
             (ParameterOutOfRangeStrategy | ParameterOutOfRangeStrategyLit):

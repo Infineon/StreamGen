@@ -10,7 +10,7 @@ from streamgen.nodes import ClassLabelNode, TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
 from streamgen.samplers.tree import SamplingTree
-from streamgen.transforms import noop, operate_on_key
+from streamgen.transforms import noop, operate_on_index, operate_on_key
 
 # ---------------------------------------------------------------------------- #
 # *                             helper functions                               #
@@ -35,7 +35,6 @@ def add_random_points(input, num_points):  # noqa: A002
     return input
 
 
-@operate_on_key("input")
 def add(input: int, number):  # noqa: A002
     return input + number
 
@@ -77,6 +76,7 @@ def test_sampling_tree_decision_node_with_probs():
             },
         ],
         params,
+        collate_func=np.array,
     )
 
     assert (
@@ -102,6 +102,18 @@ def test_sampling_tree_decision_node_with_probs():
     sample = tree.sample()
 
     assert sample.shape == (18, 18)
+
+    # test iteration
+    samples = []
+    for idx, sample in enumerate(tree):
+        samples.append(sample)
+        if idx == 2:
+            break
+    assert not np.array_equal(samples[0], samples[1]), "when iterating, the `SamplingTree` should generate different samples."
+
+    samples = tree.collect(64)
+    assert isinstance(samples, np.ndarray)
+    assert samples.shape == (64, 18, 18)
 
 
 def test_sampling_tree_decision_node_without_probs():
@@ -223,32 +235,32 @@ def test_merging_after_branching():
     """🪴🔀 tests the merging of branches."""
     tree = SamplingTree(
         [
-            lambda input: {"input": 0, "target": None},  # noqa: A002, ARG005
+            lambda input: 0,  # noqa: A002, ARG005
             {
                 "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
                 "1": [
                     TransformNode(add, Parameter("number", 1)),
-                    ClassLabelNode("one"),
+                    "one",
                 ],
                 "2": [
                     TransformNode(add, Parameter("number", 2)),
-                    ClassLabelNode("two"),
+                    "two",
                 ],
             },
-            TransformNode(add, Parameter("number", 3)),
+            TransformNode(operate_on_index()(add), Parameter("number", 3)),
         ],
     )
 
-    sample = tree.sample()
+    output, target = tree.sample()
 
-    assert sample["input"] == 4, "The last `partial(add, 3)` transform should be connected to both branches."
-    assert sample["target"] == "one"
+    assert output == 4, "The last `partial(add, 3)` transform should be connected to both branches."
+    assert target == "one"
 
     tree.update()
-    sample = tree.sample()
+    output, target = tree.sample()
 
-    assert sample["input"] == 5
-    assert sample["target"] == "two"
+    assert output == 5
+    assert target == "two"
 
 
 def test_tree_visualization(tmp_path):
@@ -368,25 +380,26 @@ def test_tree_visualization(tmp_path):
 """
         )
 
+
 def test_get_paths():
     """🍃 tests the extraction of deterministic paths to each leaf."""
     params = pd.DataFrame(
         {
-            "add.number": [1,2],
+            "add.number": [1, 2],
             "branching point.probs": [[0.6, 0.4], [0.4, 0.6]],
         },
     )
 
     tree = SamplingTree(
         [
-            lambda input: {"input": 0, "target": None},  # noqa: A002, ARG005
+            lambda input: 0,  # noqa: A002, ARG005
             {
                 "class": [
                     add,
-                    ClassLabelNode("add"),
+                    "add",
                 ],
                 "background": [
-                    ClassLabelNode("noop"),
+                    "noop",
                 ],
             },
         ],
@@ -399,10 +412,10 @@ def test_get_paths():
     assert len(paths[0].nodes) == 3
     assert len(paths[1].nodes) == 2
 
-    sample = paths[0].sample()
-    assert sample["target"] == "add"
-    assert sample["input"] == 1
+    output, target = paths[0].sample()
+    assert target == "add"
+    assert output == 1
 
-    sample = paths[1].sample()
-    assert sample["target"] == "noop"
-    assert sample["input"] == 0
+    output, target = paths[1].sample()
+    assert target == "noop"
+    assert output == 0

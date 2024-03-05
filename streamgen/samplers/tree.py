@@ -1,7 +1,7 @@
 """🌳 sampling trees are trees of transformations that you can traverse from root to leaf to create samples."""
 
 from collections.abc import Callable
-from copy import copy, deepcopy
+from copy import deepcopy
 from itertools import pairwise
 from pathlib import Path
 from typing import Any, Self
@@ -11,10 +11,12 @@ import numpy as np
 from anytree.exporter import UniqueDotExporter
 from beartype import beartype
 from pandas import DataFrame
+from rich.progress import track
 
 from streamgen.nodes import ClassLabelNode, TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
+from streamgen.samplers import Sampler
 from streamgen.transforms import noop
 
 
@@ -94,7 +96,7 @@ class BranchingNode(TransformNode):
 
 
 @beartype()
-def construct_tree(nodes: Callable | TransformNode | dict | list[Callable | TransformNode | dict]) -> list[TransformNode]:
+def construct_tree(nodes: Callable | TransformNode | dict | str | list[Callable | TransformNode | dict | str]) -> list[TransformNode]:
     """🏗️ assembles and links nodes into a tree.
 
     The following rules apply during construction:
@@ -102,14 +104,15 @@ def construct_tree(nodes: Callable | TransformNode | dict | list[Callable | Tran
     1. Nodes are linked sequentially according to the ordering in the top-level list.
     2. `TransformNode` and sub-classes are not modified.
     3. `Callable`s are cast into `TransformNode`s.
-    4. dictionaries are interpreted as `BranchingNode`s, where each value represents a branch.
+    4. `str` are cast into `ClassLabelNode`
+    5. dictionaries are interpreted as `BranchingNode`s, where each value represents a branch.
         The keys `name`, `probs` and `seed` are reserved to describe the node itself.
-    5. If there is a node after a `BranchingNode`, then every branch will be connected to a **copy** of this node.
+    6. If there is a node after a `BranchingNode`, then every branch will be connected to a **copy** of this node.
         This ensures that the structure of the tree is preserved (Otherwise we would create a more generic directed acyclic graph),
         which is not supported by `anytree`.
 
     Args:
-        nodes (Callable | TransformNode | dict | list[Callable | TransformNode | dict]): pythonic short-hand description of a graph/tree
+        nodes (Callable | TransformNode | dict | str | list[Callable | TransformNode | dict | str]): pythonic short-hand description of a tree.
 
     Returns:
         list[TransformNode]: list of linked nodes
@@ -130,6 +133,8 @@ def construct_tree(nodes: Callable | TransformNode | dict | list[Callable | Tran
                 probs = node.pop("probs", None)
                 seed = node.pop("seed", 42)
                 graph.append(BranchingNode(node, name=name, probs=probs, seed=seed))
+            case str():
+                graph.append(ClassLabelNode(node))
 
     # connect the nodes to enable traversal
     for node, next_node in pairwise(graph):
@@ -152,7 +157,7 @@ def construct_tree(nodes: Callable | TransformNode | dict | list[Callable | Tran
     return graph
 
 
-class SamplingTree:
+class SamplingTree(Sampler):
     """🌳 a tree of `TransformNode`s, that can be sampled from.
 
     The tree will be constructed using `streamgen.nodes.construct_tree(nodes)`.
@@ -161,9 +166,16 @@ class SamplingTree:
         nodes (list[Callable  |  TransformNode  |  dict]): pythonic short-hand description of a graph/tree
         params (ParameterStore | DataFrame | None, optional): parameter store containing additional parameters
             that are passed to the nodes based on the scope. Dataframes will be converted to `ParameterStore`. Defaults to None.
+        collate_func (Callable[[list[Any]], Any] | None, optional): function to collate samples when using `SamplingTree.collect(num_samples)`.
+            If None, return a list of samples. Defaults to None.
     """
 
-    def __init__(self, nodes: list[Callable | TransformNode | dict], params: ParameterStore | DataFrame | None = None) -> None:  # noqa: D107
+    def __init__(  # noqa: D107
+        self,
+        nodes: list[Callable | TransformNode | dict],
+        params: ParameterStore | DataFrame | None = None,
+        collate_func: Callable[[list[Any]], Any] | None = None,
+    ) -> None:
         self.nodes = construct_tree(nodes)
 
         self.root = self.nodes[0]
@@ -180,6 +192,8 @@ class SamplingTree:
         for node in self.nodes:
             node.fetch_params(self.params)
 
+        self.collate_func = collate_func
+
     def sample(self) -> Any:  # noqa: ANN401
         """🎲 generates a sample by traversing the tree from root to one leaf.
 
@@ -193,6 +207,36 @@ class SamplingTree:
             out, node = node.traverse(out)
 
         return out
+
+    def __next__(self) -> Any:  # noqa: ANN401
+        """🪺 returns the next element during iteration.
+
+        The iterator never runs out of samples, so no `StopIteration` exception is raised.
+
+        Returns:
+            Any: a sample
+        """
+        return self.sample()
+
+    def __iter__(self) -> Self:
+        """🏭 turns self into an iterator.
+
+        Required to loop over a `SamplingTree`.
+        """
+        return self
+
+    def collect(self, num_samples: int) -> Any:  # noqa: ANN401
+        """🪺 collect and concatenate `num_samples` using `sample() and `self.collate_func`.
+
+        Args:
+            num_samples (int): number of samples to collect
+
+        Returns:
+            Any: collection of samples
+        """
+        samples = [self.sample() for _ in track(range(num_samples), description="🎲 sampling...")]
+
+        return self.collate_func(samples) if self.collate_func else samples
 
     def update(self) -> None:
         """🆙 updates every parameter."""

@@ -26,7 +26,6 @@ def multi_params_transform(x, inc, factor):
     return (x + inc) * factor
 
 
-@operate_on_key("input")
 def add(input: int, number):  # noqa: A002
     return input + number
 
@@ -110,12 +109,12 @@ def test_class_label_node():
     """🏷️tests the labelling process using `ClassLabelNode`."""
     tree = SamplingTree(
         [
-            lambda input: {"input": 0, "target": None},  # noqa: A002, ARG005
+            lambda input: 0,  # noqa: A002, ARG005
             {
                 "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
                 "1": [
                     TransformNode(add, Parameter("number", 1)),
-                    ClassLabelNode("one"),
+                    "one",  # using shorthand rules
                 ],
                 "2": [
                     TransformNode(add, Parameter("number", 2)),
@@ -126,12 +125,14 @@ def test_class_label_node():
     )
 
     sample = tree.sample()
+    input, target = sample  # noqa: A001
 
-    assert sample["input"] == 1
-    assert sample["target"] == "one"
+    assert input == 1
+    assert target == "one"
 
     tree.update()
     sample = tree.sample()
+    input, target = sample  # noqa: A001
 
-    assert sample["input"] == 2
-    assert sample["target"] == "two"
+    assert input == 2
+    assert target == "two"

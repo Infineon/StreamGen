@@ -119,22 +119,24 @@ class ClassLabelNode(TransformNode):
 
     Args:
         label (str | int): class label or index
+        label_func (Callable[[Any, str | int], Any], optional): function which adds the label information.
+            Defaults to `lambda input, label: (input, label)`.
     """
 
     def __init__(  # noqa: D107
         self,
         label: str | int,
-        set_label: Callable[[dict, str | int], dict] = partial(set_value_in_dict, key="target"),  # noqa: B008
+        label_func: Callable[[Any, str | int], Any] = lambda input, label: (input, label),  # noqa: A002
     ) -> None:
         self.label = label
-        self.set_label = set_label
+        self.label_func = label_func
 
         super().__init__(transform=noop, name=f"label={self.label}", emoji="🏷️")
 
     def traverse(self, input: Any) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
         """🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
 
-        During traversal, a label node sets the label in `input` with `self.set_label`.
+        During traversal, a label node sets the label in `input` with `self.label_func`.
 
         Args:
             input (Any): any input
@@ -142,7 +144,7 @@ class ClassLabelNode(TransformNode):
         Returns:
             tuple[Any, anytree.NodeMixin | None]: output and next node to traverse
         """
-        output = self.set_label(input, self.label)
+        output = self.label_func(input, self.label)
 
         return super().traverse(output)
 
