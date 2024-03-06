@@ -30,6 +30,7 @@ coverage = "^7.4.3"
 pre-commit = "^3.6.2"
 poethepoet = "^0.25.0"
 portray = "^1.8.0"
+nbconvert = "^7.16.2"
 
 [tool.ruff]
 exclude = [".git", ".mypy_cache", ".ruff_cache", ".tox", ".venv", "__pypackages__", "dist", "venv"]
