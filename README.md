@@ -70,7 +70,7 @@ There are example notebooks 🪐📓 showcasing and explaining `streamgen` featu
 
 ## 📖 Documentation
 
-Open the documentation by calling `poetry run portray in_browser`.
+Open the documentation by calling `poe docs`.
 
 ## 🙏 Acknowledgement
 
