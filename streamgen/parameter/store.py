@@ -1,4 +1,4 @@
-"""🗃️ parameter store are dictionary-like collections of parameters and scheudles."""
+"""🗃️ parameter stores are dictionary-like collections of parameters and schedules."""
 
 from typing import Any
 

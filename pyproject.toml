@@ -109,7 +109,7 @@ repo = "material/bitbucket"
 
 [[tool.portray.mkdocs.nav]]
 [[tool.portray.mkdocs.nav."👨‍💻 Developers"]]
-"⚒️ Guide" = "docs/developers_guide.md"
+"⚒️ Guide" = "docs/developer_guide.md"
 
 [[tool.portray.mkdocs.nav."👨‍💻 Developers"]]
 "⚗️ Testing" =  "docs/testing.md"
