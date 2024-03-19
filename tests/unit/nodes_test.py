@@ -7,7 +7,6 @@ from streamgen.nodes import ClassLabelNode, TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
 from streamgen.samplers.tree import SamplingTree
-from streamgen.transforms import operate_on_key
 
 # ---------------------------------------------------------------------------- #
 # *                             helper functions                               #

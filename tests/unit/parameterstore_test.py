@@ -167,3 +167,32 @@ def test_from_dataframe():
     assert store["var1"].value == 2
     assert store["var2"].value == 5
     assert store["scope1.var1"].value == -2
+
+
+def test_combining_parameters():
+    """Tests combining parameters and parameter stores with `|` and `|=`."""
+    param1 = Parameter("a", 1)
+    param2 = Parameter("b", 2)
+    param3 = Parameter("c", 3)
+    store2 = ParameterStore(
+        {
+            "scope1": {
+                "d": {"value": 4},
+            },
+        },
+    )
+
+    store = param1 | param2
+    assert store.parameter_names == {"a", "b"}
+    assert store.scopes == set()
+
+    # |= also works
+    param1 |= param2
+    assert isinstance(param1, ParameterStore)
+
+    store |= param3
+
+    assert "c" in store.parameter_names
+
+    store |= store2
+    assert store.scopes == {"scope1"}

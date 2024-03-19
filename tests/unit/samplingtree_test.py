@@ -10,7 +10,7 @@ from streamgen.nodes import ClassLabelNode, TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
 from streamgen.samplers.tree import SamplingTree
-from streamgen.transforms import noop, operate_on_index, operate_on_key
+from streamgen.transforms import noop, operate_on_index
 
 # ---------------------------------------------------------------------------- #
 # *                             helper functions                               #
@@ -318,7 +318,7 @@ def test_tree_visualization(tmp_path):
                     },
                 ],
             },
-            TransformNode(lambda input: input + 0.8, name="postprocessing_offset", emoji="➕"),  # noqa: RUF001, A002
+            TransformNode(lambda input: input + 0.8, name="postprocessing_offset", emoji="➕"),  # noqa: A002
         ],
         params,
     )

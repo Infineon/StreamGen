@@ -1650,6 +1650,26 @@ files = [
 colors = ["colorama (>=0.4.6)"]
 
 [[package]]
+name = "itables"
+version = "2.0.0"
+description = "Pandas and Polar DataFrames as interactive DataTables"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "itables-2.0.0-py3-none-any.whl", hash = "sha256:34690c50ff16a450488aaf16a519f7f7203d1f165bee07694b1cf0bf76dc2594"},
+    {file = "itables-2.0.0.tar.gz", hash = "sha256:858ac48e181a1168655e925a658b96d1ef77f5b7d499e0e73e7378aeabe38683"},
+]
+
+[package.dependencies]
+ipython = "*"
+numpy = "*"
+pandas = "*"
+
+[package.extras]
+polars = ["polars", "pyarrow"]
+test = ["ipykernel", "jupytext", "matplotlib", "nbconvert", "pytest", "pytest-cov", "pytz", "shiny", "world-bank-data"]
+
+[[package]]
 name = "jedi"
 version = "0.19.1"
 description = "An autocompletion tool for Python that can be used for text editors."
@@ -5562,4 +5582,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "8fd8b14cf59532e8730c98de5986f5e085482130569e3486487ef4806494670a"
+content-hash = "e932ea8fe1721b8e0067e491c2fafe5afa1837fda622b96da6d052e3b77cc1ed"

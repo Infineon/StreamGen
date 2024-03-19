@@ -65,6 +65,21 @@ To answer different research questions in the field of CL, researchers need know
 A more economic alternative to collecting and labelling streams with desired properties is the **generation** of synthetic streams.
 Some mentionable efforts in that direction include augmentation based dataset generation like [ImageNet-C](https://github.com/hendrycks/robustness)[^3] or simulation based approaches like the [EndlessCLSim](https://arxiv.org/abs/2106.02585)[^4], where semantically labeled street-view images are generated (and labeled) by a game engine, that procedurally generates the city environment and simulates drift by modifying parameters (like the weather and illumination conditions) over time.
 
+<details>
+    <summary>ImageNet-C [3]</summary>
+
+    <img src="docs/images/imagenet-c.png">
+
+</details>
+
+<details>
+    <summary>EndlessCLSim [4]</summary>
+
+    <img src="docs/images/endless_cl_sim.png">
+    <img src="docs/images/endless_cl_sim_model.png">
+
+</details>
+
 This project builds on these ideas and presents a general framework for generating a stream of labeled samples.
 
 ## 💡 Idea

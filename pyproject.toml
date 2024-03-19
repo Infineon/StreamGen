@@ -28,6 +28,7 @@ rich = "^13.7.1"
 continuum = "^1.2.7"
 polars = "^0.20.13"
 perlin-numpy = {git = "https://github.com/pvigier/perlin-numpy"}
+itables = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.2"
@@ -55,6 +56,7 @@ docstring-code-format = true
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
+    "RUF001",
     "ANN101",
     "D211",
     "D213",
@@ -62,6 +64,7 @@ ignore = [
     "TCH003",
     "TD002",
     "PD901",
+    "EXE005",
 ]
 
 [tool.ruff.lint.pydocstyle]
@@ -96,16 +99,16 @@ repo = "material/bitbucket"
 
 [[tool.portray.mkdocs.nav]]
 [[tool.portray.mkdocs.nav."🪐📓 User Guide"]]
-"🎲 sampling from static distributions" = "examples/time series classification/01_static_distributions.md"
+"🎲 Sampling from Static Distributions" = "examples/time series classification/01_static_distributions.md"
 
 [[tool.portray.mkdocs.nav."🪐📓 User Guide"]]
-"🌌 creating data streams" = "examples/time series classification/02_data_streams.md"
+"🌌 Creating Data Streams" = "examples/time series classification/02_data_streams.md"
 
 [[tool.portray.mkdocs.nav."🪐📓 User Guide"]]
-"📊 Data drift scenarios" = "examples/time series classification/03_drift_scenarios.md"
+"📊 Data Drift Scenarios" = "examples/time series classification/03_drift_scenarios.md"
 
 [[tool.portray.mkdocs.nav."🪐📓 User Guide"]]
-"🌐 wafer map generation" = "examples/wafer_map_generation.md"
+"🌐 Wafer Map Generation" = "examples/wafer_map_generation.md"
 
 [[tool.portray.mkdocs.nav]]
 [[tool.portray.mkdocs.nav."👨‍💻 Developers"]]

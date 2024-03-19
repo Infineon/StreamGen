@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from itertools import cycle
-from typing import Generic, TypedDict, TypeVar
+from typing import Generic, Self, TypedDict, TypeVar
 
 from beartype import beartype
 
@@ -82,6 +82,17 @@ class Parameter(Generic[T]):
         """
         return f"{self.name}={self.value}"
 
+    def __or__(self, param: Self) -> ParameterStore:
+        """➕ combines two Parameters to a `ParameterStore` using `|`.
+
+        Args:
+            param (Parameter): another parameter
+
+        Returns:
+            ParameterStore: combined parameter store
+        """  # noqa: RUF002
+        return ParameterStore([self, param])
+
 
 class ParameterDict(Generic[T], TypedDict, total=False):
     """📖 typed dictionary of `streamgen.parameter.Parameter`."""
@@ -118,3 +129,6 @@ Examples:
             },
         }
 """
+
+# 🔄️ bottom-level import required to avoid circular dependency
+from streamgen.parameter.store import ParameterStore  # noqa: E402

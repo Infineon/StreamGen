@@ -197,6 +197,35 @@ class ParameterStore:
 
         return ParameterStore(params)
 
+    def __or__(self, params: Parameter | Self) -> Self:
+        """➕ combines self with another `Parameter` or `ParameterStore` using `|`.
+
+        This function takes care of merging the scopes properly.
+
+        Args:
+            params (Parameter | ParameterStore): another parameter or store
+
+        Returns:
+            ParameterStore: combined parameter store
+        """  # noqa: RUF002
+        if isinstance(params, Parameter):
+            params = ParameterStore([params])
+
+        for scope in params.scopes:
+            if scope not in self.scopes:
+                self.parameters[scope] = {}
+                self.scopes.add(scope)
+
+        for param in params.parameter_names:
+            if "." in param:
+                scope, name = param.split(".")
+                self.parameters[scope][name] = params[param]
+            else:
+                self.parameters[param] = params[param]
+            self.parameter_names.add(param)
+
+        return self
+
     def __repr__(self) -> str:
         """🏷️ Returns the debug string representation of self.
 

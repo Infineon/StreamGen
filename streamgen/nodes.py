@@ -1,7 +1,6 @@
 """🪢 different node implementations using [anytree](https://anytree.readthedocs.io/en/stable/) `NodeMixin`."""
 
 from collections.abc import Callable
-from functools import partial
 from typing import Any, Protocol
 
 import anytree
@@ -11,7 +10,7 @@ from loguru import logger
 from streamgen.enums import ArgumentPassingStrategy, ArgumentPassingStrategyLit
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
-from streamgen.transforms import noop, set_value_in_dict
+from streamgen.transforms import noop
 
 
 class Traverse(Protocol):
