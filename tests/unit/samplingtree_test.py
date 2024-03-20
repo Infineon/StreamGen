@@ -222,13 +222,28 @@ def test_sampling_tree_deep_nesting():
 
     assert sample.shape == (16, 16)
 
-    tree.update()
+    tree.set_update_step(1)
 
     assert branching_node.probs.value == [0.0, 1.0]
 
     sample = tree.sample()
 
     assert sample.shape == (18, 18)
+
+    tree.set_update_step(0)
+
+    branching_node = tree.nodes[1]
+    assert branching_node.probs.value == [1.0, 0.0]
+
+    sample = tree.sample()
+
+    assert sample.shape == (16, 16)
+
+    # test get_params
+    tree.set_update_step(0)
+    tree_params = tree.get_params()
+    assert all(param in tree_params.parameter_names for param in params.parameter_names)
+    assert all(tree_params[param].value == params[param].value for param in params.parameter_names)
 
 
 def test_merging_after_branching():

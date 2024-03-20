@@ -77,6 +77,22 @@ class BranchingNode(TransformNode):
             for node in branch:
                 node.update()
 
+    def set_update_step(self, idx: int) -> None:
+        """🕐 updates every parameter to a certain update step.
+
+        Args:
+            idx (int): parameter update step
+
+        Returns:
+            None: this function mutates `self`
+        """
+        if self.probs:
+            self.probs[idx]
+
+        for branch in self.branches.values():
+            for node in branch:
+                node.set_update_step(idx)
+
     def fetch_params(self, params: ParameterStore) -> None:
         """⚙️ fetches params from a ParameterStore.
 
@@ -93,6 +109,29 @@ class BranchingNode(TransformNode):
         for branch in self.branches.values():
             for node in branch:
                 node.fetch_params(params)
+
+    def get_params(self) -> ParameterStore | None:
+        """⚙️ collects parameters from every node.
+
+        The parameters are scoped based on the node names.
+
+        Returns:
+            ParameterStore | None: parameters from every node. None is there are no parameters.
+        """
+        store = ParameterStore([])
+
+        if self.probs:
+            store.scopes.add(self.name)
+            store.parameters[self.name] = {}
+            store.parameters[self.name][self.probs.name] = self.probs
+            store.parameter_names.add(f"{self.name}.{self.probs.name}")
+
+        for branch in self.branches.values():
+            for node in branch:
+                if params := node.get_params():
+                    store |= params
+
+        return store if len(store.parameter_names) > 0 else None
 
 
 @beartype()
@@ -243,6 +282,18 @@ class SamplingTree(Sampler):
         for node in self.nodes:
             node.update()
 
+    def set_update_step(self, idx: int) -> None:
+        """🕐 updates every parameter to a certain update step using `param[idx]`.
+
+        Args:
+            idx (int): parameter update step
+
+        Returns:
+            None: this function mutates `self`
+        """
+        for node in self.nodes:
+            node.set_update_step(idx)
+
     def get_params(self) -> ParameterStore | None:
         """⚙️ collects parameters from every node.
 
@@ -251,19 +302,13 @@ class SamplingTree(Sampler):
         Returns:
             ParameterStore | None: parameters from every node. None is there are no parameters.
         """
-        if all(node.params is None for node in self.nodes):
-            return None
-
         store = ParameterStore([])
 
         for node in self.nodes:
-            if node.args:
-                scope = node.name
-                store.scopes.add(scope)
-                store.parameters[scope] = {param.name: param for param in node.params.parameters.values()}
-                store.parameter_names.extend([f"{scope}.{param.name}" for param in node.params.parameters.values()])
+            if params := node.get_params():
+                store |= params
 
-        return store
+        return store if len(store.parameter_names) > 0 else None
 
     def to_dotfile(self, file_path: Path = Path("./tree.dot")) -> None:
         """🕸️ exports the tree as a `dot` file using [graphviz](https://www.graphviz.org/).

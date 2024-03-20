@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
+from copy import deepcopy
 from itertools import cycle
 from typing import Generic, Self, TypedDict, TypeVar
 
@@ -54,6 +55,9 @@ class Parameter(Generic[T]):
         if self.value is None and self.schedule:
             self.value = self.update()
 
+        self._initial_schedule = deepcopy(self.schedule)
+        self._initial_value = self.value
+
     def update(self) -> T:
         """🆙 updates the value according to the schedule and strategy.
 
@@ -71,6 +75,25 @@ class Parameter(Generic[T]):
         except StopIteration as err:
             if self.strategy == ParameterOutOfRangeStrategy.RAISE_EXCEPTION:
                 raise ParameterOutOfRangeError from err
+
+        return self.value
+
+    def __getitem__(self, idx: int) -> T:
+        """🫱 gets the value after a certain number of update steps.
+
+        This function resets the current schedule to its original schedule during construction.
+
+        Returns:
+            T: value after `idx` updates
+
+        Raises:
+            ParameterOutOfRangeError: when an `update` leads to an invalid value.
+        """
+        self.schedule = deepcopy(self._initial_schedule)
+
+        self.value = self._initial_value
+        for _ in range(idx):
+            self.update()
 
         return self.value
 

@@ -103,7 +103,7 @@ class ParameterStore:
         return 0
 
     def __getitem__(self, name: str) -> Parameter:
-        """Gets a parameter by its name using `store[name]` syntax.
+        """🫱 gets a parameter by its name using `store[name]` syntax.
 
         Scoped parameters are fetched using `{scope}.{parameter.name}`.
 
@@ -118,6 +118,19 @@ class ParameterStore:
             return self.parameters[scope][name]
 
         return self.parameters[name]
+
+    def set_update_step(self, idx: int) -> None:
+        """🕐 updates every parameter of `self` to a certain update step using `param[idx]`.
+
+        Args:
+            idx (int): parameter update step
+
+        Returns:
+            None: this function mutates `self`
+        """
+        for param in self.parameters.values():
+            # indexing of parameters mutates their internal state, so we do not have to set anything
+            param[idx]
 
     def get_scope(self, scope: str) -> Self | None:
         """🔭 get all parameters in a scope as a new `ParameterStore`.

@@ -91,6 +91,18 @@ class TransformNode(anytree.NodeMixin):
         if self.params:
             self.params.update()
 
+    def set_update_step(self, idx: int) -> None:
+        """🕐 updates every parameter of `self.params` to a certain update step using `self.params.set_update_step`.
+
+        Args:
+            idx (int): parameter update step
+
+        Returns:
+            None: this function mutates `self`
+        """
+        if self.params:
+            self.params.set_update_step(idx)
+
     def fetch_params(self, params: ParameterStore) -> None:
         """⚙️ fetches params from a ParameterStore.
 
@@ -103,6 +115,24 @@ class TransformNode(anytree.NodeMixin):
             return
         if self.name in params.scopes:
             self.params = params.get_scope(self.name)
+
+    def get_params(self) -> ParameterStore | None:
+        """⚙️ returns current parameters.
+
+        Returns:
+            ParameterStore | None: parameters. None is there are no parameters.
+        """
+        if self.params is None:
+            return None
+
+        store = ParameterStore([])
+        store.scopes.add(self.name)
+        store.parameters[self.name] = {}
+        for name, param in self.params.parameters.items():
+            store.parameters[self.name][name] = param
+            store.parameter_names.add(f"{self.name}.{name}")
+
+        return store
 
     def __repr__(self) -> str:
         """🏷️ Returns the string representation `str(self)`.

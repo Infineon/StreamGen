@@ -66,6 +66,46 @@ def test_parameter_dict_initialization() -> None:
     assert store["var2"].value == 1.0
 
 
+def test_updating_parameters_by_index() -> None:
+    """Tests the explicit updating of every parameter using indexing with integers."""
+    params = {
+        "var1": {
+            "value": 1,
+            "schedule": [2, 3],
+            "strategy": "cycle",
+        },
+        "var2": {
+            "name": "var2",  # can be present, but is not needed
+            "schedule": [0.0, 1.0, 0.3],
+        },
+    }
+
+    store = ParameterStore(params)
+
+    assert store["var1"].value == 1
+    assert store["var2"].value == 0.0
+
+    store.update()
+
+    assert store["var1"].value == 2
+    assert store["var2"].value == 1.0
+
+    store.set_update_step(0)
+
+    assert store["var1"].value == 1
+    assert store["var2"].value == 0.0
+
+    store.update()
+
+    assert store["var1"].value == 2
+    assert store["var2"].value == 1.0
+
+    store.set_update_step(2)
+
+    assert store["var1"].value == 3
+    assert store["var2"].value == 0.3
+
+
 def test_scoped_parameter_dict_initialization() -> None:
     """Tests the dict initialization behavior of a parameter store."""
     params = {

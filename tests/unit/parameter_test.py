@@ -67,3 +67,16 @@ def test_generator_parameter() -> None:
 
     assert param.value == 0, "initial value should be 0"
     assert param.update() == 1, "1st updated value should be 1 as defined by schedule"
+
+def test_parameter_indexing() -> None:
+    """Tests the explicit updating of a parameter via indexing."""
+    param = Parameter("count", schedule=count())
+
+    assert param.value == 0, "initial value should be 0"
+    assert param.update() == 1, "1st updated value should be 1 as defined by schedule"
+
+    assert param[0] == 0, "initial value should be 0, even after updating"
+    assert param.value == 0, "initial value should be 0, even after updating"
+    assert param.update() == 1, "1st updated value should be 1 as defined by schedule"
+    assert param[2] == 2, "using indexing should reset the schedule"
+    assert param.value == 2, "using indexing should reset the schedule"
