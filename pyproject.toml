@@ -17,18 +17,18 @@ docs = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-anytree = "^2.12.1"
-beartype = "^0.17.2"
-numpy = "^1.26.4"
-matplotlib = "^3.8.3"
-seaborn = "^0.13.2"
-pandas = "^2.2.1"
-loguru = "^0.7.2"
-rich = "^13.7.1"
-continuum = "^1.2.7"
-polars = "^0.20.13"
-perlin-numpy = {git = "https://github.com/pvigier/perlin-numpy"}
-itables = "^2.0.0"
+anytree = "^2.12.1" # Apache license 2.0
+beartype = "^0.17.2" # MIT license
+numpy = "^1.26.4" # custom license -> seems permissive
+matplotlib = "^3.8.3" # custom license -> seems permissive
+seaborn = "^0.13.2" # multiple licenses -> seems permissive (like MIT) if licenses are included
+pandas = "^2.2.1" # BSD 3-clause license
+loguru = "^0.7.2" # MIT license
+rich = "^13.7.1" # MIT license
+continuum = "^1.2.7" # MIT license
+polars = "^0.20.13" # MIT license
+perlin-numpy = {git = "https://github.com/pvigier/perlin-numpy"} # MIT license
+itables = "^2.0.0" # MIT license
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.2"

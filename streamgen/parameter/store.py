@@ -170,7 +170,7 @@ class ParameterStore:
         """📅🐼 rolls out `number_of_update_steps` and returns the result as a `pd.DataFrame`.
 
         Args:
-            number_of_update_steps (int, optional): number of rows in the dataframe. Defaults to 1.
+            number_of_update_steps (int, optional): number of rows in the dataframe. Defaults to 0.
 
         Returns:
             pd.DataFrame: parameter store as dataframe

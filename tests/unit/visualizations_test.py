@@ -2,10 +2,12 @@
 # ruff: noqa: S101, D103, ANN001, ANN201, PLR2004
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 import pytest
 
 from streamgen import visualizations
 from streamgen.parameter import Parameter
+from streamgen.parameter.store import ParameterStore
 
 
 def test_parameter_plotting() -> None:
@@ -40,3 +42,26 @@ def test_parameter_plotting() -> None:
         ax = visualizations.plot_parameter(ndarray_param)
     with pytest.raises(NotImplementedError):
         ax = visualizations.plot_parameter(str_param)
+
+
+def test_store_plotting() -> None:
+    """Tests the plotting of a parameter store."""
+    df = pd.DataFrame(
+        {
+            "background.signal_length":  256,
+            "background.offset": 0.0,
+            "background.strength": 0.1,
+            "branching point.probs": [
+                [0.5, 0.5, 0.0],
+                [0.1, 0.9, 0.0],
+                [0.0, 0.1, 0.9],
+            ],
+            "ramp.height": 1.0,
+            "ramp.length": 128,
+            "step.length": 128,
+            "step.kernel_size": 1,
+        },
+    )
+    store = ParameterStore.from_dataframe(df)
+
+    fig = visualizations.plot_parameter_store(store, num_values=3)
