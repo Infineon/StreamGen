@@ -10,7 +10,6 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-from IPython.display import display
 from IPython.utils import io
 from ipywidgets import widgets
 from matplotlib import animation
@@ -139,7 +138,9 @@ def plot_parameter_store_widget(store: ParameterStore, num_values: int | None = 
 
 
 def plot_labeled_samples_grid(
-    tree: SamplingTree, plotting_func: Callable[[Any, plt.Axes], plt.Axes], columns: int = 4
+    tree: SamplingTree,
+    plotting_func: Callable[[Any, plt.Axes], plt.Axes],
+    columns: int = 4,
 ) -> mpl.figure.Figure:
     """📟 plots a `columns`x`columns` grid of labeled samples generated from a `SamplingTree` with `ClassLabelNode`s.
 
@@ -172,7 +173,10 @@ def plot_labeled_samples_grid(
 
 
 def plot_labeled_samples_animation(
-    tree: SamplingTree, plotting_func: Callable[[Any, plt.Axes], plt.Axes], num_samples: int = 8, interval: int = 200
+    tree: SamplingTree,
+    plotting_func: Callable[[Any, plt.Axes], plt.Axes],
+    num_samples: int = 8,
+    interval: int = 200,
 ) -> IPython.display.HTML:
     """🎞️ plots several labeled samples generated from a `SamplingTree` with `ClassLabelNode`s as an animation.
 
@@ -201,37 +205,3 @@ def plot_labeled_samples_animation(
         anim = animation.FuncAnimation(fig, _plotting_func, frames=num_samples, fargs=(ax,))
 
     return IPython.display.HTML(anim.to_jshtml())
-
-
-def plot_labeled_experiences(
-    tree: SamplingTree,
-    plotting_func: Callable[[Any, plt.Axes], plt.Axes],
-    num_experiences: int,
-    columns: int = 4,
-) -> widgets.Tab:
-    """🌌 plots several experiences of labeled samples generated from a `SamplingTree` with `ClassLabelNode`s in each tab.
-
-    Be aware, that this function calls `tree.update()` `num_experiences` times.
-
-    Args:
-        tree (SamplingTree): tree to generate samples from
-        plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.
-            The function should take a sample and a `plt.Axes` as arguments.
-        num_experiences (int): number of experiences to visualize.
-        columns (int, optional): number of samples in the columns (and rows). Defaults to 4.
-
-    Returns:
-        widgets.Tab: ipywidgets tab widget with animations
-    """
-    tabs = [widgets.Output() for _ in range(num_experiences)]
-
-    widget = widgets.Tab(children=tabs)
-
-    for idx in range(num_experiences):
-        widget.set_title(idx, str(idx + 1))
-        with tabs[idx]:
-            fig = plot_labeled_samples_grid(tree, plotting_func, columns)
-            plt.show(fig)
-        tree.update()
-
-    return widget

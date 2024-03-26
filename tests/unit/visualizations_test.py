@@ -48,7 +48,7 @@ def test_store_plotting() -> None:
     """Tests the plotting of a parameter store."""
     df = pd.DataFrame(
         {
-            "background.signal_length":  256,
+            "background.signal_length": 256,
             "background.offset": 0.0,
             "background.strength": 0.1,
             "branching point.probs": [
