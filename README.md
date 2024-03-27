@@ -163,6 +163,10 @@ There are example notebooks 🪐📓 showcasing and explaining `streamgen` featu
     + [📊 data drift scenarios](examples/time%20series%20classification/03-drift-scenarios.ipynb)
 + 🖼️ analog wafer map streams based on the [wm811k dataset](https://www.kaggle.com/datasets/qingyi/wm811k-wafer-map)[^5] in [🌐 wafer map generation](examples/wafer_map_generation.ipynb)
 
+Here is a preview of what we will create in the time series examples:
+
+![time series example tree](docs/videos/time_series_tree_svg.gif)
+
 ## 📖 Documentation
 
 Open the documentation by calling `poe docs`.
