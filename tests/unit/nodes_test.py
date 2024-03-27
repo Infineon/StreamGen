@@ -3,7 +3,7 @@
 
 import pytest
 
-from streamgen.nodes import ClassLabelNode, TransformNode
+from streamgen.nodes import ClassLabelNode, SampleBufferNode, TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
 from streamgen.samplers.tree import SamplingTree
@@ -135,3 +135,48 @@ def test_class_label_node():
 
     assert input == 2
     assert target == "two"
+
+
+def test_sample_buffer_node() -> None:
+    """Tests the `SampleBufferNode`."""
+    buffer = SampleBufferNode(num_samples=3)
+    tree = SamplingTree(
+        [
+            lambda input: 0,  # noqa: A002, ARG005
+            {
+                "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
+                "1": [
+                    TransformNode(add, Parameter("number", 1)),
+                    "one",  # using shorthand rules
+                ],
+                "2": [
+                    TransformNode(add, Parameter("number", 2)),
+                    buffer,
+                    ClassLabelNode("two"),
+                ],
+            },
+        ],
+    )
+
+    sample = tree.sample()
+    input, target = sample  # noqa: A001
+
+    assert len(buffer.samples) == 0, "should be 0 since only the other branch was traversed"
+
+    assert input == 1
+    assert target == "one"
+
+    tree.update()
+    sample = tree.sample()
+    input, target = sample  # noqa: A001
+
+    assert input == 2
+    assert target == "two"
+
+    assert len(buffer.samples) == 1
+    assert buffer.samples[0] == 2
+
+    _samples = tree.collect(10)
+
+    assert len(buffer.samples) == 3
+    assert buffer.samples[0] == 2

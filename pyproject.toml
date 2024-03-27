@@ -29,6 +29,7 @@ continuum = "^1.2.7" # MIT license
 polars = "^0.20.13" # MIT license
 perlin-numpy = {git = "https://github.com/pvigier/perlin-numpy"} # MIT license
 itables = "^2.0.0" # MIT license
+graphviz = "^0.20.3"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.2"
@@ -99,13 +100,13 @@ repo = "material/bitbucket"
 
 [[tool.portray.mkdocs.nav]]
 [[tool.portray.mkdocs.nav."🪐📓 User Guide"]]
-"🎲 Sampling from Static Distributions" = "examples/time series classification/01_static_distributions.md"
+"🎲 Sampling from Static Distributions" = "examples/time series classification/01-static-distributions.md"
 
 [[tool.portray.mkdocs.nav."🪐📓 User Guide"]]
-"🌌 Creating Data Streams" = "examples/time series classification/02_data_streams.md"
+"🌌 Creating Data Streams" = "examples/time series classification/02-data-streams.md"
 
 [[tool.portray.mkdocs.nav."🪐📓 User Guide"]]
-"📊 Data Drift Scenarios" = "examples/time series classification/03_drift_scenarios.md"
+"📊 Data Drift Scenarios" = "examples/time series classification/03-drift-scenarios.md"
 
 [[tool.portray.mkdocs.nav."🪐📓 User Guide"]]
 "🌐 Wafer Map Generation" = "examples/wafer_map_generation.md"

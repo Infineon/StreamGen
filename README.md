@@ -158,9 +158,9 @@ pip install streamgen
 There are example notebooks 🪐📓 showcasing and explaining `streamgen` features:
 
 + 📈 time series
-    + [🎲 sampling from static distributions](examples/time%20series%20classification/01_static_distributions.ipynb)
-    + [🌌 creating data streams](examples/time%20series%20classification/02_data_streams.ipynb)
-    + [📊 data drift scenarios](examples/time%20series%20classification/03_drift_scenarios.ipynb)
+    + [🎲 sampling from static distributions](examples/time%20series%20classification/01-static-distributions.ipynb)
+    + [🌌 creating data streams](examples/time%20series%20classification/02-data-streams.ipynb)
+    + [📊 data drift scenarios](examples/time%20series%20classification/03-drift-scenarios.ipynb)
 + 🖼️ analog wafer map streams based on the [wm811k dataset](https://www.kaggle.com/datasets/qingyi/wm811k-wafer-map)[^5] in [🌐 wafer map generation](examples/wafer_map_generation.ipynb)
 
 ## 📖 Documentation

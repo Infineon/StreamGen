@@ -1,11 +1,16 @@
 """🪢 different node implementations using [anytree](https://anytree.readthedocs.io/en/stable/) `NodeMixin`."""
 
+from collections import deque
 from collections.abc import Callable
 from typing import Any, Protocol
 
 import anytree
+import IPython
+import matplotlib.pyplot as plt
+import seaborn as sns
 from beartype import beartype
 from loguru import logger
+from matplotlib import animation
 
 from streamgen.enums import ArgumentPassingStrategy, ArgumentPassingStrategyLit
 from streamgen.parameter import Parameter
@@ -184,3 +189,81 @@ class ClassLabelNode(TransformNode):
             str: string representation of self
         """
         return f"🏷️ `{self.label}`"
+
+
+class SampleBufferNode(TransformNode):
+    """🗃️ node which remembers the last samples.
+
+    Args:
+        name (str | None, optional): name of the buffer. Defaults to "sample buffer".
+        num_samples (int, optional): maximum number of samples to store. Defaults to 4.
+    """
+
+    def __init__(  # noqa: D107
+        self,
+        name: str | None = None,
+        num_samples: int = 4,
+    ) -> None:
+        name = name if name is not None else "sample buffer"
+        self.samples = deque(maxlen=num_samples)
+
+        super().__init__(transform=noop, name=name, emoji="🗃️")
+
+    def traverse(self, input: Any) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
+        """🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
+
+        During traversal, a sample buffer node adds samples to `self.samples`.
+
+        Args:
+            input (Any): any input
+
+        Returns:
+            tuple[Any, anytree.NodeMixin | None]: output and next node to traverse
+        """
+        self.samples.append(input)
+
+        return super().traverse(input)
+
+    def _plotting_func_wrapper(self, idx: int, ax: plt.Axes, plotting_func: Callable[[Any, plt.Axes], plt.Axes]) -> None:
+        """🖼️ private wrapper for the `plotting_func` argument in `self.plot`.
+
+        Args:
+            idx (int): index of the frame. Passed into this function by matplotlib.
+            ax (plt.Axes): artist to draw to
+            plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.
+                The function should take a sample and a `plt.Axes` as arguments
+        """
+        labeled = isinstance(self.samples[0], tuple)
+        if labeled:
+            sample, target = self.samples[idx]
+        else:
+            sample = self.samples[idx]
+        ax.clear()
+        plotting_func(sample, ax)
+        ax.get_xaxis().set_visible(False)
+        ax.get_yaxis().set_visible(False)
+
+    def plot(
+        self,
+        plotting_func: Callable[[Any, plt.Axes], plt.Axes],
+        display: bool = True,  # noqa: FBT001, FBT002
+    ) -> IPython.display.HTML | animation.FuncAnimation | None:
+        """📹 visualizes the samples in the buffer as an animation.
+
+        Args:
+            plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.
+                The function should take a sample and a `plt.Axes` as arguments.
+            display (bool, optional): If true, wraps the animation object in an `IPython.display.HTML`. Defaults to True.
+
+        Returns:
+            IPython.display.HTML | animation.FuncAnimation | None: matplotlib animation object
+        """
+        if len(self.samples) == 0:
+            return None
+
+        sns.set_theme()
+        fig, ax = plt.subplots(figsize=(3.2, 2.4))
+
+        anim = animation.FuncAnimation(fig, self._plotting_func_wrapper, frames=len(self.samples), fargs=(ax, plotting_func))
+
+        return IPython.display.HTML(anim.to_jshtml()) if display else anim

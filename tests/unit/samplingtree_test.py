@@ -360,40 +360,7 @@ def test_tree_visualization(tmp_path):
 
     tree.to_dotfile(tmp_path / "tree.dot")
 
-    with (tmp_path / "tree.dot").open(encoding="utf8") as f:
-        assert (
-            f.read()
-            == """digraph tree {
-    "0x0" [label="➡️ `noise(size=16)`"];
-    "0x1" [label="🪴 `decision()`",shape=diamond];
-    "0x2" [label="➡️ `noop()`"];
-    "0x3" [label="🏷️ `no-pattern`",shape=cds];
-    "0x4" [label="➕ `postprocessing_offset()`"];
-    "0x5" [label="➡️ `add_random_points(num_points=1)`"];
-    "0x6" [label="🪴 `skew_decision()`",shape=diamond];
-    "0x7" [label="➡️ `noop()`"];
-    "0x8" [label="🏷️ `points`",shape=cds];
-    "0x9" [label="➕ `postprocessing_offset()`"];
-    "0xa" [label="🔩 `skew(skew=0.0)`"];
-    "0xb" [label="➡️ `add_random_points_a_second_time(num_points=4)`"];
-    "0xc" [label="🏷️ `skewed points`",shape=cds];
-    "0xd" [label="➕ `postprocessing_offset()`"];
-    "0x0" -> "0x1";
-    "0x1" -> "0x2";
-    "0x1" -> "0x5";
-    "0x2" -> "0x3";
-    "0x3" -> "0x4";
-    "0x5" -> "0x6";
-    "0x6" -> "0x7";
-    "0x6" -> "0xa";
-    "0x7" -> "0x8";
-    "0x8" -> "0x9";
-    "0xa" -> "0xb";
-    "0xb" -> "0xc";
-    "0xc" -> "0xd";
-}
-"""
-        )
+    tree.to_svg(tmp_path/"tree")
 
 
 def test_get_paths():

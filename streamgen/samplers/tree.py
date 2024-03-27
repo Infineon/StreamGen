@@ -10,10 +10,15 @@ import anytree
 import numpy as np
 from anytree.exporter import UniqueDotExporter
 from beartype import beartype
+from graphviz import Source
+from IPython.display import SVG, HTML
+from IPython.utils import io
+from matplotlib import animation
+from matplotlib import pyplot as plt
 from pandas import DataFrame
 from rich.progress import track
 
-from streamgen.nodes import ClassLabelNode, TransformNode
+from streamgen.nodes import ClassLabelNode, SampleBufferNode, TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
 from streamgen.samplers import Sampler
@@ -310,23 +315,45 @@ class SamplingTree(Sampler):
 
         return store if len(store.parameter_names) > 0 else None
 
-    def to_dotfile(self, file_path: Path = Path("./tree.dot")) -> None:
+    def to_dotfile(
+            self,
+            file_path: Path = Path("./tree.dot"),
+            plotting_func: Callable[[Any, plt.Axes], plt.Axes] | None = None,
+            fps: int = 2,
+        ) -> None:
         """🕸️ exports the tree as a `dot` file using [graphviz](https://www.graphviz.org/).
 
         Args:
             file_path (Path, optional): path of the resulting file. Defaults to "./tree.dot".
+            plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.
+                The function should take a sample and a `plt.Axes` as arguments.
+                It is used to create sample animations for `SampleBufferNode`s.
+            fps (int, optional): frames per second for the sample animations. Defaults to 2.
         """
-
+        output_path = file_path.parent
         def _nodeattrfunc(node) -> str:  # noqa: ANN001
             """Builds the node attribute list for graphviz."""
-            a = f'label="{node!s}"'
+            a = f'label="{node.emoji} {node.name}"'
             match node:
                 case BranchingNode():
-                    return a + ",shape=diamond"
+                    probs = [round(1.0 / len(node.children), 3)] * len(node.children) if node.probs is None else str(node.probs)
+                    return a + f' shape=diamond tooltip="{probs}"'
                 case ClassLabelNode():
-                    return a + ",shape=cds"
+                    return a + " shape=cds"
+                case SampleBufferNode():
+                    # create animation
+                    if plotting_func is None:
+                        return a + " shape=box"
+                    anim = node.plot(plotting_func, display=False);
+                    if anim is None:
+                        return a + " shape=box"
+                    # save gif
+                    gif_path = output_path/f"{node.name}.gif"
+                    anim.save(gif_path, writer=animation.PillowWriter(fps=fps))
+                    # add gif as background
+                    return f'label="" shape=box image="{gif_path.name}" imagescale=true'
                 case _:
-                    return a
+                    return a + f' tooltip="{node.get_params()!s}"'
 
         dot = UniqueDotExporter(
             self.root,
@@ -335,6 +362,33 @@ class SamplingTree(Sampler):
         )
 
         dot.to_dotfile(file_path)
+
+    def to_svg(
+        self,
+        file_path: Path = Path("./tree"),
+        plotting_func: Callable[[Any, plt.Axes], plt.Axes] | None = None,
+        fps: int = 2,
+    ) -> SVG:
+        """📹 visualizes the tree as an svg using [graphviz](https://www.graphviz.org/).
+
+        Args:
+            file_path (Path, optional): path of the resulting file. Defaults to "./tree.dot".
+            plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.
+                The function should take a sample and a `plt.Axes` as arguments.
+                It is used to create sample animations for `SampleBufferNode`s.
+            fps (int, optional): frames per second for the sample animations. Defaults to 2.
+
+        Returns:
+            IPython.display.SVG: svg display of dot visualization
+        """
+        output_path = file_path.parent
+        file_stem = file_path.stem
+        dot_path = output_path / (file_stem + ".dot")
+
+        with io.capture_output() as _captured:
+            self.to_dotfile(dot_path, plotting_func, fps)
+            Source.from_file(dot_path).render(dot_path, format="svg")
+        return SVG(filename=(output_path / (file_stem + ".dot.svg")))
 
     def get_paths(self) -> list[Self]:
         """🍃 constructs a deterministic path for each leaf in the tree.

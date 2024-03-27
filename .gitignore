@@ -1,5 +1,6 @@
 .vscode/
 tree.dot
+tree.dot.svg
 tree.txt
 
 # Byte-compiled / optimized / DLL files

@@ -202,6 +202,6 @@ def plot_labeled_samples_animation(
             plotting_func(sample, ax)
             ax.set_title(target)
 
-        anim = animation.FuncAnimation(fig, _plotting_func, frames=num_samples, fargs=(ax,))
+        anim = animation.FuncAnimation(fig, _plotting_func, frames=num_samples, fargs=(ax,), interval=interval)
 
     return IPython.display.HTML(anim.to_jshtml())

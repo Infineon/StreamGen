@@ -1,2 +1,6 @@
 *.md
+*.dot
+*.svg
+*.gif
 *_files
+*-files
