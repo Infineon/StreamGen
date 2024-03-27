@@ -15,12 +15,12 @@ a 🐍 framework for generating labeled data streams
     <img alt="Static Badge" src="https://img.shields.io/badge/📦_version-0.0.1-blue">
     <a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>
     <img alt="Static Badge" src="https://img.shields.io/badge/tests-passing-green?logo=pytest">
-    <img alt="Static Badge" src="https://img.shields.io/badge/Coverage-90%25-yellow?logo=codecov">
+    <img alt="Static Badge" src="https://img.shields.io/badge/Coverage-85%25-yellow?logo=codecov">
 </p>
 
 <p align="center">
-    <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/-Python%203.11-darkgreen?style=for-the-badge&logo=python&logoColor=white"></a>
-    <a href="https://python-poetry.org/"><img alt="Poetry" src="https://img.shields.io/badge/-Poetry%201.7-60A5FA?style=for-the-badge&logo=Poetry&logoColor=FFFFFF"></a>
+    <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.11-yellow?logo=python"></a>
+    <a href="https://python-poetry.org/"><img alt="Poetry" src="https://img.shields.io/badge/Poetry-1.8.2-blue?logo=Poetry"></a>
 </p>
 
 <p align="center">
