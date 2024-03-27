@@ -11,7 +11,7 @@ import numpy as np
 from anytree.exporter import UniqueDotExporter
 from beartype import beartype
 from graphviz import Source
-from IPython.display import SVG, HTML
+from IPython.display import SVG
 from IPython.utils import io
 from matplotlib import animation
 from matplotlib import pyplot as plt
@@ -156,7 +156,7 @@ def construct_tree(nodes: Callable | TransformNode | dict | str | list[Callable 
         which is not supported by `anytree`.
 
     Args:
-        nodes (Callable | TransformNode | dict | str | list[Callable | TransformNode | dict | str]): pythonic short-hand description of a tree.
+        nodes (Callable | TransformNode | dict | str | list[Callable | TransformNode | dict | str]): short-hand description of a tree.
 
     Returns:
         list[TransformNode]: list of linked nodes
@@ -187,13 +187,6 @@ def construct_tree(nodes: Callable | TransformNode | dict | str | list[Callable 
                 for leaf in node.leaves:
                     # * the copy operation is needed, since `anytree` does not allow merged branches
                     # * (merged branches are different branches with a common child -> creates a DAG instead of a tree).
-                    #! the `copy` operation tricks `anytree` into not recognizing the merging.
-                    # TODO: I need to check a few things to make sure this is ok:
-                    #   1. how is a copy of a node linked to its original node (especially regarding mutation)?
-                    #   2. does this approach work recursively with multiple nestings?
-                    #       -> no, we need to check recursively for branching points.
-                    #          fortunately, anytree makes this very easy with `node.leaves`
-                    #   3. how does this affect the printing/representation of the tree?
                     leaf.children = [deepcopy(next_node)]
             case (_, _):
                 node.children = [next_node]
@@ -210,7 +203,7 @@ class SamplingTree(Sampler):
         nodes (list[Callable  |  TransformNode  |  dict]): pythonic short-hand description of a graph/tree
         params (ParameterStore | DataFrame | None, optional): parameter store containing additional parameters
             that are passed to the nodes based on the scope. Dataframes will be converted to `ParameterStore`. Defaults to None.
-        collate_func (Callable[[list[Any]], Any] | None, optional): function to collate samples when using `SamplingTree.collect(num_samples)`.
+        collate_func (Callable[[list[Any]], Any] | None, optional): function to collate samples when using `self.collect(num_samples)`.
             If None, return a list of samples. Defaults to None.
     """
 
@@ -316,11 +309,11 @@ class SamplingTree(Sampler):
         return store if len(store.parameter_names) > 0 else None
 
     def to_dotfile(
-            self,
-            file_path: Path = Path("./tree.dot"),
-            plotting_func: Callable[[Any, plt.Axes], plt.Axes] | None = None,
-            fps: int = 2,
-        ) -> None:
+        self,
+        file_path: Path = Path("./tree.dot"),
+        plotting_func: Callable[[Any, plt.Axes], plt.Axes] | None = None,
+        fps: int = 2,
+    ) -> None:
         """🕸️ exports the tree as a `dot` file using [graphviz](https://www.graphviz.org/).
 
         Args:
@@ -331,6 +324,7 @@ class SamplingTree(Sampler):
             fps (int, optional): frames per second for the sample animations. Defaults to 2.
         """
         output_path = file_path.parent
+
         def _nodeattrfunc(node) -> str:  # noqa: ANN001
             """Builds the node attribute list for graphviz."""
             a = f'label="{node.emoji} {node.name}"'
@@ -344,11 +338,11 @@ class SamplingTree(Sampler):
                     # create animation
                     if plotting_func is None:
                         return a + " shape=box"
-                    anim = node.plot(plotting_func, display=False);
+                    anim = node.plot(plotting_func, display=False)
                     if anim is None:
                         return a + " shape=box"
                     # save gif
-                    gif_path = output_path/f"{node.name}.gif"
+                    gif_path = output_path / f"{node.name}.gif"
                     anim.save(gif_path, writer=animation.PillowWriter(fps=fps))
                     # add gif as background
                     return f'label="" shape=box image="{gif_path.name}" imagescale=true'

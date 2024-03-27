@@ -1,4 +1,5 @@
 """⚙️ parameters are variables that change over time according to a schedule."""
+
 from __future__ import annotations
 
 from collections.abc import Iterable

@@ -107,7 +107,7 @@ while generating_data:
     sample = np.random.choice(dataset)
     # option 2 - sample from a distribution
     sample = np.random.randn(...)
-  
+
     augmented_sample = transforms(sample)
 ```
 

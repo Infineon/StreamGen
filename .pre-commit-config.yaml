@@ -1,0 +1,37 @@
+repos:
+  - repo: https://github.com/python-poetry/poetry.git
+    rev: 1.8.0
+    hooks:
+      - id: poetry-check
+      - id: poetry-install
+        stages: [post-checkout, post-merge]
+        always_run: true
+  - repo: https://github.com/python-poetry/poetry-plugin-export.git
+    rev: 1.7.1
+    hooks:
+      - id: poetry-export
+        args: [-f, requirements.txt, -o, requirements.txt, --with, dev, --all-extras]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+        args: [--maxkb=10240]
+      - id: check-case-conflict
+      - id: check-docstring-first
+        exclude: (__init__|io).py
+      - id: check-json
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        exclude: .pdf|.svg|.graphml
+      - id: pretty-format-json
+        exclude: .ipynb
+        args: [--autofix]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.4
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix, --config=pyproject.toml]
+      - id: ruff-format

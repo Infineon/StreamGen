@@ -44,7 +44,7 @@ def plot(values: list[int | float | list | np.ndarray], ax: plt.Axes | None = No
             sns.set_theme()
             indices = list(range(len(values)))
             values = np.array(values).T
-            assert len(values.shape) == 2, "only arrays with two dimensions can be visualized here"
+            assert len(values.shape) == 2, "only arrays with two dimensions can be visualized here"  # noqa: S101, PLR2004
             ax.stackplot(indices, values)
         case _:
             raise NotImplementedError
@@ -72,7 +72,7 @@ def plot_parameter(param: Parameter, num_values: int | None = None, ax: plt.Axes
     """
     match num_values:
         case int():
-            assert num_values > 1, "at least two value are needed for the plot."
+            assert num_values > 1, "at least two value are needed for the plot."  # noqa: S101
             values = [param.value, *list(islice(deepcopy(param.schedule), num_values - 1))]
         case None:
             values = [param.value, *list(islice(deepcopy(param.schedule), None))]

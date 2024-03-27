@@ -4,15 +4,15 @@ from beartype import beartype
 
 
 @beartype()
-class Experience:
+class Experience:  # noqa: D101
     pass
 
 
 @beartype()
-class Stream:
+class Stream:  # noqa: D101
     pass
 
 
 @beartype()
-class SizedStream(Stream):
+class SizedStream(Stream):  # noqa: D101
     pass

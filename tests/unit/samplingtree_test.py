@@ -360,7 +360,7 @@ def test_tree_visualization(tmp_path):
 
     tree.to_dotfile(tmp_path / "tree.dot")
 
-    tree.to_svg(tmp_path/"tree")
+    tree.to_svg(tmp_path / "tree")
 
 
 def test_get_paths():

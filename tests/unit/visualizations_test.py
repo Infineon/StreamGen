@@ -1,4 +1,5 @@
 """🧪 `streamgen.visualizations` tests."""
+
 # ruff: noqa: S101, D103, ANN001, ANN201, PLR2004
 import matplotlib.pyplot as plt
 import numpy as np
@@ -64,4 +65,4 @@ def test_store_plotting() -> None:
     )
     store = ParameterStore.from_dataframe(df)
 
-    fig = visualizations.plot_parameter_store(store, num_values=3)
+    _fig = visualizations.plot_parameter_store(store, num_values=3)
