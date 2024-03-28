@@ -1,5 +1,6 @@
 """🌳 sampling trees are trees of transformations that you can traverse from root to leaf to create samples."""
 
+import itertools
 from collections.abc import Callable
 from copy import deepcopy
 from itertools import pairwise
@@ -18,6 +19,7 @@ from matplotlib import pyplot as plt
 from pandas import DataFrame
 from rich.progress import track
 
+from streamgen.enums import SamplingStrategy, SamplingStrategyLit
 from streamgen.nodes import ClassLabelNode, SampleBufferNode, TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
@@ -262,16 +264,27 @@ class SamplingTree(Sampler):
         """
         return self
 
-    def collect(self, num_samples: int) -> Any:  # noqa: ANN401
+    def collect(self, num_samples: int, strategy: SamplingStrategy | SamplingStrategyLit = "stochastic") -> Any:  # noqa: ANN401
         """🪺 collect and concatenate `num_samples` using `sample() and `self.collate_func`.
 
         Args:
-            num_samples (int): number of samples to collect
+            num_samples (int): number of samples to collect.
+                When using the "stochastic" (default) strategy, this refers to the total number of samples.
+                When using the "balanced" strategies, this refers to the number of samples per path through the tree.
+            strategy (SamplingStrategy | SamplingStrategyLit, optional): sampling strategy. Defaults to "stochastic".
 
         Returns:
-            Any: collection of samples
+            Any: (possibly collated with `self.collate_func`) collection of samples
         """
-        samples = [self.sample() for _ in track(range(num_samples), description="🎲 sampling...")]
+        match strategy:
+            case SamplingStrategy.STOCHASTIC:
+                samples = [self.sample() for _ in track(range(num_samples), description="🎲 sampling...")]
+            case SamplingStrategy.BALANCED:
+                paths = self.get_paths()
+                samples = list(itertools.chain(*[path.collect(num_samples) for path in paths]))
+            case SamplingStrategy.BALANCED_PRUNED:
+                paths = self.get_paths(prune=True)
+                samples = list(itertools.chain(*[path.collect(num_samples) for path in paths]))
 
         return self.collate_func(samples) if self.collate_func else samples
 
@@ -384,18 +397,33 @@ class SamplingTree(Sampler):
             Source.from_file(dot_path).render(dot_path, format="svg")
         return SVG(filename=(output_path / (file_stem + ".dot.svg")))
 
-    def get_paths(self) -> list[Self]:
+    def get_paths(self, prune: bool = False) -> list[Self]:  # noqa: FBT001, FBT002
         """🍃 constructs a deterministic path for each leaf in the tree.
+
+        Args:
+            prune (bool, optional): If true, only return paths with probabilities greater than zero. Defaults to false.
 
         Returns:
             list[Self]: list of `SamplingTree`s without branches.
         """
         paths = []
         for leaf in self.root.leaves:
-            path = [node for node in deepcopy(leaf.ancestors) if not isinstance(node, BranchingNode)] + [deepcopy(leaf)]
-            for node, next_node in pairwise(path):
-                node.children = [next_node]
-            paths.append(SamplingTree(path, self.params))
+            pruned_path = False
+            if prune:
+                # check if all probs leading to the leaf are greater than 0
+                for node in leaf.ancestors:
+                    if isinstance(node, BranchingNode):
+                        # get probability for the path leading to the leaf
+                        # to do this, we need to find the index of the branch
+                        idx = next(idx for idx, branch in enumerate(node.children) if leaf in branch.leaves)
+                        prob = node.probs.value[idx]
+                        if prob == 0.0:
+                            pruned_path = True
+            if not pruned_path:
+                path = [node for node in deepcopy(leaf.ancestors) if not isinstance(node, BranchingNode)] + [deepcopy(leaf)]
+                for node, next_node in pairwise(path):
+                    node.children = [next_node]
+                paths.append(SamplingTree(path, self.params))
 
         return paths
 

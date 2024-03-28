@@ -201,13 +201,17 @@ def test_sampling_tree_deep_nesting():
             noise,
             {
                 "name": "decision",
-                "background": noop,
+                "background": [noop, "background"],
                 "patterns": [
                     add_random_points,
                     {
                         "name": "skew_decision",
-                        "noop": noop,
-                        "skew": [TransformNode(skew, Parameter("skew", schedule=[0.0, 0.5]), argument_strategy="dict"), add_random_points],
+                        "noop": [noop, "points"],
+                        "skew": [
+                            TransformNode(skew, Parameter("skew", schedule=[0.0, 0.5]), argument_strategy="dict"),
+                            add_random_points,
+                            "skewed points",
+                        ],
                     },
                 ],
             },
@@ -218,24 +222,46 @@ def test_sampling_tree_deep_nesting():
     branching_node = tree.nodes[1]
     assert branching_node.probs.value == [1.0, 0.0], "Probs should be fetched from params since there is a scope `decision`."
 
-    sample = tree.sample()
+    (sample, target) = tree.sample()
 
     assert sample.shape == (16, 16)
+    assert target == "background"
+
+    samples = tree.collect(10, "stochastic")
+    assert len(samples) == 10
+    targets = {target for sample, target in samples}
+    assert targets == {"background"}
+
+    samples = tree.collect(10, "balanced")
+    assert len(samples) == 30
+    targets = {target for _sample, target in samples}
+    assert targets == {"background", "points", "skewed points"}
+
+    samples = tree.collect(10, "balanced pruned")
+    assert len(samples) == 10, "since only the background branch has probs > 0"
+    targets = {target for _sample, target in samples}
+    assert targets == {"background"}
 
     tree.set_update_step(1)
 
     assert branching_node.probs.value == [0.0, 1.0]
 
-    sample = tree.sample()
+    (sample, target) = tree.sample()
 
     assert sample.shape == (18, 18)
+    assert target in ["points", "skewed points"], "not sure, since we have two paths with probs > 0"
+
+    samples = tree.collect(10, "balanced pruned")
+    assert len(samples) == 20
+    targets = {target for _sample, target in samples}
+    assert targets == {"points", "skewed points"}
 
     tree.set_update_step(0)
 
     branching_node = tree.nodes[1]
     assert branching_node.probs.value == [1.0, 0.0]
 
-    sample = tree.sample()
+    (sample, target) = tree.sample()
 
     assert sample.shape == (16, 16)
 

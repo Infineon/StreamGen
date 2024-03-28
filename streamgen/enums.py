@@ -41,3 +41,21 @@ ArgumentPassingStrategyLit: TypeAlias = Literal[
     "dict",
     "unpack",
 ]
+
+
+class SamplingStrategy(str, Enum):
+    """🎲 strategy which defines how to sample a `streamgen.samplers.Sampler`."""
+
+    STOCHASTIC = "stochastic"
+    """Samples randomly. -> The class distributions are determined by the probabilities of the decision nodes."""
+    BALANCED = "balanced"
+    """Samples evenly/balanced/stratified among all classes."""
+    BALANCED_PRUNED = "balanced pruned"
+    """Samples evenly/balanced/stratified among all classes that have a probability greater than zero."""
+
+
+SamplingStrategyLit: TypeAlias = Literal[
+    "stochastic",
+    "balanced",
+    "balanced pruned",
+]
