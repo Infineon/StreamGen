@@ -51,7 +51,7 @@ Existing CL frameworks like [avalanche](https://github.com/ContinualAI/avalanche
 
 - results in unrealistic scenarios
 - offers limited insight into distributions and their evolution
-- not extendable to scenarios with less constraints on the stream properties
+- not extendable to scenarios with fewer constraints on the stream properties
 
 To answer different research questions in the field of CL, researchers need knowledge and control over:
 
@@ -62,8 +62,8 @@ To answer different research questions in the field of CL, researchers need know
 - class dependencies
 - class composition (for multi-label modelling)
 
-A more economic alternative to collecting and labelling streams with desired properties is the **generation** of synthetic streams.
-Some mentionable efforts in that direction include augmentation based dataset generation like [ImageNet-C](https://github.com/hendrycks/robustness)[^3] or simulation based approaches like the [EndlessCLSim](https://arxiv.org/abs/2106.02585)[^4], where semantically labeled street-view images are generated (and labeled) by a game engine, that procedurally generates the city environment and simulates drift by modifying parameters (like the weather and illumination conditions) over time.
+A more economical alternative to collecting and labelling streams with desired properties is the **generation** of synthetic streams[^6].
+Some mentionable efforts in that direction include augmentation based dataset generation like [ImageNet-C](https://github.com/hendrycks/robustness)[^3] or simulation-based approaches like the [EndlessCLSim](https://arxiv.org/abs/2106.02585)[^4], where semantically labeled street-view images are generated (and labeled) by a game engine, that procedurally generates the city environment and simulates drift by modifying parameters (like the weather and illumination conditions) over time.
 
 <details>
     <summary>ImageNet-C [3]</summary>
@@ -80,7 +80,7 @@ Some mentionable efforts in that direction include augmentation based dataset ge
 
 </details>
 
-This project builds on these ideas and presents a general framework for generating a stream of labeled samples.
+This project builds on these ideas and presents a general framework for generating streams of labeled samples.
 
 ## 💡 Idea
 
@@ -88,7 +88,7 @@ This section introduces the main ideas and building blocks of the `streamgen` fr
 
 ### 🎲 Building complex Distributions through random Transformations
 
-There exist only a limited number of distributions one can directly sample from (e.g.: a gaussian distribution).
+There exists only a limited number of distributions one can directly sample from (e.g.: a gaussian distribution).
 
 Instead of generating samples directly from a distribution, researchers often work with collected sets of samples.
 A common practice to increase the variability of such datasets is the use of **stochastic transformations** in a sequential augmentation pipeline:
@@ -117,9 +117,9 @@ Combined with an initial sampler, that either samples from a data set or directl
 
 One shortcoming of this approach is that one can only generate samples from a single distribution -> different class distributions are not representable.
 
-One solution to this problem is the use of a [tree](https://en.wikipedia.org/wiki/Tree_(data_structure)) (or other directed a-cyclic graph (DAG)) data structure to store the transformations.
+One solution to this problem is the use of a [tree](https://en.wikipedia.org/wiki/Tree_(data_structure)) (or other directed acyclic graph (DAG)) data structure to store the transformations.
 
-- samples are transformed during traversal of the tree from the root to the leaves.
+- samples are transformed during the traversal of the tree from the root to the leaves.
 - each path through the tree represents its own class-conditional distribution.
 - each branching point represents a categorical distribution which determines the path to take for a sample during the tree traversal.
 
@@ -175,6 +175,8 @@ Open the documentation by calling `poe docs`.
 
 Made with ❤️ and ☕ by Laurenz Farthofer.
 
+This work was funded by the Austrian Research Promotion Agency (FFG, Project No. 905107).
+
 Special thanks to Benjamin Steinwender, Marius Birkenbach and Nikolaus Neugebauer for their valuable feedback.
 
 I want to thank Infineon and Kai for letting me work on and publish this project.
@@ -190,3 +192,4 @@ Finally, I want to thank my university supervisors Thomas Pock and Marc Masana f
 [^3]: D. Hendrycks and T. Dietterich, “Benchmarking Neural Network Robustness to Common Corruptions and Perturbations.” arXiv, Mar. 28, 2019. doi: 10.48550/arXiv.1903.12261.
 [^4]: T. Hess, M. Mundt, I. Pliushch, and V. Ramesh, “A Procedural World Generation Framework for Systematic Evaluation of Continual Learning.” arXiv, Dec. 13, 2021. doi: 10.48550/arXiv.2106.02585.
 [^5]: Wu, Ming-Ju, Jyh-Shing R. Jang, and Jui-Long Chen. “Wafer Map Failure Pattern Recognition and Similarity Ranking for Large-Scale Data Sets.” IEEE Transactions on Semiconductor Manufacturing 28, no. 1 (February 2015): 1–12.
+[^6]: J. Lu, A. Liu, F. Dong, F. Gu, J. Gama, and G. Zhang, “Learning under Concept Drift: A Review” IEEE Trans. Knowl. Data Eng., pp. 1–1, 2018, doi: 10.1109/TKDE.2018.2876857.
