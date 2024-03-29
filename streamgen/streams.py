@@ -2,6 +2,11 @@
 
 from beartype import beartype
 
+from streamgen import is_extra_installed
+
+if is_extra_installed("plots"):
+    pass
+
 
 @beartype()
 class Experience:  # noqa: D101

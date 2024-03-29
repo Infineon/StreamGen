@@ -149,8 +149,28 @@ The proposed tree structure can model all three common data drift scenarios by s
 
 ## 📦 Installation
 
+The basic version of the package (without special dependencies) can be installed with:
 ```sh
 pip install streamgen
+```
+
+`streamgen` provides a few extras:
+
+| extras group | needed for                                                                 | additional dependencies      |
+| ------------ | -------------------------------------------------------------------------- | ---------------------------- |
+| **examples** | running the example notebooks with their application specific dependencies | `perlin-numpy`, `polars`     |
+| **cl**       | continual learning frameworks                                              | `avalanche-lib`, `continuum` |
+| **all**      | shortcut for installing every extra                                        | * |
+
+To install the package with specific extras execute:
+
+```sh
+pip install streamgen[<name_of_extra>]
+```
+
+> 🧑‍💻 to install a development environment (which you need if you want to work on the package, instead of just using the package), `cd` into the project's root directory and call:
+```bash
+poetry install --sync --compile --all-extras
 ```
 
 ## 👀 Examples
