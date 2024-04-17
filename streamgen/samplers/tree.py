@@ -38,7 +38,7 @@ class BranchingNode(TransformNode):
             `probs.value` is passed to `numpy.random.choice` as parameter `p`, which is documented as:
             (1-D array_like, optional) the probabilities associated with each entry in a.
             If not given the sample assumes a uniform distribution over all entries. Defaults to None.
-        name (str | None, optional): name of the node. Important for fetching the `probs` if not present. Defaults to "branching point".
+        name (str | None, optional): name of the node. Important for fetching the `probs` if not present. Defaults to "branching_node".
         seed (int, optional): random number generator seed. Defaults to 42.
     """
 
@@ -49,7 +49,7 @@ class BranchingNode(TransformNode):
         name: str | None = None,
         seed: int = 42,
     ) -> None:
-        self.name = name if name else "branching point"
+        self.name = name if name else "branching_node"
         self.probs = probs
         self.rng = np.random.default_rng(seed)
 

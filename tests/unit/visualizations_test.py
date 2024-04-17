@@ -52,7 +52,7 @@ def test_store_plotting() -> None:
             "background.signal_length": 256,
             "background.offset": 0.0,
             "background.strength": 0.1,
-            "branching point.probs": [
+            "branching_node.probs": [
                 [0.5, 0.5, 0.0],
                 [0.1, 0.9, 0.0],
                 [0.0, 0.1, 0.9],

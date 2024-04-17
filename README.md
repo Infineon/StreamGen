@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="docs/images/stream_scene.png" alt="Banner"/></a>
+    <img src="docs/images/stream_scene.png" alt="Banner credits to emailbackgrounds.com"/></a>
 </p>
 
 <h1 style="text-align: center;">
@@ -113,6 +113,42 @@ while generating_data:
 
 Combined with an initial sampler, that either samples from a data set or directly from a distribution, these chained transformations can represent complex distributions.
 
+<details>
+    <summary>Function Composition Details </summary>
+
+Two (or more) functions f: X → X, g: X → X having the same domain and codomain are often called **transformations**. One can form chains of transformations composed together, such as f ∘ f ∘ g ∘ f (which is the same as f(f(g(f(x)))) given some input x). Such chains have the algebraic structure of a **monoid**, called a transformation monoid or (much more seldom) a composition monoid. [^7]
+
+A lot of programming languages offer native support for such transformation monoids.
+
+Julia uses `|>` or `∘` for function chaining:
+```julia
+distribution = sample |> filter |> augment
+distribution = augment ∘ filter ∘ sample
+```
+
+R uses the chain operator `%>%`:
+```R
+distribution <- sample %>%
+    filter() %>%
+    augment()
+```
+
+In python, you can use `functools.reduce` to create simple monoids:
+```python
+from functools import reduce
+from typing import Callable
+
+def compose(*funcs) -> Callable[[int], int]:
+    """Compose a group of functions (f(g(h(...)))) into a single composite func."""
+    return reduce(lambda f, g: lambda x: f(g(x)), funcs)
+
+distribution = compose(sample, filter, augment)
+```
+
+> 🤚 StreamGen is not trying to implement general (and optimized) function composition in Python. It rather offers a very opinionated implementation, that is optimal for the data generation use-case.
+
+</details>
+
 ### 🌳 Sampling Trees
 
 One shortcoming of this approach is that one can only generate samples from a single distribution -> different class distributions are not representable.
@@ -213,3 +249,4 @@ Finally, I want to thank my university supervisors Thomas Pock and Marc Masana f
 [^4]: T. Hess, M. Mundt, I. Pliushch, and V. Ramesh, “A Procedural World Generation Framework for Systematic Evaluation of Continual Learning.” arXiv, Dec. 13, 2021. doi: 10.48550/arXiv.2106.02585.
 [^5]: Wu, Ming-Ju, Jyh-Shing R. Jang, and Jui-Long Chen. “Wafer Map Failure Pattern Recognition and Similarity Ranking for Large-Scale Data Sets.” IEEE Transactions on Semiconductor Manufacturing 28, no. 1 (February 2015): 1–12.
 [^6]: J. Lu, A. Liu, F. Dong, F. Gu, J. Gama, and G. Zhang, “Learning under Concept Drift: A Review” IEEE Trans. Knowl. Data Eng., pp. 1–1, 2018, doi: 10.1109/TKDE.2018.2876857.
+[^7]: “Function composition,” Wikipedia. Feb. 16, 2024. Accessed: Apr. 17, 2024. [Online]. Available: https://en.wikipedia.org/w/index.php?title=Function_composition&oldid=1207989326

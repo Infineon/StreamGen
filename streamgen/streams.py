@@ -4,7 +4,7 @@ from beartype import beartype
 
 from streamgen import is_extra_installed
 
-if is_extra_installed("plots"):
+if is_extra_installed("cl"):
     pass
 
 

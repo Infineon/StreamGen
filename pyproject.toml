@@ -37,13 +37,15 @@ continuum = { version = "^1.2.7", optional = true } # MIT license
 # Example/Application Dependencies
 perlin-numpy = { git = "https://github.com/pvigier/perlin-numpy", optional = true} # MIT license
 polars = { version = "^0.20.13", optional = true } # MIT license
+ipympl = { version = "^0.9.4", optional = true }
 
 [tool.poetry.extras]
-examples = ["perlin-numpy", "polars"]
+examples = ["perlin-numpy", "polars", "ipympl"]
 cl = ["avalanche-lib", "continuum"]
 all = [
     "perlin-numpy",
     "polars",
+    "ipympl",
     "avalanche-lib",
     "continuum"
 ]

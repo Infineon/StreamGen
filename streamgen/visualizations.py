@@ -37,7 +37,7 @@ def plot(values: list[int | float | list | np.ndarray], ax: plt.Axes | None = No
     """
     match values[0]:
         case int() | float():
-            ax = sns.lineplot(values, ax=ax)
+            ax = sns.lineplot(values, ax=ax, marker="o")
         case np.ndarray() | list():
             if ax is None:
                 fig, ax = plt.subplots()

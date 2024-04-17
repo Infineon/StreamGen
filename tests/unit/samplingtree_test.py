@@ -84,7 +84,7 @@ def test_sampling_tree_decision_node_with_probs():
         == """🌳
 ➡️ `noise(size=16)`
 ╰── ➡️ `skew(skew=0.0)`
-    ╰── 🪴 `branching point()`
+    ╰── 🪴 `branching_node()`
         ├── ➡️ `noop()`
         ╰── ➡️ `add_random_points(num_points=1)`
 """
@@ -130,7 +130,7 @@ def test_sampling_tree_decision_node_without_probs():
                     "schedule": [1, 8],
                 },
             },
-            "branching point": {
+            "branching_node": {
                 "probs": {
                     "schedule": [[1.0, 0.0], [0.0, 1.0]],
                 },
@@ -394,7 +394,7 @@ def test_get_paths():
     params = pd.DataFrame(
         {
             "add.number": [1, 2],
-            "branching point.probs": [[0.6, 0.4], [0.4, 0.6]],
+            "branching_node.probs": [[0.6, 0.4], [0.4, 0.6]],
         },
     )
 
