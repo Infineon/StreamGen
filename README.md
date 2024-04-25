@@ -167,6 +167,14 @@ If we want to model evolving distributions (streams), we either need to change t
 
 ![parameter schedule](docs/images/parameter_schedule.png)
 
+Currently, `streamgen` does not support scheduling topological changes (like adding branches and nodes), but by **unrolling** these changes over time into one static tree, topological changes can be modelled purely with branch probabilities.
+
+![modelling data drift through changes in the topology of the tree](docs/images/data_drifts_by_topology_changes.png)
+
+![unrolling topological changes into one static tree](docs/images/unrolled_static_tree.png)
+
+> 💡 the directed acyclic graph above is not a tree anymore due to the *merging* of certain branches. Because these merges are very conveniently in certain scenarios, `streamgen` support the definition of such trees by copying the paths below the merge to every branch before the merge. For an example of this, have a look at `examples/time series classification/04-multi-label-generation.ipynb`.
+
 ### 📈 Data Drift Scenarios
 
 The proposed tree structure can model all three common data drift scenarios by scheduling the parameters of the transformations at specific nodes.
