@@ -40,6 +40,8 @@ class BranchingNode(TransformNode):
             If not given the sample assumes a uniform distribution over all entries. Defaults to None.
         name (str | None, optional): name of the node. Important for fetching the `probs` if not present. Defaults to "branching_node".
         seed (int, optional): random number generator seed. Defaults to 42.
+        string_node (Callable[[str], TransformNode], optional): `TransfromNode` constructor from strings used in `construct_tree`.
+            Defaults to `ClassLabelNode`.
     """
 
     def __init__(  # noqa: D107
@@ -48,12 +50,13 @@ class BranchingNode(TransformNode):
         probs: Parameter | None = None,
         name: str | None = None,
         seed: int = 42,
+        string_node: Callable[[str], TransformNode] = ClassLabelNode,
     ) -> None:
         self.name = name if name else "branching_node"
         self.probs = probs
         self.rng = np.random.default_rng(seed)
 
-        self.branches = {branch_name: construct_tree(nodes) for branch_name, nodes in branches.items()}
+        self.branches = {branch_name: construct_tree(nodes, string_node) for branch_name, nodes in branches.items()}
 
         self.children = [branch[0] for branch in self.branches.values()]
 
@@ -142,7 +145,10 @@ class BranchingNode(TransformNode):
 
 
 @beartype()
-def construct_tree(nodes: Callable | TransformNode | dict | str | list[Callable | TransformNode | dict | str]) -> list[TransformNode]:
+def construct_tree(
+    nodes: Callable | TransformNode | dict | str | list[Callable | TransformNode | dict | str],
+    string_node: Callable[[str], TransformNode] = ClassLabelNode,
+) -> list[TransformNode]:
     """🏗️ assembles and links nodes into a tree.
 
     The following rules apply during construction:
@@ -150,7 +156,7 @@ def construct_tree(nodes: Callable | TransformNode | dict | str | list[Callable 
     1. Nodes are linked sequentially according to the ordering in the top-level list.
     2. `TransformNode` and sub-classes are not modified.
     3. `Callable`s are cast into `TransformNode`s.
-    4. `str` are cast into `ClassLabelNode`
+    4. `str` are passed to the `string_node` constructor, which allows to configure which Node type is used for them.
     5. dictionaries are interpreted as `BranchingNode`s, where each value represents a branch.
         The keys `name`, `probs` and `seed` are reserved to describe the node itself.
     6. If there is a node after a `BranchingNode`, then every branch will be connected to a **copy** of this node.
@@ -159,6 +165,8 @@ def construct_tree(nodes: Callable | TransformNode | dict | str | list[Callable 
 
     Args:
         nodes (Callable | TransformNode | dict | str | list[Callable | TransformNode | dict | str]): short-hand description of a tree.
+        string_node (Callable[[str], TransformNode], optional): `TransfromNode` constructor from strings used in `construct_tree`.
+            Defaults to `ClassLabelNode`.
 
     Returns:
         list[TransformNode]: list of linked nodes
@@ -178,18 +186,26 @@ def construct_tree(nodes: Callable | TransformNode | dict | str | list[Callable 
                 name = node.pop("name", None)
                 probs = node.pop("probs", None)
                 seed = node.pop("seed", 42)
-                graph.append(BranchingNode(node, name=name, probs=probs, seed=seed))
+                graph.append(BranchingNode(node, name=name, probs=probs, seed=seed, string_node=string_node))
             case str():
-                graph.append(ClassLabelNode(node))
+                graph.append(string_node(node))
 
-    # connect the nodes to enable traversal
+    # connect the nodes to enable traversal and parameter fetching and updating
     for node, next_node in pairwise(graph):
         match (node, next_node):
             case (BranchingNode(), _):
-                for leaf in node.leaves:
+                # * This is a special shorthand conveninence behaviour:
+                # * when we sequentially combine a `BranchingNode` with another node,
+                # * we add the other node to every leaf of the branches in the `BranchingNode`
+                for branch in node.branches.values():
                     # * the copy operation is needed, since `anytree` does not allow merged branches
                     # * (merged branches are different branches with a common child -> creates a DAG instead of a tree).
-                    leaf.children = [deepcopy(next_node)]
+                    # * we have to add the copy to the leaf's children to enable traversal
+                    for leaf in branch[-1].leaves:
+                        next_node_copy = deepcopy(next_node)
+                        leaf.children = [next_node_copy]
+                        # * we have to add the copy to the branch to handle parameter fetching and updating
+                        branch.append(next_node_copy)
             case (_, _):
                 node.children = [next_node]
 
@@ -199,23 +215,27 @@ def construct_tree(nodes: Callable | TransformNode | dict | str | list[Callable 
 class SamplingTree(Sampler):
     """🌳 a tree of `TransformNode`s, that can be sampled from.
 
-    The tree will be constructed using `streamgen.nodes.construct_tree(nodes)`.
+    The tree will be constructed using `streamgen.nodes.construct_tree(nodes, string_node)`.
 
     Args:
-        nodes (list[Callable  |  TransformNode  |  dict]): pythonic short-hand description of a graph/tree
+        nodes (list[Callable | TransformNode | dict| str]): pythonic short-hand description of a graph/tree.
+            `streamgen.samplers.tree.construct_tree` will be called to construct the tree.
         params (ParameterStore | DataFrame | None, optional): parameter store containing additional parameters
             that are passed to the nodes based on the scope. Dataframes will be converted to `ParameterStore`. Defaults to None.
         collate_func (Callable[[list[Any]], Any] | None, optional): function to collate samples when using `self.collect(num_samples)`.
             If None, return a list of samples. Defaults to None.
+        string_node (Callable[[str], TransformNode], optional): `TransfromNode` constructor from strings used in `construct_tree`.
+            Defaults to `ClassLabelNode`.
     """
 
     def __init__(  # noqa: D107
         self,
-        nodes: list[Callable | TransformNode | dict],
+        nodes: list[Callable | TransformNode | dict | str],
         params: ParameterStore | DataFrame | None = None,
         collate_func: Callable[[list[Any]], Any] | None = None,
+        string_node: Callable[[str], TransformNode] = ClassLabelNode,
     ) -> None:
-        self.nodes = construct_tree(nodes)
+        self.nodes = construct_tree(nodes, string_node)
 
         self.root = self.nodes[0]
 

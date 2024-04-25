@@ -338,6 +338,11 @@ def test_tree_visualization(tmp_path):
                     "schedule": [[0.3, 0.7], [0.9, 0.1]],
                 },
             },
+            "postprocessing_offset": {
+                "offset": {
+                    "schedule": [0.8, 0.6],
+                },
+            },
         },
     )
     tree = SamplingTree(
@@ -359,7 +364,7 @@ def test_tree_visualization(tmp_path):
                     },
                 ],
             },
-            TransformNode(lambda input: input + 0.8, name="postprocessing_offset", emoji="➕"),  # noqa: A002
+            TransformNode(lambda input, offset: input + offset, name="postprocessing_offset", emoji="➕"),  # noqa: A002
         ],
         params,
     )
@@ -371,16 +376,16 @@ def test_tree_visualization(tmp_path):
 ╰── 🪴 `decision()`
     ├── ➡️ `noop()`
     │   ╰── 🏷️ `no-pattern`
-    │       ╰── ➕ `postprocessing_offset()`
+    │       ╰── ➕ `postprocessing_offset(offset=0.8)`
     ╰── ➡️ `add_random_points(num_points=1)`
         ╰── 🪴 `skew_decision()`
             ├── ➡️ `noop()`
             │   ╰── 🏷️ `points`
-            │       ╰── ➕ `postprocessing_offset()`
+            │       ╰── ➕ `postprocessing_offset(offset=0.8)`
             ╰── 🔩 `skew(skew=0.0)`
                 ╰── ➡️ `add_random_points_a_second_time(num_points=4)`
                     ╰── 🏷️ `skewed points`
-                        ╰── ➕ `postprocessing_offset()`
+                        ╰── ➕ `postprocessing_offset(offset=0.8)`
 """
     )
 
