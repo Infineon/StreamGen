@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="docs/images/stream_scene.png" alt="Banner credits to emailbackgrounds.com"/></a>
+    <img src="docs/images/deep_dream_generated_stream_1.jpg" alt="Banner credits to deepdreamgenerator.com"/></a>
 </p>
 
 <h1 style="text-align: center;">
