@@ -47,10 +47,10 @@ class ParameterStore:
             )
 
         >>> store = ParameterStore([
-                Parameter("var1", 1, [2]),
-                Parameter("var2", schedule=[0.0, 1.0]),
-            ]
-        })
+                    Parameter("var1", 1, [2]),
+                    Parameter("var2", schedule=[0.0, 1.0]),
+                ]
+            })
     """
 
     def __init__(self, parameters: list[Parameter] | ScopedParameterDict) -> None:  # noqa: D107

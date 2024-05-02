@@ -38,7 +38,7 @@ Streamgen implements the following abstractions and utility functions to design 
 - A selection of custom nodes based on [anytree](https://github.com/c0fec0de/anytree)'s `NodeMixin` [@c0fec0de_anytree_2016]
 - A `SamplingTree` class with:
   - Pythonic short-hand construction via nested lists and dictionaries
-  - Parameter scheduling and configuration of all transformations via a simple `update()` step
+  - Parameter scheduling and configuration of all transformations via one `update()` call
   - Multiple sampling strategies (stochastic traversal, stratified, pruned)
   - Visualizations using [graphviz](https://www.graphviz.org/) [@gansner_open_1997]
 - Stream abstraction to use datasets created with StreamGen in CL frameworks like [avalanche](https://github.com/ContinualAI/avalanche) [@lomonaco_avalanche_2021] or [continuum](https://github.com/Continvvm/continuum) [@douillard_continuum_2021]

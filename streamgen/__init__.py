@@ -5,13 +5,13 @@ import importlib
 from beartype import beartype
 
 EXTRAS = {
-    "examples": ["perlin-numpy", "polars", "ipymlp"],
-    "cl": ["avalanche-lib", "continuum"],
+    "examples": ["perlin_numpy", "polars", "ipymlp"],
+    "cl": ["avalanche", "continuum"],
     "all": [
-        "perlin-numpy",
+        "perlin_numpy",
         "polars",
-        "ipymnp",
-        "avalanche-lib",
+        "ipympl",
+        "avalanche",
         "continuum",
     ],
 }

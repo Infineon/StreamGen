@@ -294,7 +294,9 @@ class SamplingTree(Sampler):
             strategy (SamplingStrategy | SamplingStrategyLit, optional): sampling strategy. Defaults to "stochastic".
 
         Returns:
-            Any: (possibly collated with `self.collate_func`) collection of samples
+            Any: collection of samples.
+                If `self.collate_func` is defined, it will be mapped to the tuple elements in each sample.
+                Otherwise this functions just returns a list of samples.
         """
         match strategy:
             case SamplingStrategy.STOCHASTIC:
@@ -306,7 +308,7 @@ class SamplingTree(Sampler):
                 paths = self.get_paths(prune=True)
                 samples = list(itertools.chain(*[path.collect(num_samples) for path in paths]))
 
-        return self.collate_func(samples) if self.collate_func else samples
+        return tuple(map(self.collate_func, zip(*samples, strict=True))) if self.collate_func else samples
 
     def update(self) -> None:
         """🆙 updates every parameter."""

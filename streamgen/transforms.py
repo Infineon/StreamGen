@@ -4,6 +4,113 @@ from collections.abc import Callable
 from functools import wraps
 from typing import Any
 
+import numpy as np
+
+
+class LabelEncoder:
+    """🏷️ index of class-name lookup transform.
+
+    Args:
+        classes (List[str]): list of labels/class-names. Order determines the indices.
+
+    Example:
+        >>> LabelEncoder(["A", "B", "C"])("C")
+        array(2, dtype=int64)
+    """
+
+    def __init__(self, classes: list[str]) -> None:  # noqa: D107
+        self.classes = {class_: idx for idx, class_ in enumerate(classes)}
+
+    def __call__(self, label: str) -> np.ndarray:
+        """Standard call method.
+
+        Args:
+            label (str): class name
+
+        Returns:
+            np.ndarray: index encoded target array
+        """
+        return np.array(self.classes[label], dtype=np.int64)
+
+
+class LabelDecoder:
+    """🏷️ label/class-name for index lookup transform.
+
+    Args:
+        classes (List[str]): list of labels/class-names. Order determines the indices.
+
+    Example:
+        >>> LabelDecoder(["A", "B", "C"])(1)
+        'B'
+    """
+
+    def __init__(self, classes: list[str]) -> None:  # noqa: D107
+        self.classes = classes
+
+    def __call__(self, idx: int) -> str:
+        """Standard call method.
+
+        Args:
+            idx (int): index of the target class
+
+        Returns:
+            str: class name
+        """
+        return self.classes[idx]
+
+
+class MultiLabelEncoder:
+    """🏷️ encoding of multiple labels/class-names.
+
+    Args:
+        classes (List[str]): list of labels/class-names. Order determines the indices.
+
+    Example:
+        >>> MultiLabelEncoder(["A", "B", "C"])(["A", "C"])
+        array([1., 0., 1.], dtype=float32)
+    """
+
+    def __init__(self, classes: list[str]) -> None:  # noqa: D107
+        self.classes = classes
+
+    def __call__(self, labels: list[str]) -> np.ndarray:
+        """Standard call method.
+
+        Args:
+            labels (list[str]): (potentially empty) list of class_ names.
+
+        Returns:
+            np.ndarray: encoded array of targets
+        """
+        return np.array([int(p in labels) for p in self.classes], dtype=np.float32)
+
+
+class MultiLabelDecoder:
+    """🏷️ decoding of labels/class-names.
+
+    Args:
+        classes (List[str]): list of labels/class-names. Order determines the indices.
+
+    Example:
+        >>> MultiLabelDecoder(["A", "B", "C"])([1.0, 0.0, 1.0])
+        array([1., 0., 1.], dtype=float32)
+    """
+
+    def __init__(self, classes: list[str]) -> None:  # noqa: D107
+        self.classes = classes
+
+    def __call__(self, labels: list[int | float]) -> list[str]:
+        """Standard call method.
+
+        Args:
+            labels (list[int | float]): encoded array of targets.
+                must have the same length as `self.classes`.
+
+        Returns:
+            list[str]: (potentially empty) list of class_ names
+        """
+        return [p for i, p in enumerate(self.classes) if bool(labels[i])]
+
 
 def noop(input: Any) -> Any:  # noqa: ANN401, A002
     """🤷 no-operation. Passes through the input.

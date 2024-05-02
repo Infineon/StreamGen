@@ -2,7 +2,7 @@
 
 from collections import deque
 from collections.abc import Callable
-from typing import Any, Protocol
+from typing import Any, Protocol, runtime_checkable
 
 import anytree
 import IPython
@@ -18,6 +18,7 @@ from streamgen.parameter.store import ParameterStore
 from streamgen.transforms import noop
 
 
+@runtime_checkable
 class Traverse(Protocol):
     """🏃 transform-node traversal protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
 
@@ -47,7 +48,7 @@ class TransformNode(anytree.NodeMixin):
     """
 
     @beartype()
-    def __init__(  # noqa: D107, PLR0913
+    def __init__(  # noqa: D107
         self,
         transform: Callable,
         params: Parameter | ParameterStore | None = None,

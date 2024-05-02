@@ -4,9 +4,10 @@ Samplers are objects that represent distributions.
 """
 
 from collections.abc import Iterator
-from typing import Any, Protocol
+from typing import Any, Protocol, runtime_checkable
 
 
+@runtime_checkable
 class Sampler(Iterator, Protocol):
     """📊 sampler protocol `() -> sample`.
 
@@ -30,4 +31,8 @@ class Sampler(Iterator, Protocol):
         Returns:
             Any: collection of samples
         """
+        ...
+
+    def update(self) -> None:
+        """🆙 updates every parameter."""
         ...

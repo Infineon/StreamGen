@@ -70,8 +70,8 @@ def test_sampling_tree_decision_node_with_probs():
             noise,
             TransformNode(skew, Parameter("skew", schedule=[0.0, 0.5]), argument_strategy="dict"),
             {
-                "background": noop,
-                "point pattern": add_random_points,
+                "background": [noop, "background"],
+                "point pattern": [add_random_points, "points"],
                 "probs": Parameter("probs", schedule=[[0.4, 0.6], [0.6, 0.4]]),
             },
         ],
@@ -86,34 +86,39 @@ def test_sampling_tree_decision_node_with_probs():
 ╰── ➡️ `skew(skew=0.0)`
     ╰── 🪴 `branching_node()`
         ├── ➡️ `noop()`
+        │   ╰── 🏷️ `background`
         ╰── ➡️ `add_random_points(num_points=1)`
+            ╰── 🏷️ `points`
 """
     )
 
     branching_node = tree.nodes[2]
     assert branching_node.probs.value == [0.4, 0.6]
 
-    sample = tree.sample()
+    sample, label = tree.sample()
 
     assert sample.shape == (16, 16)
+    assert label in ["background", "points"]
 
     tree.update()
 
-    sample = tree.sample()
+    sample, _ = tree.sample()
 
     assert sample.shape == (18, 18)
 
     # test iteration
     samples = []
-    for idx, sample in enumerate(tree):
+    for idx, (sample, _) in enumerate(tree):
         samples.append(sample)
         if idx == 2:
             break
     assert not np.array_equal(samples[0], samples[1]), "when iterating, the `SamplingTree` should generate different samples."
 
-    samples = tree.collect(64)
+    samples, labels = tree.collect(64)
     assert isinstance(samples, np.ndarray)
     assert samples.shape == (64, 18, 18)
+    assert isinstance(labels, np.ndarray)
+    assert labels.shape == (64,)
 
 
 def test_sampling_tree_decision_node_without_probs():

@@ -15,7 +15,7 @@ a 🐍 framework for generating labeled data streams
     <img alt="Static Badge" src="https://img.shields.io/badge/📦_version-0.0.1-blue">
     <a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>
     <img alt="Static Badge" src="https://img.shields.io/badge/tests-passing-green?logo=pytest">
-    <img alt="Static Badge" src="https://img.shields.io/badge/Coverage-85%25-yellow?logo=codecov">
+    <img alt="Static Badge" src="https://img.shields.io/badge/Coverage-89%25-yellow?logo=codecov">
 </p>
 
 <p align="center">
