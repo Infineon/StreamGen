@@ -2,7 +2,7 @@
     <img src="docs/artwork/crystal_cascades_by_th3dutchzombi3_dgmp8d5-pre.jpg"/></a>
 </p>
 
-<h1 style="text-align: center;">
+<h1 align="center">
     🌌 StreamGen
 </h1>
 
