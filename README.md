@@ -2,7 +2,9 @@
     <img src="docs/artwork/crystal_cascades_by_th3dutchzombi3_dgmp8d5-pre.jpg"/></a>
 </p>
 
-# 🌌 StreamGen
+<h1 style="text-align: center;">
+    🌌 StreamGen
+</h1>
 
 <p align="center">
 a 🐍 Python framework for generating labeled data streams
