@@ -1,14 +1,11 @@
 <p align="center">
-    <img src="docs/images/deep_dream_generated_stream_1.jpg" alt="Banner credits to deepdreamgenerator.com"/></a>
+    <img src="docs/artwork/crystal_cascades_by_th3dutchzombi3_dgmp8d5-pre.jpg"/></a>
 </p>
 
-<h1 style="text-align: center;">
-    <img src="docs/images/milky-way_animated.png" style="display:inline; height:1.0em">
-    StreamGen
-</h1>
+# 🌌 StreamGen
 
 <p align="center">
-a 🐍 framework for generating labeled data streams
+a 🐍 Python framework for generating labeled data streams
 </p>
 
 <p align="center">
@@ -246,6 +243,12 @@ Special thanks to Benjamin Steinwender, Marius Birkenbach and Nikolaus Neugebaue
 I want to thank Infineon and Kai for letting me work on and publish this project.
 
 Finally, I want to thank my university supervisors Thomas Pock and Marc Masana for their guidance.
+
+---
+
+## 🖼️ ©️ Banner Artwork Attribution
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png" /></a><br />The art in the banner of this README is licensed under a [Creative Commons Attribution-NonCommercial-No Derivatives Works 3.0 License](https://creativecommons.org/licenses/by-nc-nd/3.0/). It was made by [th3dutchzombi3](https://www.deviantart.com/th3dutchzombi3). Check out his beautiful artwork ❤️
 
 ---
 
