@@ -7,5 +7,6 @@ c.NbConvertApp.notebooks = [
     "examples/time series classification/03-drift-scenarios.ipynb",
     "examples/time series classification/04-multi-label-generation.ipynb",
     "examples/wafer_map_generation.ipynb",
+    "examples/wafer_map_scratch_generation.ipynb",
 ]
 c.NbConvertApp.output_files_dir = "{notebook_name}-files"

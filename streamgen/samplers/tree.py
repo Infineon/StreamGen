@@ -34,7 +34,7 @@ class BranchingNode(TransformNode):
 
     Args:
         branches (dict): dictionary, where each key:value pair represent label:branch.
-        probs (Parameter | None, optional): parameter containing the probabilities for selecting each branch.
+        probs (Parameter | list[float] None, optional): parameter containing the probabilities for selecting each branch.
             `probs.value` is passed to `numpy.random.choice` as parameter `p`, which is documented as:
             (1-D array_like, optional) the probabilities associated with each entry in a.
             If not given the sample assumes a uniform distribution over all entries. Defaults to None.
@@ -47,12 +47,16 @@ class BranchingNode(TransformNode):
     def __init__(  # noqa: D107
         self,
         branches: dict,
-        probs: Parameter | None = None,
+        probs: Parameter | list[float] | None = None,
         name: str | None = None,
         seed: int = 42,
         string_node: Callable[[str], TransformNode] = ClassLabelNode,
     ) -> None:
         self.name = name if name else "branching_node"
+
+        if isinstance(probs, list):
+            probs = Parameter(name="probs", value=probs)
+
         self.probs = probs
         self.rng = np.random.default_rng(seed)
 
