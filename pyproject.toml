@@ -7,7 +7,7 @@ packages = [{ include = "streamgen" }]
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/Infineon/StreamGen"
-#documentation = ""
+documentation = "https://reimagined-adventure-7kv2r5k.pages.github.io/"
 keywords = ["Python", "Data Generation", "Data Streams", "Continual Learning", "Data Structures", "Function Composition"]
 
 [tool.poe.tasks]
@@ -111,9 +111,10 @@ modules = ["streamgen"]
 extra_dirs = ["examples"]
 
 [tool.portray.mkdocs]
-repo_name = "Laurenz Farthofer (KAI DSC)/StreamGen"
+repo_name = "Infineon/StreamGen"
 repo_url = "https://github.com/Infineon/StreamGen"
 edit_uri = "https://github.com/Infineon/StreamGen/edit/main/docs"
+copyright = "Copyright (c) 2024 Infineon Technologies AG. All rights reserved."
 
 [tool.portray.mkdocs.theme]
 name = "material"
@@ -121,7 +122,7 @@ favicon = "docs/images/milky-way_animated.png"
 logo = "docs/images/milky-way_animated.png"
 
 [tool.portray.mkdocs.theme.icon]
-repo = "material/bitbucket"
+repo = "material/github"
 
 # Documentation Navigation
 [[tool.portray.mkdocs.nav]]
