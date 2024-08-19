@@ -1,0 +1,23 @@
+{
+  "@context": "https://raw.githubusercontent.com/codemeta/codemeta/master/codemeta.jsonld",
+  "@type": "Code",
+  "author": [
+    {
+      "@id": "https://orcid.org/0000-0003-1477-1327",
+      "@type": "Person",
+      "affiliation": "Infineon Technologies AG., Graz University of Technology",
+      "email": "laurenz@hey.com",
+      "name": "Farthofer Laurenz"
+    }
+  ],
+  "codeRepository": "https://github.com/Infineon/StreamGen",
+  "dateCreated": "2024-08-19",
+  "dateModified": "2024-08-19",
+  "datePublished": "2024-08-19",
+  "description": "A Python framework for generating streams of labeled data.",
+  "identifier": "",
+  "keywords": "python, data-structures, data-generation, function-composition, data-streams, continual-learning",
+  "license": "MIT",
+  "title": "StreamGen",
+  "version": "v1.0.2"
+}
