@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="docs/artwork/crystal_cascades_by_th3dutchzombi3_dgmp8d5-pre.jpg"/></a>
+    <img src="https://github.com/Infineon/StreamGen/blob/main/docs/artwork/crystal_cascades_by_th3dutchzombi3_dgmp8d5-pre.jpg?raw=true"/></a>
 </p>
 
 <h1 align="center">
@@ -7,12 +7,12 @@
 </h1>
 
 <p align="center">
-a 🐍 Python framework for generating labeled data streams
+a 🐍 Python framework for generating streams of labelled data
 </p>
 
 <p align="center">
-    <img alt="Static Badge" src="https://img.shields.io/badge/📦_version-0.0.1-blue">
-    <a href="https://www.repostatus.org/#wip"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public." /></a>
+    <img alt="Static Badge" src="https://img.shields.io/badge/📦_version-1.0.0-blue">
+    <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a>
     <img alt="Static Badge" src="https://img.shields.io/badge/tests-passing-green?logo=pytest">
     <img alt="Static Badge" src="https://img.shields.io/badge/Coverage-89%25-yellow?logo=codecov">
 </p>
@@ -27,16 +27,14 @@ a 🐍 Python framework for generating labeled data streams
     <a href="https://github.com/beartype/beartype"><img alt="Beartype" src="https://raw.githubusercontent.com/beartype/beartype-assets/main/badge/bear-ified.svg"></a>
 </p>
 
----
-
-## 📃 Table of Contents
-
-- [⚗️ Motivation](#⚗️-motivation)
-- [💡 Idea](#💡-idea)
-- [📦 Installation](#📦-installation)
-- [👀 Examples](#👀-examples)
-- [📖 Documentation](#📖-documentation)
-- [🙏 Acknowledgement](#🙏-acknowledgement)
+<p align="center">
+  <a href="https://github.com/Infineon/StreamGen?tab=readme-ov-file#%EF%B8%8F-motivation">⚗️ Motivation</a> •
+  <a href="https://github.com/Infineon/StreamGen?tab=readme-ov-file#-idea">💡 Idea</a> •
+  <a href="https://github.com/Infineon/StreamGen?tab=readme-ov-file#-installation">📦 Installation</a> •
+  <a href="https://github.com/Infineon/StreamGen?tab=readme-ov-file#-examples">👀 Examples</a> •
+  <a href="https://github.com/Infineon/StreamGen?tab=readme-ov-file#-documentation">📖 Documentation</a> •
+  <a href="https://github.com/Infineon/StreamGen?tab=readme-ov-file#-acknowledgement">🙏 Acknowledgement</a>
+</p>
 
 ---
 
@@ -65,18 +63,14 @@ A more economical alternative to collecting and labelling streams with desired p
 Some mentionable efforts in that direction include augmentation based dataset generation like [ImageNet-C](https://github.com/hendrycks/robustness)[^3] or simulation-based approaches like the [EndlessCLSim](https://arxiv.org/abs/2106.02585)[^4], where semantically labeled street-view images are generated (and labeled) by a game engine, that procedurally generates the city environment and simulates drift by modifying parameters (like the weather and illumination conditions) over time.
 
 <details>
-    <summary>ImageNet-C [3]</summary>
-
-    <img src="docs/images/imagenet-c.png">
-
+<summary>ImageNet-C [3]</summary>
+<img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/imagenet-c.png?raw=true">
 </details>
 
 <details>
-    <summary>EndlessCLSim [4]</summary>
-
-    <img src="docs/images/endless_cl_sim.png">
-    <img src="docs/images/endless_cl_sim_model.png">
-
+<summary>EndlessCLSim [4]</summary>
+<img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/endless_cl_sim.png?raw=true">
+<img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/endless_cl_sim_model.png?raw=true">
 </details>
 
 This project builds on these ideas and presents a general framework for generating streams of labeled samples.
@@ -158,19 +152,27 @@ One solution to this problem is the use of a [tree](https://en.wikipedia.org/wik
 - each path through the tree represents its own class-conditional distribution.
 - each branching point represents a categorical distribution which determines the path to take for a sample during the tree traversal.
 
-![sampling tree](docs/images/sampling_tree.png)
+<p align="center">
+    <img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/sampling_tree.png?raw=true"/></a>
+</p>
 
 ### ⚙️ Parameter Schedules
 
 If we want to model evolving distributions (streams), we either need to change the **parameters** of the stochastic transformations or the **topology** of the tree over time.
 
-![parameter schedule](docs/images/parameter_schedule.png)
+<p align="center">
+    <img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/parameter_schedule.png?raw=true"/></a>
+</p>
 
 Currently, `streamgen` does not support scheduling topological changes (like adding branches and nodes), but by **unrolling** these changes over time into one static tree, topological changes can be modelled purely with branch probabilities.
 
-![modelling data drift through changes in the topology of the tree](docs/images/data_drifts_by_topology_changes.png)
+<p align="center">
+    <img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/data_drifts_by_topology_changes.png?raw=true"/></a>
+</p>
 
-![unrolling topological changes into one static tree](docs/images/unrolled_static_tree.png)
+<p align="center">
+    <img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/unrolled_static_tree.png?raw=true"/></a>
+</p>
 
 > 💡 the directed acyclic graph above is not a tree anymore due to the *merging* of certain branches. Because these merges are very conveniently in certain scenarios, `streamgen` support the definition of such trees by copying the paths below the merge to every branch before the merge. For an example of this, have a look at `examples/time series classification/04-multi-label-generation.ipynb`.
 
@@ -180,15 +182,21 @@ The proposed tree structure can model all three common data drift scenarios by s
 
 #### 📉 Covariate shift
 
-![covariate shift](docs/images/covariate_shift.png)
+<p align="center">
+    <img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/covariate_shift.png?raw=true"/></a>
+</p>
 
 #### 📊 Prior probability shift
 
-![prior probability shift](docs/images/prior_probability_shift.png)
+<p align="center">
+    <img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/prior_probability_shift.png?raw=true"/></a>
+</p>
 
 #### 🏷️ Concept shift
 
-![concept shift](docs/images/concept_shift.png)
+<p align="center">
+    <img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/concept_shift.png?raw=true"/></a>
+</p>
 
 ## 📦 Installation
 
@@ -221,14 +229,17 @@ poetry install --sync --compile --all-extras
 There are example notebooks 🪐📓 showcasing and explaining `streamgen` features:
 
 + 📈 time series
-    + [🎲 sampling from static distributions](examples/time%20series%20classification/01-static-distributions.ipynb)
-    + [🌌 creating data streams](examples/time%20series%20classification/02-data-streams.ipynb)
-    + [📊 data drift scenarios](examples/time%20series%20classification/03-drift-scenarios.ipynb)
-+ 🖼️ analog wafer map streams based on the [wm811k dataset](https://www.kaggle.com/datasets/qingyi/wm811k-wafer-map)[^5] in [🌐 wafer map generation](examples/wafer_map_generation.ipynb)
+    + [🎲 sampling from static distributions](https://github.com/Infineon/StreamGen/blob/main/examples/time%20series%20classification/01-static-distributions.ipynb)
+    + [🌌 creating data streams](https://github.com/Infineon/StreamGen/blob/main/examples/time%20series%20classification/02-data-streams.ipynb)
+    + [📊 data drift scenarios](https://github.com/Infineon/StreamGen/blob/main/examples/time%20series%20classification/03-drift-scenarios.ipynb)
+    + [🏷️ multi-label generation](https://github.com/Infineon/StreamGen/blob/main/examples/time%20series%20classification/04-multi-label-generation.ipynb)
++ 🖼️ analog wafer map streams based on the [wm811k dataset](https://www.kaggle.com/datasets/qingyi/wm811k-wafer-map)[^5] in [🌐 wafer map generation](https://github.com/Infineon/StreamGen/blob/main/examples/wafer_map_generation.ipynb)
 
 Here is a preview of what we will create in the time series examples:
 
-![time series example tree](docs/videos/time_series_tree_svg.gif)
+<p align="center">
+    <img src="https://github.com/Infineon/StreamGen/blob/main/docs/videos/time_series_tree_svg.gif?raw=true"/></a>
+</p>
 
 ## 📖 Documentation
 
@@ -242,7 +253,7 @@ This work was funded by the Austrian Research Promotion Agency (FFG, Project No.
 
 Special thanks to Benjamin Steinwender, Marius Birkenbach and Nikolaus Neugebauer for their valuable feedback.
 
-I want to thank Infineon and Kai for letting me work on and publish this project.
+I want to thank Infineon and KAI for letting me work on and publish this project.
 
 Finally, I want to thank my university supervisors Thomas Pock and Marc Masana for their guidance.
 
