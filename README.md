@@ -11,7 +11,7 @@ a 🐍 Python framework for generating streams of labelled data
 </p>
 
 <p align="center">
-    <img alt="Static Badge" src="https://img.shields.io/badge/📦_version-1.0.1-blue">
+    <a href="https://pypi.org/project/streamgen/"><img alt="Static Badge" src="https://img.shields.io/badge/📦_version-1.0.1-blue"></a>
     <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a>
     <img alt="Static Badge" src="https://img.shields.io/badge/tests-passing-green?logo=pytest">
     <img alt="Static Badge" src="https://img.shields.io/badge/Coverage-88%25-yellow?logo=codecov">
@@ -200,7 +200,7 @@ The proposed tree structure can model all three common data drift scenarios by s
 
 ## 📦 Installation
 
-The basic version of the package (without special dependencies) can be installed with:
+The basic version of the package (without special dependencies) can be installed from [PyPi](https://pypi.org/project/streamgen/) with:
 ```sh
 pip install streamgen
 ```
@@ -243,7 +243,7 @@ Here is a preview of what we will create in the time series examples:
 
 ## 📖 Documentation
 
-The [documentation](https://reimagined-adventure-7kv2r5k.pages.github.io/) is hosted through github pages.
+The [documentation](https://infineon.github.io/StreamGen/) is hosted through github pages.
 
 To locally build and view it, call `poe docs_local`.
 

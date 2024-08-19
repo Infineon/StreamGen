@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "streamgen"
-version = "1.0.1"
+version = "1.0.2"
 description = "🌌 a framework for generating streams of labeled data."
 authors = ["Laurenz A. Farthofer <laurenz@hey.com>"]
 packages = [{ include = "streamgen" }]
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/Infineon/StreamGen"
-documentation = "https://reimagined-adventure-7kv2r5k.pages.github.io/"
+documentation = "https://infineon.github.io/StreamGen/"
 keywords = [
     "Python",
     "Data Generation",
