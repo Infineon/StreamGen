@@ -6177,6 +6177,25 @@ files = [
 ]
 
 [[package]]
+name = "towncrier"
+version = "24.7.1"
+description = "Building newsfiles for your project."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "towncrier-24.7.1-py3-none-any.whl", hash = "sha256:685e2a94335b5dc47537b4d3b449a25b18571ea85b07dcf6e8df31ba40f692dd"},
+    {file = "towncrier-24.7.1.tar.gz", hash = "sha256:57a057faedabcadf1a62f6f9bad726ae566c1f31a411338ddb8316993f583b3d"},
+]
+
+[package.dependencies]
+click = "*"
+jinja2 = "*"
+tomli = {version = "*", markers = "python_version < \"3.11\""}
+
+[package.extras]
+dev = ["furo (>=2024.05.06)", "nox", "packaging", "sphinx (>=5)", "twisted"]
+
+[[package]]
 name = "tqdm"
 version = "4.66.4"
 description = "Fast, Extensible Progress Meter"
@@ -6835,4 +6854,4 @@ examples = ["ipympl", "perlin-numpy", "polars", "scikit-image"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "8834a985465c29a83664bf2f00d7846e9d980f97049f25993ff538343c40a11a"
+content-hash = "534ddd3cf904396d025207aadc15e1c6f785ec6a0e96dd39ca817fb41f729059"
