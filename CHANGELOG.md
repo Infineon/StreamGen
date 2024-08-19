@@ -8,7 +8,7 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/) to build the 
 
 <!-- towncrier release notes start -->
 
-# ## [1.0.0](https://github.com/Infineon/StreamGen/tree/1.0.0) - 2024-08-19
+## [1.0.0](https://github.com/Infineon/StreamGen/tree/1.0.0) - 2024-08-19
 
 ### 📦 Misc
 
