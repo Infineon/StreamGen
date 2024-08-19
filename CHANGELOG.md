@@ -8,6 +8,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/) to build the 
 
 <!-- towncrier release notes start -->
 
+# ## [1.0.1](https://github.com/Infineon/StreamGen/tree/1.0.1) - 2024-08-19
+
+### ➖ Removed
+
+- 🔥 temporarily removed the avalanche-lib stream construction helper functions due to an import problem in avalanche. ([#2](https://github.com/Infineon/StreamGen/issues/2))
+
+
 ## [1.0.0](https://github.com/Infineon/StreamGen/tree/1.0.0) - 2024-08-19
 
 ### 📦 Misc
