@@ -45,16 +45,17 @@ rich = "^13.7.1" # MIT license
 avalanche-lib = { version = "^0.5.0", optional = true } # MIT license
 continuum = { version = "^1.2.7", optional = true } # MIT license
 # 👾 Example/Application Dependencies
-perlin-numpy = { git = "https://github.com/pvigier/perlin-numpy", optional = true} # MIT license
 polars = { version = "^0.20.13", optional = true } # MIT license
 ipympl = { version = "^0.9.4", optional = true }
 scikit-image = { version = "^0.24", optional = true }
 
 [tool.poetry.extras]
-examples = ["perlin-numpy", "polars", "ipympl", "scikit-image"]
+examples = [
+    "polars",
+    "ipympl",
+    "scikit-image"]
 cl = ["avalanche-lib", "continuum"]
 all = [
-    "perlin-numpy",
     "polars",
     "ipympl",
     "scikit-image",
@@ -77,7 +78,7 @@ qpsolvers = {extras = ["open-source-solvers"], version = "^4.3.2"} # explicit in
 towncrier = "^24.7.1"
 
 [tool.ruff]
-exclude = [".git", ".mypy_cache", ".ruff_cache", ".tox", ".venv", "__pypackages__", "dist", "venv"]
+exclude = [".git", ".mypy_cache", ".ruff_cache", ".tox", ".venv", "__pypackages__", "dist", "venv", "examples/perlin_numpy.py"]
 line-length = 140
 target-version = "py311"
 
