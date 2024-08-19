@@ -871,12 +871,8 @@ Finally, we will add <code>ClassLabelNode</code>s, which will allow us to sample
 </ol>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">Video</span>
-<span class="kn">from</span> <span class="nn">IPython.utils</span> <span class="kn">import</span> <span class="n">io</span>
-<span class="kn">from</span> <span class="nn">matplotlib.animation</span> <span class="kn">import</span> <span class="n">FuncAnimation</span>
 <span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span>
 
 <span class="kn">from</span> <span class="nn">streamgen</span> <span class="kn">import</span> <span class="n">visualizations</span>
@@ -885,7 +881,7 @@ Finally, we will add <code>ClassLabelNode</code>s, which will allow us to sample
 <span class="kn">from</span> <span class="nn">streamgen.samplers.tree</span> <span class="kn">import</span> <span class="n">SamplingTree</span>
 <span class="kn">from</span> <span class="nn">streamgen.transforms</span> <span class="kn">import</span> <span class="n">noop</span>
 
-<span class="n">SEED</span><span class="o">=</span><span class="mi">42</span>
+<span class="n">SEED</span> <span class="o">=</span> <span class="mi">42</span>
 <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
@@ -918,16 +914,18 @@ This dataset consists of three classes with the following parameters:</p>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">background</span><span class="p">(</span><span class="n">signal_</span><span class="p">,</span> <span class="n">signal_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">strength</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103, ANN001, ARG001</span>
     <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">strength</span><span class="p">,</span> <span class="n">signal_length</span><span class="p">)</span>
 
+
 <span class="k">def</span> <span class="nf">ramp</span><span class="p">(</span><span class="n">signal</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103</span>
     <span class="n">ramp_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
-    <span class="n">ramp_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span><span class="o">-</span><span class="n">length</span><span class="p">))</span>
-    <span class="n">ramp_signal</span><span class="p">[</span><span class="n">ramp_start</span><span class="p">:</span><span class="n">ramp_start</span><span class="o">+</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+    <span class="n">ramp_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span><span class="p">))</span>
+    <span class="n">ramp_signal</span><span class="p">[</span><span class="n">ramp_start</span> <span class="p">:</span> <span class="n">ramp_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">signal</span> <span class="o">+</span> <span class="n">ramp_signal</span>
+
 
 <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">signal</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103</span>
     <span class="n">step_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
-    <span class="n">step_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span><span class="o">-</span><span class="n">length</span><span class="p">))</span>
-    <span class="n">step_signal</span><span class="p">[</span><span class="n">step_start</span><span class="p">:</span><span class="n">step_start</span><span class="o">+</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">step_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span><span class="p">))</span>
+    <span class="n">step_signal</span><span class="p">[</span><span class="n">step_start</span> <span class="p">:</span> <span class="n">step_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
     <span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">kernel_size</span>
     <span class="n">step_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">step_signal</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;same&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">signal</span> <span class="o">+</span> <span class="n">step_signal</span>
@@ -941,7 +939,7 @@ This dataset consists of three classes with the following parameters:</p>
 <span class="n">noise_strength</span> <span class="o">=</span> <span class="mf">0.1</span>
 <span class="n">height</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">length</span> <span class="o">=</span> <span class="mi">128</span>
-<span class="n">kernel_size</span><span class="o">=</span><span class="mi">10</span>
+<span class="n">kernel_size</span> <span class="o">=</span> <span class="mi">10</span>
 
 <span class="c1"># 🎲 sample signals</span>
 <span class="n">background_sample</span> <span class="o">=</span> <span class="n">background</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">signal_length</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">noise_strength</span><span class="p">)</span>
@@ -1000,21 +998,23 @@ For convenient construction, we also provide a shorthand description following t
 <p>👉 more details about parameter handling is explained in the next notebook on <a href="../02-data-streams.ipynb">🌌 data streams</a>.</p>
 </blockquote>
 <div class="codehilite"><pre><span></span><code><span class="c1"># ⚙️ scoped parameter</span>
-<span class="n">params</span> <span class="o">=</span> <span class="n">ParameterStore</span><span class="p">({</span>
-    <span class="s2">&quot;background&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;signal_length&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">256</span> <span class="p">},</span>
-        <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mf">0.0</span> <span class="p">},</span>
-        <span class="s2">&quot;strength&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mf">0.1</span> <span class="p">},</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;ramp&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mf">1.0</span> <span class="p">},</span>
-        <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">128</span> <span class="p">},</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;step&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">128</span> <span class="p">},</span>
-        <span class="s2">&quot;kernel_size&quot;</span><span class="p">:</span> <span class="p">{</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">10</span> <span class="p">},</span>
-    <span class="p">},</span>
-<span class="p">})</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">ParameterStore</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;background&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;signal_length&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">256</span><span class="p">},</span>
+            <span class="s2">&quot;offset&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
+            <span class="s2">&quot;strength&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;ramp&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+            <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;step&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;length&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">},</span>
+            <span class="s2">&quot;kernel_size&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+<span class="p">)</span>
 
 <span class="c1"># 🎲🌳 tree of transformations</span>
 <span class="n">tree</span> <span class="o">=</span> <span class="n">SamplingTree</span><span class="p">(</span>
@@ -1083,11 +1083,13 @@ For convenient construction, we also provide a shorthand description following t
 
 <div class="codehilite"><pre><span></span><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">notebook</span>
 
+
 <span class="k">def</span> <span class="nf">plotting_func</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">);</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ax</span>
 
-<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span><span class="o">/</span><span class="s2">&quot;tree&quot;</span><span class="p">,</span> <span class="n">plotting_func</span><span class="p">)</span>
+
+<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;tree&quot;</span><span class="p">,</span> <span class="n">plotting_func</span><span class="p">)</span>
 </code></pre></div>
 
 <p><img alt="svg" src="../01-static-distributions-files/01-static-distributions_10_0.svg" /></p>
@@ -1096,7 +1098,7 @@ After collecting some samples, the visualization will include sample plots:</p>
 <div class="codehilite"><pre><span></span><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">notebook</span>
 <span class="n">samples</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 
-<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span><span class="o">/</span><span class="s2">&quot;tree_with_samples&quot;</span><span class="p">,</span> <span class="n">plotting_func</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;tree_with_samples&quot;</span><span class="p">,</span> <span class="n">plotting_func</span><span class="p">)</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code>Output()
@@ -1309,42 +1311,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_imgb8b7b7ff711a46208a70dee37d4bd595">
+  <img id="_anim_img807bc8ac4879491291e7bcf1ff55ac88">
   <div class="anim-controls">
-    <input id="_anim_sliderb8b7b7ff711a46208a70dee37d4bd595" type="range" class="anim-slider"
+    <input id="_anim_slider807bc8ac4879491291e7bcf1ff55ac88" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="animb8b7b7ff711a46208a70dee37d4bd595.set_frame(parseInt(this.value));">
+           oninput="anim807bc8ac4879491291e7bcf1ff55ac88.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="animb8b7b7ff711a46208a70dee37d4bd595.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim807bc8ac4879491291e7bcf1ff55ac88.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="animb8b7b7ff711a46208a70dee37d4bd595.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim807bc8ac4879491291e7bcf1ff55ac88.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="animb8b7b7ff711a46208a70dee37d4bd595.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim807bc8ac4879491291e7bcf1ff55ac88.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="animb8b7b7ff711a46208a70dee37d4bd595.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim807bc8ac4879491291e7bcf1ff55ac88.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="animb8b7b7ff711a46208a70dee37d4bd595.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim807bc8ac4879491291e7bcf1ff55ac88.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="animb8b7b7ff711a46208a70dee37d4bd595.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim807bc8ac4879491291e7bcf1ff55ac88.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="animb8b7b7ff711a46208a70dee37d4bd595.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim807bc8ac4879491291e7bcf1ff55ac88.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="animb8b7b7ff711a46208a70dee37d4bd595.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim807bc8ac4879491291e7bcf1ff55ac88.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="animb8b7b7ff711a46208a70dee37d4bd595.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim807bc8ac4879491291e7bcf1ff55ac88.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectb8b7b7ff711a46208a70dee37d4bd595"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select807bc8ac4879491291e7bcf1ff55ac88"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_b8b7b7ff711a46208a70dee37d4bd595"
+      <input type="radio" name="state" value="once" id="_anim_radio1_807bc8ac4879491291e7bcf1ff55ac88"
              >
-      <label for="_anim_radio1_b8b7b7ff711a46208a70dee37d4bd595">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_b8b7b7ff711a46208a70dee37d4bd595"
+      <label for="_anim_radio1_807bc8ac4879491291e7bcf1ff55ac88">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_807bc8ac4879491291e7bcf1ff55ac88"
              checked>
-      <label for="_anim_radio2_b8b7b7ff711a46208a70dee37d4bd595">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_b8b7b7ff711a46208a70dee37d4bd595"
+      <label for="_anim_radio2_807bc8ac4879491291e7bcf1ff55ac88">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_807bc8ac4879491291e7bcf1ff55ac88"
              >
-      <label for="_anim_radio3_b8b7b7ff711a46208a70dee37d4bd595">Reflect</label>
+      <label for="_anim_radio3_807bc8ac4879491291e7bcf1ff55ac88">Reflect</label>
     </form>
   </div>
 </div>
@@ -1353,13 +1355,13 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_imgb8b7b7ff711a46208a70dee37d4bd595";
-    var slider_id = "_anim_sliderb8b7b7ff711a46208a70dee37d4bd595";
-    var loop_select_id = "_anim_loop_selectb8b7b7ff711a46208a70dee37d4bd595";
+    var img_id = "_anim_img807bc8ac4879491291e7bcf1ff55ac88";
+    var slider_id = "_anim_slider807bc8ac4879491291e7bcf1ff55ac88";
+    var loop_select_id = "_anim_loop_select807bc8ac4879491291e7bcf1ff55ac88";
     var frames = new Array(8);
 
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
-bGliIHZlcnNpb24zLjguNCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8fJSN1AAAACXBIWXMAAA9h\
+bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9h\
 AAAPYQGoP6dpAACsa0lEQVR4nO39eZxkVX3/j7/uUlvv3TPTszMMAzPDsA3LAKMDIRODezSGbxIj\
 RE1AY9SJImj8SdxIjIoCgkHEgEaW+HEhSHQSERW3CMwMyD4DzMAwa/f0vtV67/39ce85de6tW9XV\
 3VVd1V2v5+PBg56qW7dunaq691Wv96Y5juOAEEIIIYQ0DHqtD4AQQgghhMwuFICEEEIIIQ0GBSAh\
@@ -2137,7 +2139,7 @@ GBSAhBBCCCENBgUgIYQQQkiDQQFICCGEENJgUAASQgghhDQYFICEEEIIIQ0GBSAhhBBCSINBAUgI\
 IYQQ0mBQABJCCCGENBgUgIQQQgghDQYFICGEEEJIg/H/B4BoZ65scrItAAAAAElFTkSuQmCC\
 "
   frames[1] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
-bGliIHZlcnNpb24zLjguNCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8fJSN1AAAACXBIWXMAAA9h\
+bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9h\
 AAAPYQGoP6dpAADy5klEQVR4nOz9ebwlV1kujj9VtYczd5/upNOdhIQQICFASMgAkQQCKHovgl5E\
 BQ2KPwN8EYlwMQzeXK8KDlciaAjgFYMgglG5XCKDMiozmQhjSAiZpx7SffrMZw9V9fujaq31rrfW\
 qmEP5+xzzno+n/70PnvXsGpV1Vrvet73fV4vjuMYDg4ODg4ODg4O2wb+RjfAwcHBwcHBwcFhfeEM\
@@ -3232,7 +3234,7 @@ AACAx5AAAgAAeAwJIAAAgMeQAAIAAHgMCSAAAIDHkAACAAB4DAkgAACAx5AAAgAAeAwJIAAAgMeQ\
 AAIAAHjM/wMOqvXyQi0pTQAAAABJRU5ErkJggg==\
 "
   frames[2] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
-bGliIHZlcnNpb24zLjguNCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8fJSN1AAAACXBIWXMAAA9h\
+bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9h\
 AAAPYQGoP6dpAACet0lEQVR4nO29eZwcdZ3//6q+e46eI8nMJJmEJJCDcIUjhGhAjC4/1ntd9kDD\
 V90FxFWzXkH5iojisipHFPkiorCrHIsXHouoiCteKxACypmLkGRyzJU5emb67q7fH1WfT3+qunqm\
 Z6bP6dfz8eDBpLu6+1Ofrq561et9fDRd13UQQgghhJC6wVXpARBCCCGEkPJCAUgIIYQQUmdQABJC\
@@ -3949,7 +3951,7 @@ hBBC6gwKQEIIIYSQOoMCkBBCCCGkzqAAJIQQQgipMygACSGEEELqDApAQgghhJA6gwKQEEIIIaTO\
 +P8BvtCOyohGsWwAAAAASUVORK5CYII=\
 "
   frames[3] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
-bGliIHZlcnNpb24zLjguNCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8fJSN1AAAACXBIWXMAAA9h\
+bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9h\
 AAAPYQGoP6dpAACnA0lEQVR4nO29eZhjVZ3//765WStVqa33je4Gmpa1WRpobRAZhh+OM+o4fOc7\
 KIw6A6ijtoKiMjIMivpV2RR8EHHAGRHEURlkEBVxQ1GgWaTZeoHeu2vrriVV2ZN7f3/ce27OvbnZ\
 qpJUUnm/noeHriw3JyfJue/7/ixH0XVdByGEEEIIaRs8sz0AQgghhBDSWCgACSGEEELaDApAQggh\
@@ -4703,7 +4705,7 @@ ENJmUAASQgghhLQZFICEEEIIIW0GBSAhhBBCSJtBAUgIIYQQ0mZQABJCCCGEtBkUgIQQQgghbQYF\
 ICGEEEJIm0EBSAghhBDSZvz/2wglc6KhJhoAAAAASUVORK5CYII=\
 "
   frames[4] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
-bGliIHZlcnNpb24zLjguNCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8fJSN1AAAACXBIWXMAAA9h\
+bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9h\
 AAAPYQGoP6dpAACkeUlEQVR4nO29eZwcdZ3//6qqPqdneo5kJgnkJOQgCIQjQBQQkUVXZXWV7/5k\
 hVV3wWuVFQWU77KuyK7rgaDgIuKCrhz69eu9iF8QL0QFwqEcIQkhEHLOTDJHz/Rdx++Pqk/1p6qr\
 e7pnpqdnel7PxyOPzHRXdVd/prv6Va/3pViWZYEQQgghhMwb1GYfACGEEEIImVkoAAkhhBBC5hkU\
@@ -5446,7 +5448,7 @@ CCGEzDMoAAkhhBBC5hkUgIQQQggh8wwKQEIIIYSQeQYFICGEEELIPIMCkBBCCCFknvH/A+clLrD/\
 o3IFAAAAAElFTkSuQmCC\
 "
   frames[5] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
-bGliIHZlcnNpb24zLjguNCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8fJSN1AAAACXBIWXMAAA9h\
+bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9h\
 AAAPYQGoP6dpAACe60lEQVR4nO2deZwkdX33P13Vd8/0XDszewLLArvcy7HAKhBEgnc0hhxEiJqA\
 R6JEkEVNkAfF+GhEQDCIGNB48BijxhMVUREvYLkR2IVlYdlzjp2jZ3r6quP5o+pX9avq6p6zZ6am\
 P+/Xa187011dXV3T/etPfb5XxDRNE4QQQgghpGlQFvoACCGEEELI/EIBSAghhBDSZFAAEkIIIYQ0\
@@ -6164,7 +6166,7 @@ DApAQgghhJAmgwKQEEIIIaTJoAAkhBBCCGkyKAAJIYQQQpoMCkBCCCGEkCaDApAQQgghpMn4/4kf\
 ABTtjcI0AAAAAElFTkSuQmCC\
 "
   frames[6] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
-bGliIHZlcnNpb24zLjguNCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8fJSN1AAAACXBIWXMAAA9h\
+bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9h\
 AAAPYQGoP6dpAACbgklEQVR4nO29eZwjdZ3//0oqd7rT10x3z80wMDMMxwzHAKOAOCpfFXVdl+/u\
 osOuuIC46qygoHxlXQT1p3KMgIuAgq4IoiIqi6AIijcwDMhwzTAXw1x9TR/pTuesqt8fVZ9KVaWS\
 TtJJJ+m8no8HD3qSSuVTnyRVr3q9j49LVVUVhBBCCCGkaXDXegCEEEIIIWRmoQAkhBBCCGkyKAAJ\
@@ -6866,7 +6868,7 @@ CCGkyaAAJIQQQghpMigACSGEEEKaDApAQgghhJAmgwKQEEIIIaTJoAAkhBBCCGkyKAAJIYQQQpoM\
 CkBCCCGEkCaDApAQQgghpMmgACSEEEIIaTIoAAkhhBBCmoz/H0GLu5s3K3iOAAAAAElFTkSuQmCC\
 "
   frames[7] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90\
-bGliIHZlcnNpb24zLjguNCwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8fJSN1AAAACXBIWXMAAA9h\
+bGliIHZlcnNpb24zLjkuMiwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy8hTgPZAAAACXBIWXMAAA9h\
 AAAPYQGoP6dpAACloUlEQVR4nO29eZwcdZ3//6qjz5npOZJM7pAQICFc4UggGhAjX7yPVfZwhZ+y\
 gtdqVhFQVpZFcdcDBAUXERfWlWPZXUXXVRRExWsFwo1AEiCQOzNJ5uiZnj6r6vdH1af6U9XVxxw9\
 0z39ej4ePEiqq6s//Un3p1/1eh8fxbIsC4QQQgghpGVQZ3oAhBBCCCFkeqEAJIQQQghpMSgACSGE\
@@ -7618,7 +7620,7 @@ IYS0GP8/gGxCwgQsUdcAAAAASUVORK5CYII=\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        animb8b7b7ff711a46208a70dee37d4bd595 = new Animation(frames, img_id, slider_id, 200.0,
+        anim807bc8ac4879491291e7bcf1ff55ac88 = new Animation(frames, img_id, slider_id, 200.0,
                                  loop_select_id);
     }, 0);
   })()

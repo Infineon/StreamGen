@@ -852,7 +852,7 @@
 <span class="kn">from</span> <span class="nn">streamgen.samplers.tree</span> <span class="kn">import</span> <span class="n">SamplingTree</span>
 <span class="kn">from</span> <span class="nn">streamgen.transforms</span> <span class="kn">import</span> <span class="n">noop</span><span class="p">,</span> <span class="n">operate_on_index</span>
 
-<span class="n">SEED</span><span class="o">=</span><span class="mi">42</span>
+<span class="n">SEED</span> <span class="o">=</span> <span class="mi">42</span>
 <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
@@ -888,22 +888,25 @@
 <p>Using this decorator, we can re-use the time-series transformations from the first notebook:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># ➡️ transforms and generators</span>
 
+
 <span class="nd">@operate_on_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">background</span><span class="p">(</span><span class="n">signal_</span><span class="p">,</span> <span class="n">signal_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">strength</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103, ANN001, ARG001</span>
     <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">strength</span><span class="p">,</span> <span class="n">signal_length</span><span class="p">)</span>
 
+
 <span class="nd">@operate_on_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">ramp</span><span class="p">(</span><span class="n">signal</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103</span>
     <span class="n">ramp_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
-    <span class="n">ramp_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span><span class="o">-</span><span class="n">length</span><span class="p">))</span>
-    <span class="n">ramp_signal</span><span class="p">[</span><span class="n">ramp_start</span><span class="p">:</span><span class="n">ramp_start</span><span class="o">+</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+    <span class="n">ramp_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span><span class="p">))</span>
+    <span class="n">ramp_signal</span><span class="p">[</span><span class="n">ramp_start</span> <span class="p">:</span> <span class="n">ramp_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">signal</span> <span class="o">+</span> <span class="n">ramp_signal</span>
+
 
 <span class="nd">@operate_on_index</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">signal</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103</span>
     <span class="n">step_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
-    <span class="n">step_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span><span class="o">-</span><span class="n">length</span><span class="p">))</span>
-    <span class="n">step_signal</span><span class="p">[</span><span class="n">step_start</span><span class="p">:</span><span class="n">step_start</span><span class="o">+</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">step_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span><span class="p">))</span>
+    <span class="n">step_signal</span><span class="p">[</span><span class="n">step_start</span> <span class="p">:</span> <span class="n">step_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
     <span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">kernel_size</span>
     <span class="n">step_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">step_signal</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;same&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">signal</span> <span class="o">+</span> <span class="n">step_signal</span>
@@ -921,7 +924,7 @@
 <div class="codehilite"><pre><span></span><code><span class="n">MultiLabelNode</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">ClassLabelNode</span><span class="p">,</span> <span class="n">label_func</span><span class="o">=</span><span class="k">lambda</span> <span class="nb">input</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">input</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">label</span><span class="p">]))</span>  <span class="c1"># noqa: A002</span>
 
 <span class="n">transform_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;background.signal_length&quot;</span><span class="p">:</span>  <span class="mi">512</span><span class="p">,</span>
+    <span class="s2">&quot;background.signal_length&quot;</span><span class="p">:</span> <span class="mi">512</span><span class="p">,</span>
     <span class="s2">&quot;background.offset&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
     <span class="s2">&quot;background.strength&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span>
     <span class="s2">&quot;ramp.height&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
@@ -942,7 +945,8 @@
             <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span>
         <span class="p">],</span>
-    <span class="p">}</span> <span class="o">|</span> <span class="n">transform_config</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="o">|</span> <span class="n">transform_config</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="c1"># 🎲🌳 tree of transformations</span>
@@ -959,7 +963,10 @@
                 <span class="s2">&quot;step&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">step</span><span class="p">,</span> <span class="s2">&quot;step&quot;</span><span class="p">],</span>
             <span class="p">},</span>
             <span class="s2">&quot;multi label branch&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="n">ramp</span><span class="p">,</span> <span class="s2">&quot;ramp&quot;</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="s2">&quot;step&quot;</span><span class="p">,</span>
+                <span class="n">ramp</span><span class="p">,</span>
+                <span class="s2">&quot;ramp&quot;</span><span class="p">,</span>
+                <span class="n">step</span><span class="p">,</span>
+                <span class="s2">&quot;step&quot;</span><span class="p">,</span>
             <span class="p">],</span>
         <span class="p">},</span>
     <span class="p">],</span>
@@ -967,7 +974,7 @@
     <span class="n">string_node</span><span class="o">=</span><span class="n">MultiLabelNode</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span><span class="o">/</span><span class="s2">&quot;multi_label_tree_1&quot;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;multi_label_tree_1&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 <p><img alt="svg" src="../04-multi-label-generation-files/04-multi-label-generation_5_0.svg" /></p>
@@ -1002,7 +1009,8 @@
             <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">],</span>
             <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">],</span>
         <span class="p">],</span>
-    <span class="p">}</span> <span class="o">|</span> <span class="n">transform_config</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="o">|</span> <span class="n">transform_config</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="c1"># 🎲🌳 tree of transformations</span>
@@ -1025,7 +1033,7 @@
     <span class="n">string_node</span><span class="o">=</span><span class="n">MultiLabelNode</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span><span class="o">/</span><span class="s2">&quot;multi_label_tree_2&quot;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;multi_label_tree_2&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 <p><img alt="svg" src="../04-multi-label-generation-files/04-multi-label-generation_8_0.svg" /></p>
@@ -1043,30 +1051,32 @@
 <h2 id="writing-more-expressive-functions">🎲 Writing more expressive functions</h2>
 <p>Another viable option is the inclusion of the stochastic application of the transform into the function definitions. This can drastically simplify the tree topology. In our simply example, we do not need any branches at all, falling back to a sequential composition of transformations (which can still be expressed by a <code>SamplingTree</code>).</p>
 <p>Since the transforms themselves take care of adding the labels, we neither need the function decorators nor the special labelling nodes from earlier:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">maybe_ramp</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p_apply</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103, A002</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">maybe_ramp</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p_apply</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103, A002</span>
     <span class="n">signal</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">input</span>
 
     <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p_apply</span><span class="p">:</span>
         <span class="n">ramp_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
-        <span class="n">ramp_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span><span class="o">-</span><span class="n">length</span><span class="p">))</span>
-        <span class="n">ramp_signal</span><span class="p">[</span><span class="n">ramp_start</span><span class="p">:</span><span class="n">ramp_start</span><span class="o">+</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+        <span class="n">ramp_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span><span class="p">))</span>
+        <span class="n">ramp_signal</span><span class="p">[</span><span class="n">ramp_start</span> <span class="p">:</span> <span class="n">ramp_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
         <span class="n">signal</span> <span class="o">+=</span> <span class="n">ramp_signal</span>
         <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;ramp&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">signal</span><span class="p">,</span> <span class="n">labels</span>
 
-<span class="k">def</span> <span class="nf">maybe_step</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p_apply</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103, A002</span>
+
+<span class="k">def</span> <span class="nf">maybe_step</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">p_apply</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103, A002</span>
     <span class="n">signal</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="nb">input</span>
 
     <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p_apply</span><span class="p">:</span>
         <span class="n">step_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
-        <span class="n">step_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span><span class="o">-</span><span class="n">length</span><span class="p">))</span>
-        <span class="n">step_signal</span><span class="p">[</span><span class="n">step_start</span><span class="p">:</span><span class="n">step_start</span><span class="o">+</span><span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">step_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span><span class="p">))</span>
+        <span class="n">step_signal</span><span class="p">[</span><span class="n">step_start</span> <span class="p">:</span> <span class="n">step_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
         <span class="n">kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">kernel_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">kernel_size</span>
         <span class="n">signal</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">convolve</span><span class="p">(</span><span class="n">step_signal</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;same&quot;</span><span class="p">)</span>
         <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;step&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">signal</span><span class="p">,</span> <span class="n">labels</span>
+
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="p">{</span>
@@ -1076,7 +1086,8 @@
         <span class="s2">&quot;maybe_step.length&quot;</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
         <span class="s2">&quot;maybe_step.kernel_size&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
         <span class="s2">&quot;maybe_step.p_apply&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
-    <span class="p">}</span> <span class="o">|</span> <span class="n">transform_config</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="o">|</span> <span class="n">transform_config</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="c1"># 🎲🌳 tree of transformations</span>
@@ -1090,7 +1101,7 @@
     <span class="n">df</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span><span class="o">/</span><span class="s2">&quot;multi_label_tree_3&quot;</span><span class="p">)</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;multi_label_tree_3&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 <p><img alt="svg" src="../04-multi-label-generation-files/04-multi-label-generation_11_0.svg" /></p>
