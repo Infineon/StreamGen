@@ -1,0 +1,31 @@
+digraph tree {
+    "0x0" [label="➡️ <lambda>" tooltip="None"];
+    "0x1" [label="➡️ background" tooltip="{
+    'background.offset': 0.0,
+    'background.signal_length': 512,
+    'background.strength': 0.1
+}"];
+    "0x2" [label="🪴 cardinality" shape=diamond tooltip="probs=[0.5, 0.3, 0.2]"];
+    "0x3" [label="➡️ noop" tooltip="None"];
+    "0x4" [label="🪴 single label branch" shape=diamond tooltip="probs=[0.8, 0.2]"];
+    "0x5" [label="➡️ ramp" tooltip="{'ramp.height': 1.0, 'ramp.length': 128}"];
+    "0x6" [label="🏷️ label=ramp" shape=cds];
+    "0x7" [label="➡️ step" tooltip="{'step.kernel_size': 1, 'step.length': 64}"];
+    "0x8" [label="🏷️ label=step" shape=cds];
+    "0x9" [label="➡️ ramp" tooltip="{'ramp.height': 1.0, 'ramp.length': 128}"];
+    "0xa" [label="🏷️ label=ramp" shape=cds];
+    "0xb" [label="➡️ step" tooltip="{'step.kernel_size': 1, 'step.length': 64}"];
+    "0xc" [label="🏷️ label=step" shape=cds];
+    "0x0" -> "0x1";
+    "0x1" -> "0x2";
+    "0x2" -> "0x3";
+    "0x2" -> "0x4";
+    "0x2" -> "0x9";
+    "0x4" -> "0x5";
+    "0x4" -> "0x7";
+    "0x5" -> "0x6";
+    "0x7" -> "0x8";
+    "0x9" -> "0xa";
+    "0xa" -> "0xb";
+    "0xb" -> "0xc";
+}

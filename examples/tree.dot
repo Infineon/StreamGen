@@ -1,0 +1,82 @@
+digraph tree {
+    "0x0" [label="➡️ zeros" tooltip="{'zeros.shape': (53, 58)}"];
+    "0x1" [label="➡️ set_random_defects" tooltip="{'set_random_defects.percentage_of_defects': 0.05}"];
+    "0x2" [label="🪴 branching_node" shape=diamond tooltip="probs=[0.2, 0.4, 0.2, 0.1, 0.1]"];
+    "0x3" [label="🏷️ label=background" shape=cds];
+    "0x4" [label="➡️ apply_mask" tooltip="{
+    'apply_mask.mask': array([[ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       ...,
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True]])
+}"];
+    "0x5" [label="➡️ set_random_line" tooltip="None"];
+    "0x6" [label="🏷️ label=scratch" shape=cds];
+    "0x7" [label="➡️ apply_mask" tooltip="{
+    'apply_mask.mask': array([[ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       ...,
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True]])
+}"];
+    "0x8" [label="➡️ set_deterministic_scratch" tooltip="{
+    'set_deterministic_scratch.p0': (10, 20),
+    'set_deterministic_scratch.p1': (20, 40)
+}"];
+    "0x9" [label="🏷️ label=deterministic scratch" shape=cds];
+    "0xa" [label="➡️ apply_mask" tooltip="{
+    'apply_mask.mask': array([[ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       ...,
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True]])
+}"];
+    "0xb" [label="➡️ set_random_curve" tooltip="{'set_random_curve.weight': 1.0}"];
+    "0xc" [label="🏷️ label=curved scratch" shape=cds];
+    "0xd" [label="➡️ apply_mask" tooltip="{
+    'apply_mask.mask': array([[ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       ...,
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True]])
+}"];
+    "0xe" [label="➡️ set_random_curve_in_region" tooltip="{
+    'set_random_curve_in_region.p0': array([17, 19], dtype=int32),
+    'set_random_curve_in_region.p1': array([34, 38]),
+    'set_random_curve_in_region.weight': 2.0
+}"];
+    "0xf" [label="🏷️ label=local curved scratch" shape=cds];
+    "0x10" [label="➡️ apply_mask" tooltip="{
+    'apply_mask.mask': array([[ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       ...,
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True],
+       [ True,  True,  True, ...,  True,  True,  True]])
+}"];
+    "0x0" -> "0x1";
+    "0x1" -> "0x2";
+    "0x2" -> "0x3";
+    "0x2" -> "0x5";
+    "0x2" -> "0x8";
+    "0x2" -> "0xb";
+    "0x2" -> "0xe";
+    "0x3" -> "0x4";
+    "0x5" -> "0x6";
+    "0x6" -> "0x7";
+    "0x8" -> "0x9";
+    "0x9" -> "0xa";
+    "0xb" -> "0xc";
+    "0xc" -> "0xd";
+    "0xe" -> "0xf";
+    "0xf" -> "0x10";
+}

@@ -1,0 +1,4981 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../docs/images/milky-way_animated.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.5.4">
+    
+    
+      
+        <title>Enums - streamgen</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.80dcb947.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#module-streamgenenums" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="streamgen" class="md-header__button md-logo" aria-label="streamgen" data-md-component="logo">
+      
+  <img src="../../../docs/images/milky-way_animated.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            streamgen
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Enums
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Infineon/StreamGen" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.65 3C2.3 3 2 3.3 2 3.65v.12l2.73 16.5c.07.42.43.73.85.73h13.05c.31 0 .59-.22.64-.54L22 3.77a.643.643 0 0 0-.54-.73c-.03-.01-.07-.01-.11-.01L2.65 3M14.1 14.95H9.94L8.81 9.07h6.3l-1.01 5.88Z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Laurenz Farthofer (KAI DSC)/StreamGen
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="streamgen" class="md-nav__button md-logo" aria-label="streamgen" data-md-component="logo">
+      
+  <img src="../../../docs/images/milky-way_animated.png" alt="logo">
+
+    </a>
+    streamgen
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Infineon/StreamGen" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.65 3C2.3 3 2 3.3 2 3.65v.12l2.73 16.5c.07.42.43.73.85.73h13.05c.31 0 .59-.22.64-.54L22 3.77a.643.643 0 0 0-.54-.73c-.03-.01-.07-.01-.11-.01L2.65 3M14.1 14.95H9.94L8.81 9.07h6.3l-1.01 5.88Z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Laurenz Farthofer (KAI DSC)/StreamGen
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        🏘️ Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/motivation_and_history/" class="md-nav__link">
+        🏛️ Motivation and History
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/project_structure/" class="md-nav__link">
+        🗂️ Project Structure
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          🪐📓 User Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="🪐📓 User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          🪐📓 User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/time%20series%20classification/01-static-distributions/" class="md-nav__link">
+        🎲 Sampling from Static Distributions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/time%20series%20classification/02-data-streams/" class="md-nav__link">
+        🌌 Creating Data Streams
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/time%20series%20classification/03-drift-scenarios/" class="md-nav__link">
+        📊 Data Drift Scenarios
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/time%20series%20classification/04-multi-label-generation/" class="md-nav__link">
+        🏷️ Multi-Label Generation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/wafer_map_generation/" class="md-nav__link">
+        🌐 Wafer Map Generation - WM811k patterns
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/wafer_map_scratch_generation/" class="md-nav__link">
+        🌐 Wafer Map Generation - generated patterns
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          👨‍💻 Developers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="👨‍💻 Developers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          👨‍💻 Developers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/developer_guide/" class="md-nav__link">
+        ⚒️ Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/testing/" class="md-nav__link">
+        ⚗️ Testing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CHANGELOG/" class="md-nav__link">
+        🕰️ Changelog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Streamgen
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Streamgen" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Streamgen
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Enums
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Enums
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#argumentpassingstrategy" class="md-nav__link">
+    ArgumentPassingStrategy
+  </a>
+  
+    <nav class="md-nav" aria-label="ArgumentPassingStrategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ancestors-in-mro" class="md-nav__link">
+    Ancestors (in MRO)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-variables" class="md-nav__link">
+    Class variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-methods" class="md-nav__link">
+    Static methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maketrans" class="md-nav__link">
+    maketrans
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capitalize" class="md-nav__link">
+    capitalize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casefold" class="md-nav__link">
+    casefold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#center" class="md-nav__link">
+    center
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count" class="md-nav__link">
+    count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encode" class="md-nav__link">
+    encode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endswith" class="md-nav__link">
+    endswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expandtabs" class="md-nav__link">
+    expandtabs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find" class="md-nav__link">
+    find
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format" class="md-nav__link">
+    format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_map" class="md-nav__link">
+    format_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    index
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalnum" class="md-nav__link">
+    isalnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalpha" class="md-nav__link">
+    isalpha
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isascii" class="md-nav__link">
+    isascii
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdecimal" class="md-nav__link">
+    isdecimal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdigit" class="md-nav__link">
+    isdigit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isidentifier" class="md-nav__link">
+    isidentifier
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#islower" class="md-nav__link">
+    islower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isnumeric" class="md-nav__link">
+    isnumeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isprintable" class="md-nav__link">
+    isprintable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isspace" class="md-nav__link">
+    isspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#istitle" class="md-nav__link">
+    istitle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isupper" class="md-nav__link">
+    isupper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join" class="md-nav__link">
+    join
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ljust" class="md-nav__link">
+    ljust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lower" class="md-nav__link">
+    lower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lstrip" class="md-nav__link">
+    lstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition" class="md-nav__link">
+    partition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeprefix" class="md-nav__link">
+    removeprefix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removesuffix" class="md-nav__link">
+    removesuffix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace" class="md-nav__link">
+    replace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rfind" class="md-nav__link">
+    rfind
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rindex" class="md-nav__link">
+    rindex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rjust" class="md-nav__link">
+    rjust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpartition" class="md-nav__link">
+    rpartition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsplit" class="md-nav__link">
+    rsplit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rstrip" class="md-nav__link">
+    rstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    split
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#splitlines" class="md-nav__link">
+    splitlines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startswith" class="md-nav__link">
+    startswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strip" class="md-nav__link">
+    strip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#swapcase" class="md-nav__link">
+    swapcase
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#title" class="md-nav__link">
+    title
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#translate" class="md-nav__link">
+    translate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper" class="md-nav__link">
+    upper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zfill" class="md-nav__link">
+    zfill
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameteroutofrangestrategy" class="md-nav__link">
+    ParameterOutOfRangeStrategy
+  </a>
+  
+    <nav class="md-nav" aria-label="ParameterOutOfRangeStrategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ancestors-in-mro_1" class="md-nav__link">
+    Ancestors (in MRO)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-variables_1" class="md-nav__link">
+    Class variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-methods_1" class="md-nav__link">
+    Static methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maketrans_1" class="md-nav__link">
+    maketrans
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_1" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capitalize_1" class="md-nav__link">
+    capitalize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casefold_1" class="md-nav__link">
+    casefold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#center_1" class="md-nav__link">
+    center
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count_1" class="md-nav__link">
+    count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encode_1" class="md-nav__link">
+    encode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endswith_1" class="md-nav__link">
+    endswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expandtabs_1" class="md-nav__link">
+    expandtabs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_1" class="md-nav__link">
+    find
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_1" class="md-nav__link">
+    format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_map_1" class="md-nav__link">
+    format_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index_1" class="md-nav__link">
+    index
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalnum_1" class="md-nav__link">
+    isalnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalpha_1" class="md-nav__link">
+    isalpha
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isascii_1" class="md-nav__link">
+    isascii
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdecimal_1" class="md-nav__link">
+    isdecimal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdigit_1" class="md-nav__link">
+    isdigit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isidentifier_1" class="md-nav__link">
+    isidentifier
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#islower_1" class="md-nav__link">
+    islower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isnumeric_1" class="md-nav__link">
+    isnumeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isprintable_1" class="md-nav__link">
+    isprintable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isspace_1" class="md-nav__link">
+    isspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#istitle_1" class="md-nav__link">
+    istitle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isupper_1" class="md-nav__link">
+    isupper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join_1" class="md-nav__link">
+    join
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ljust_1" class="md-nav__link">
+    ljust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lower_1" class="md-nav__link">
+    lower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lstrip_1" class="md-nav__link">
+    lstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition_1" class="md-nav__link">
+    partition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeprefix_1" class="md-nav__link">
+    removeprefix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removesuffix_1" class="md-nav__link">
+    removesuffix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace_1" class="md-nav__link">
+    replace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rfind_1" class="md-nav__link">
+    rfind
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rindex_1" class="md-nav__link">
+    rindex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rjust_1" class="md-nav__link">
+    rjust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpartition_1" class="md-nav__link">
+    rpartition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsplit_1" class="md-nav__link">
+    rsplit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rstrip_1" class="md-nav__link">
+    rstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split_1" class="md-nav__link">
+    split
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#splitlines_1" class="md-nav__link">
+    splitlines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startswith_1" class="md-nav__link">
+    startswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strip_1" class="md-nav__link">
+    strip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#swapcase_1" class="md-nav__link">
+    swapcase
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#title_1" class="md-nav__link">
+    title
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#translate_1" class="md-nav__link">
+    translate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper_1" class="md-nav__link">
+    upper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zfill_1" class="md-nav__link">
+    zfill
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#samplingstrategy" class="md-nav__link">
+    SamplingStrategy
+  </a>
+  
+    <nav class="md-nav" aria-label="SamplingStrategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ancestors-in-mro_2" class="md-nav__link">
+    Ancestors (in MRO)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-variables_2" class="md-nav__link">
+    Class variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-methods_2" class="md-nav__link">
+    Static methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maketrans_2" class="md-nav__link">
+    maketrans
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_2" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capitalize_2" class="md-nav__link">
+    capitalize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casefold_2" class="md-nav__link">
+    casefold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#center_2" class="md-nav__link">
+    center
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count_2" class="md-nav__link">
+    count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encode_2" class="md-nav__link">
+    encode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endswith_2" class="md-nav__link">
+    endswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expandtabs_2" class="md-nav__link">
+    expandtabs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_2" class="md-nav__link">
+    find
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_2" class="md-nav__link">
+    format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_map_2" class="md-nav__link">
+    format_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index_2" class="md-nav__link">
+    index
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalnum_2" class="md-nav__link">
+    isalnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalpha_2" class="md-nav__link">
+    isalpha
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isascii_2" class="md-nav__link">
+    isascii
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdecimal_2" class="md-nav__link">
+    isdecimal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdigit_2" class="md-nav__link">
+    isdigit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isidentifier_2" class="md-nav__link">
+    isidentifier
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#islower_2" class="md-nav__link">
+    islower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isnumeric_2" class="md-nav__link">
+    isnumeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isprintable_2" class="md-nav__link">
+    isprintable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isspace_2" class="md-nav__link">
+    isspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#istitle_2" class="md-nav__link">
+    istitle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isupper_2" class="md-nav__link">
+    isupper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join_2" class="md-nav__link">
+    join
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ljust_2" class="md-nav__link">
+    ljust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lower_2" class="md-nav__link">
+    lower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lstrip_2" class="md-nav__link">
+    lstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition_2" class="md-nav__link">
+    partition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeprefix_2" class="md-nav__link">
+    removeprefix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removesuffix_2" class="md-nav__link">
+    removesuffix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace_2" class="md-nav__link">
+    replace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rfind_2" class="md-nav__link">
+    rfind
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rindex_2" class="md-nav__link">
+    rindex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rjust_2" class="md-nav__link">
+    rjust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpartition_2" class="md-nav__link">
+    rpartition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsplit_2" class="md-nav__link">
+    rsplit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rstrip_2" class="md-nav__link">
+    rstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split_2" class="md-nav__link">
+    split
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#splitlines_2" class="md-nav__link">
+    splitlines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startswith_2" class="md-nav__link">
+    startswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strip_2" class="md-nav__link">
+    strip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#swapcase_2" class="md-nav__link">
+    swapcase
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#title_2" class="md-nav__link">
+    title
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#translate_2" class="md-nav__link">
+    translate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper_2" class="md-nav__link">
+    upper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zfill_2" class="md-nav__link">
+    zfill
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nodes/" class="md-nav__link">
+        Nodes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streams/" class="md-nav__link">
+        Streams
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transforms/" class="md-nav__link">
+        Transforms
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visualizations/" class="md-nav__link">
+        Visualizations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_8" type="checkbox" id="__nav_7_1_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1_8">
+          Parameter
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Parameter" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          Parameter
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parameter/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parameter/store/" class="md-nav__link">
+        Store
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_9" type="checkbox" id="__nav_7_1_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1_9">
+          Samplers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Samplers" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_1_9">
+          <span class="md-nav__icon md-icon"></span>
+          Samplers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../samplers/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../samplers/tree/" class="md-nav__link">
+        Tree
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    Classes
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#argumentpassingstrategy" class="md-nav__link">
+    ArgumentPassingStrategy
+  </a>
+  
+    <nav class="md-nav" aria-label="ArgumentPassingStrategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ancestors-in-mro" class="md-nav__link">
+    Ancestors (in MRO)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-variables" class="md-nav__link">
+    Class variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-methods" class="md-nav__link">
+    Static methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maketrans" class="md-nav__link">
+    maketrans
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capitalize" class="md-nav__link">
+    capitalize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casefold" class="md-nav__link">
+    casefold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#center" class="md-nav__link">
+    center
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count" class="md-nav__link">
+    count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encode" class="md-nav__link">
+    encode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endswith" class="md-nav__link">
+    endswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expandtabs" class="md-nav__link">
+    expandtabs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find" class="md-nav__link">
+    find
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format" class="md-nav__link">
+    format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_map" class="md-nav__link">
+    format_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    index
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalnum" class="md-nav__link">
+    isalnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalpha" class="md-nav__link">
+    isalpha
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isascii" class="md-nav__link">
+    isascii
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdecimal" class="md-nav__link">
+    isdecimal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdigit" class="md-nav__link">
+    isdigit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isidentifier" class="md-nav__link">
+    isidentifier
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#islower" class="md-nav__link">
+    islower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isnumeric" class="md-nav__link">
+    isnumeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isprintable" class="md-nav__link">
+    isprintable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isspace" class="md-nav__link">
+    isspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#istitle" class="md-nav__link">
+    istitle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isupper" class="md-nav__link">
+    isupper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join" class="md-nav__link">
+    join
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ljust" class="md-nav__link">
+    ljust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lower" class="md-nav__link">
+    lower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lstrip" class="md-nav__link">
+    lstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition" class="md-nav__link">
+    partition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeprefix" class="md-nav__link">
+    removeprefix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removesuffix" class="md-nav__link">
+    removesuffix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace" class="md-nav__link">
+    replace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rfind" class="md-nav__link">
+    rfind
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rindex" class="md-nav__link">
+    rindex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rjust" class="md-nav__link">
+    rjust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpartition" class="md-nav__link">
+    rpartition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsplit" class="md-nav__link">
+    rsplit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rstrip" class="md-nav__link">
+    rstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    split
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#splitlines" class="md-nav__link">
+    splitlines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startswith" class="md-nav__link">
+    startswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strip" class="md-nav__link">
+    strip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#swapcase" class="md-nav__link">
+    swapcase
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#title" class="md-nav__link">
+    title
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#translate" class="md-nav__link">
+    translate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper" class="md-nav__link">
+    upper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zfill" class="md-nav__link">
+    zfill
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parameteroutofrangestrategy" class="md-nav__link">
+    ParameterOutOfRangeStrategy
+  </a>
+  
+    <nav class="md-nav" aria-label="ParameterOutOfRangeStrategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ancestors-in-mro_1" class="md-nav__link">
+    Ancestors (in MRO)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-variables_1" class="md-nav__link">
+    Class variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-methods_1" class="md-nav__link">
+    Static methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maketrans_1" class="md-nav__link">
+    maketrans
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_1" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capitalize_1" class="md-nav__link">
+    capitalize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casefold_1" class="md-nav__link">
+    casefold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#center_1" class="md-nav__link">
+    center
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count_1" class="md-nav__link">
+    count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encode_1" class="md-nav__link">
+    encode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endswith_1" class="md-nav__link">
+    endswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expandtabs_1" class="md-nav__link">
+    expandtabs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_1" class="md-nav__link">
+    find
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_1" class="md-nav__link">
+    format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_map_1" class="md-nav__link">
+    format_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index_1" class="md-nav__link">
+    index
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalnum_1" class="md-nav__link">
+    isalnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalpha_1" class="md-nav__link">
+    isalpha
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isascii_1" class="md-nav__link">
+    isascii
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdecimal_1" class="md-nav__link">
+    isdecimal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdigit_1" class="md-nav__link">
+    isdigit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isidentifier_1" class="md-nav__link">
+    isidentifier
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#islower_1" class="md-nav__link">
+    islower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isnumeric_1" class="md-nav__link">
+    isnumeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isprintable_1" class="md-nav__link">
+    isprintable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isspace_1" class="md-nav__link">
+    isspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#istitle_1" class="md-nav__link">
+    istitle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isupper_1" class="md-nav__link">
+    isupper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join_1" class="md-nav__link">
+    join
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ljust_1" class="md-nav__link">
+    ljust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lower_1" class="md-nav__link">
+    lower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lstrip_1" class="md-nav__link">
+    lstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition_1" class="md-nav__link">
+    partition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeprefix_1" class="md-nav__link">
+    removeprefix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removesuffix_1" class="md-nav__link">
+    removesuffix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace_1" class="md-nav__link">
+    replace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rfind_1" class="md-nav__link">
+    rfind
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rindex_1" class="md-nav__link">
+    rindex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rjust_1" class="md-nav__link">
+    rjust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpartition_1" class="md-nav__link">
+    rpartition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsplit_1" class="md-nav__link">
+    rsplit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rstrip_1" class="md-nav__link">
+    rstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split_1" class="md-nav__link">
+    split
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#splitlines_1" class="md-nav__link">
+    splitlines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startswith_1" class="md-nav__link">
+    startswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strip_1" class="md-nav__link">
+    strip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#swapcase_1" class="md-nav__link">
+    swapcase
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#title_1" class="md-nav__link">
+    title
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#translate_1" class="md-nav__link">
+    translate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper_1" class="md-nav__link">
+    upper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zfill_1" class="md-nav__link">
+    zfill
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#samplingstrategy" class="md-nav__link">
+    SamplingStrategy
+  </a>
+  
+    <nav class="md-nav" aria-label="SamplingStrategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ancestors-in-mro_2" class="md-nav__link">
+    Ancestors (in MRO)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-variables_2" class="md-nav__link">
+    Class variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#static-methods_2" class="md-nav__link">
+    Static methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maketrans_2" class="md-nav__link">
+    maketrans
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_2" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capitalize_2" class="md-nav__link">
+    capitalize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#casefold_2" class="md-nav__link">
+    casefold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#center_2" class="md-nav__link">
+    center
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count_2" class="md-nav__link">
+    count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#encode_2" class="md-nav__link">
+    encode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#endswith_2" class="md-nav__link">
+    endswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expandtabs_2" class="md-nav__link">
+    expandtabs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_2" class="md-nav__link">
+    find
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_2" class="md-nav__link">
+    format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#format_map_2" class="md-nav__link">
+    format_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index_2" class="md-nav__link">
+    index
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalnum_2" class="md-nav__link">
+    isalnum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isalpha_2" class="md-nav__link">
+    isalpha
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isascii_2" class="md-nav__link">
+    isascii
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdecimal_2" class="md-nav__link">
+    isdecimal
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isdigit_2" class="md-nav__link">
+    isdigit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isidentifier_2" class="md-nav__link">
+    isidentifier
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#islower_2" class="md-nav__link">
+    islower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isnumeric_2" class="md-nav__link">
+    isnumeric
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isprintable_2" class="md-nav__link">
+    isprintable
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isspace_2" class="md-nav__link">
+    isspace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#istitle_2" class="md-nav__link">
+    istitle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#isupper_2" class="md-nav__link">
+    isupper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join_2" class="md-nav__link">
+    join
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ljust_2" class="md-nav__link">
+    ljust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lower_2" class="md-nav__link">
+    lower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lstrip_2" class="md-nav__link">
+    lstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition_2" class="md-nav__link">
+    partition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeprefix_2" class="md-nav__link">
+    removeprefix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removesuffix_2" class="md-nav__link">
+    removesuffix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace_2" class="md-nav__link">
+    replace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rfind_2" class="md-nav__link">
+    rfind
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rindex_2" class="md-nav__link">
+    rindex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rjust_2" class="md-nav__link">
+    rjust
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rpartition_2" class="md-nav__link">
+    rpartition
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsplit_2" class="md-nav__link">
+    rsplit
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rstrip_2" class="md-nav__link">
+    rstrip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split_2" class="md-nav__link">
+    split
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#splitlines_2" class="md-nav__link">
+    splitlines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#startswith_2" class="md-nav__link">
+    startswith
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#strip_2" class="md-nav__link">
+    strip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#swapcase_2" class="md-nav__link">
+    swapcase
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#title_2" class="md-nav__link">
+    title
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#translate_2" class="md-nav__link">
+    translate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper_2" class="md-nav__link">
+    upper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zfill_2" class="md-nav__link">
+    zfill
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/Infineon/StreamGen/edit/main/docs/reference/streamgen/enums.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="module-streamgenenums">Module streamgen.enums</h1>
+<p>🔢 all enumerations for <code>streamgen</code>.</p>
+<p>For every enumeration, a Literal with the same values as the enumeration is created.
+In every function that excepts a custom <code>streamgen</code> enum as an argument, use the type
+<enum_name> | <enum_name>Lit to have strong type checking, string autocompletion and
+good documentation generation.</p>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;🔢 all enumerations for `streamgen`.</span>
+
+<span class="sd">For every enumeration, a Literal with the same values as the enumeration is created.</span>
+
+<span class="sd">In every function that excepts a custom `streamgen` enum as an argument, use the type</span>
+
+<span class="sd">&lt;enum_name&gt; | &lt;enum_name&gt;Lit to have strong type checking, string autocompletion and</span>
+
+<span class="sd">good documentation generation.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Enum</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Literal</span><span class="p">,</span><span class="w"> </span><span class="n">TypeAlias</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ParameterOutOfRangeStrategy</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Enum</span><span class="p">):</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;❓ strategy which defines what happens when there is no valid next value.&quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="n">HOLD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;hold&quot;</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;Holds/Keeps the last valid value.&quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="n">CYCLE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;cycle&quot;</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;Use the first valid value.&quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="n">RAISE_EXCEPTION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;raise exception&quot;</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;Raises a ParameterOutOfRangeError.&quot;&quot;&quot;</span>
+
+<span class="n">ParameterOutOfRangeStrategyLit</span><span class="p">:</span><span class="w"> </span><span class="n">TypeAlias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Literal</span><span class="p">[</span>
+
+<span class="w">    </span><span class="s2">&quot;hold&quot;</span><span class="p">,</span>
+
+<span class="w">    </span><span class="s2">&quot;cycle&quot;</span><span class="p">,</span>
+
+<span class="w">    </span><span class="s2">&quot;raise exception&quot;</span><span class="p">,</span>
+
+<span class="p">]</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ArgumentPassingStrategy</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Enum</span><span class="p">):</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;⚙️ strategy which defines how parameters are passed to functions.&quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="n">DICT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;dict&quot;</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;A dictionary as the second argument.&quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="n">UNPACK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;unpack&quot;</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;Unpack the arguments as kwargs (**params).&quot;&quot;&quot;</span>
+
+<span class="n">ArgumentPassingStrategyLit</span><span class="p">:</span><span class="w"> </span><span class="n">TypeAlias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Literal</span><span class="p">[</span>
+
+<span class="w">    </span><span class="s2">&quot;dict&quot;</span><span class="p">,</span>
+
+<span class="w">    </span><span class="s2">&quot;unpack&quot;</span><span class="p">,</span>
+
+<span class="p">]</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">SamplingStrategy</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Enum</span><span class="p">):</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;🎲 strategy which defines how to sample a `streamgen.samplers.Sampler`.&quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="n">STOCHASTIC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;stochastic&quot;</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;Samples randomly. -&gt; The class distributions are determined by the probabilities of the decision nodes.&quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="n">BALANCED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;balanced&quot;</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;Samples evenly/balanced/stratified among all classes.&quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="n">BALANCED_PRUNED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;balanced pruned&quot;</span>
+
+<span class="w">    </span><span class="s2">&quot;&quot;&quot;Samples evenly/balanced/stratified among all classes that have a probability greater than zero.&quot;&quot;&quot;</span>
+
+<span class="n">SamplingStrategyLit</span><span class="p">:</span><span class="w"> </span><span class="n">TypeAlias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Literal</span><span class="p">[</span>
+
+<span class="w">    </span><span class="s2">&quot;stochastic&quot;</span><span class="p">,</span>
+
+<span class="w">    </span><span class="s2">&quot;balanced&quot;</span><span class="p">,</span>
+
+<span class="w">    </span><span class="s2">&quot;balanced pruned&quot;</span><span class="p">,</span>
+
+<span class="p">]</span>
+</code></pre></div>
+
+</details>
+<h2 id="classes">Classes</h2>
+<h3 id="argumentpassingstrategy">ArgumentPassingStrategy</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ArgumentPassingStrategy</span><span class="p">(</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwds</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>⚙️ strategy which defines how parameters are passed to functions.</p>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">ArgumentPassingStrategy</span>(<span class="n">str</span>, <span class="n">Enum</span>):
+
+    <span class="s">&quot;&quot;&quot;⚙️ strategy which defines how parameters are passed to functions.&quot;&quot;&quot;</span>
+
+    <span class="n">DICT</span> = <span class="s">&quot;dict&quot;</span>
+
+    <span class="s">&quot;&quot;&quot;A dictionary as the second argument.&quot;&quot;&quot;</span>
+
+    <span class="n">UNPACK</span> = <span class="s">&quot;unpack&quot;</span>
+
+    <span class="s">&quot;&quot;&quot;Unpack the arguments as kwargs (**params).&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</details>
+<hr />
+<h4 id="ancestors-in-mro">Ancestors (in MRO)</h4>
+<ul>
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h4 id="class-variables">Class variables</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">DICT</span>
+</code></pre></div>
+
+<p>A dictionary as the second argument.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">UNPACK</span>
+</code></pre></div>
+
+<p>Unpack the arguments as kwargs (**params).</p>
+<div class="codehilite"><pre><span></span><code><span class="n">name</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">value</span>
+</code></pre></div>
+
+<h4 id="static-methods">Static methods</h4>
+<h4 id="maketrans">maketrans</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">maketrans</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a translation table usable for str.translate().</p>
+<p>If there is only one argument, it must be a dictionary mapping Unicode
+ordinals (integers) or characters to Unicode ordinals, strings or None.
+Character keys will be then converted to ordinals.
+If there are two arguments, they must be strings of equal length, and
+in the resulting dictionary, each character in x will be mapped to the
+character at the same position in y. If there is a third argument, it
+must be a string, whose characters will be mapped to None in the result.</p>
+<h4 id="methods">Methods</h4>
+<h4 id="capitalize">capitalize</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">capitalize</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a capitalized version of the string.</p>
+<p>More specifically, make the first character have upper case and the rest lower
+case.</p>
+<h4 id="casefold">casefold</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">casefold</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a version of the string suitable for caseless comparisons.</p>
+<h4 id="center">center</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">center</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a centered string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+<h4 id="count">count</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.count(sub[, start[, end]]) -&gt; int</p>
+<p>Return the number of non-overlapping occurrences of substring sub in
+string S[start:end].  Optional arguments start and end are
+interpreted as in slice notation.</p>
+<h4 id="encode">encode</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
+    <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;strict&#39;</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Encode the string using the codec registered for encoding.</p>
+<p>encoding
+  The encoding in which to encode the string.
+errors
+  The error handling scheme to use for encoding errors.
+  The default is 'strict' meaning that encoding errors raise a
+  UnicodeEncodeError.  Other possible values are 'ignore', 'replace' and
+  'xmlcharrefreplace' as well as any other name registered with
+  codecs.register_error that can handle UnicodeEncodeErrors.</p>
+<h4 id="endswith">endswith</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">endswith</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.endswith(suffix[, start[, end]]) -&gt; bool</p>
+<p>Return True if S ends with the specified suffix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+suffix can also be a tuple of strings to try.</p>
+<h4 id="expandtabs">expandtabs</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">expandtabs</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">tabsize</span><span class="o">=</span><span class="mi">8</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy where all tab characters are expanded using spaces.</p>
+<p>If tabsize is not given, a tab size of 8 characters is assumed.</p>
+<h4 id="find">find</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.find(sub[, start[, end]]) -&gt; int</p>
+<p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+<h4 id="format">format</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.format(<em>args, </em>*kwargs) -&gt; str</p>
+<p>Return a formatted version of S, using substitutions from args and kwargs.
+The substitutions are identified by braces ('{' and '}').</p>
+<h4 id="format_map">format_map</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format_map</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.format_map(mapping) -&gt; str</p>
+<p>Return a formatted version of S, using substitutions from mapping.
+The substitutions are identified by braces ('{' and '}').</p>
+<h4 id="index">index</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">index</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.index(sub[, start[, end]]) -&gt; int</p>
+<p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+<h4 id="isalnum">isalnum</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalnum</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is an alpha-numeric string, False otherwise.</p>
+<p>A string is alpha-numeric if all characters in the string are alpha-numeric and
+there is at least one character in the string.</p>
+<h4 id="isalpha">isalpha</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalpha</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is an alphabetic string, False otherwise.</p>
+<p>A string is alphabetic if all characters in the string are alphabetic and there
+is at least one character in the string.</p>
+<h4 id="isascii">isascii</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isascii</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if all characters in the string are ASCII, False otherwise.</p>
+<p>ASCII characters have code points in the range U+0000-U+007F.
+Empty string is ASCII too.</p>
+<h4 id="isdecimal">isdecimal</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdecimal</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a decimal string, False otherwise.</p>
+<p>A string is a decimal string if all characters in the string are decimal and
+there is at least one character in the string.</p>
+<h4 id="isdigit">isdigit</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdigit</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a digit string, False otherwise.</p>
+<p>A string is a digit string if all characters in the string are digits and there
+is at least one character in the string.</p>
+<h4 id="isidentifier">isidentifier</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isidentifier</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a valid Python identifier, False otherwise.</p>
+<p>Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
+such as "def" or "class".</p>
+<h4 id="islower">islower</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">islower</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a lowercase string, False otherwise.</p>
+<p>A string is lowercase if all cased characters in the string are lowercase and
+there is at least one cased character in the string.</p>
+<h4 id="isnumeric">isnumeric</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isnumeric</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a numeric string, False otherwise.</p>
+<p>A string is numeric if all characters in the string are numeric and there is at
+least one character in the string.</p>
+<h4 id="isprintable">isprintable</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isprintable</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is printable, False otherwise.</p>
+<p>A string is printable if all of its characters are considered printable in
+repr() or if it is empty.</p>
+<h4 id="isspace">isspace</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isspace</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a whitespace string, False otherwise.</p>
+<p>A string is whitespace if all characters in the string are whitespace and there
+is at least one character in the string.</p>
+<h4 id="istitle">istitle</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">istitle</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a title-cased string, False otherwise.</p>
+<p>In a title-cased string, upper- and title-case characters may only
+follow uncased characters and lowercase characters only cased ones.</p>
+<h4 id="isupper">isupper</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isupper</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is an uppercase string, False otherwise.</p>
+<p>A string is uppercase if all cased characters in the string are uppercase and
+there is at least one cased character in the string.</p>
+<h4 id="join">join</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">join</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">iterable</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p>
+<h4 id="ljust">ljust</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">ljust</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a left-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+<h4 id="lower">lower</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lower</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string converted to lowercase.</p>
+<h4 id="lstrip">lstrip</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lstrip</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string with leading whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+<h4 id="partition">partition</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">partition</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">sep</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string.  If the separator is found,
+returns a 3-tuple containing the part before the separator, the separator
+itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing the original string
+and two empty strings.</p>
+<h4 id="removeprefix">removeprefix</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removeprefix</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">prefix</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a str with the given prefix string removed if present.</p>
+<p>If the string starts with the prefix string, return string[len(prefix):].
+Otherwise, return a copy of the original string.</p>
+<h4 id="removesuffix">removesuffix</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removesuffix</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">suffix</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a str with the given suffix string removed if present.</p>
+<p>If the string ends with the suffix string and that suffix is not empty,
+return string[:-len(suffix)]. Otherwise, return a copy of the original
+string.</p>
+<h4 id="replace">replace</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">replace</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">old</span><span class="p">,</span>
+    <span class="n">new</span><span class="p">,</span>
+    <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy with all occurrences of substring old replaced by new.</p>
+<p>count
+    Maximum number of occurrences to replace.
+    -1 (the default value) means replace all occurrences.</p>
+<p>If the optional argument count is given, only the first count occurrences are
+replaced.</p>
+<h4 id="rfind">rfind</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rfind</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.rfind(sub[, start[, end]]) -&gt; int</p>
+<p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+<h4 id="rindex">rindex</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rindex</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.rindex(sub[, start[, end]]) -&gt; int</p>
+<p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+<h4 id="rjust">rjust</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rjust</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a right-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+<h4 id="rpartition">rpartition</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rpartition</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">sep</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string, starting at the end. If
+the separator is found, returns a 3-tuple containing the part before the
+separator, the separator itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing two empty strings
+and the original string.</p>
+<h4 id="rsplit">rsplit</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rsplit</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">maxsplit</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<p>sep
+    The separator used to split the string.</p>
+<div class="codehilite"><pre><span></span><code>When set to None (the default value), will split on any whitespace
+character (including \\n \\r \\t \\f and spaces) and will discard
+empty strings from the result.
+</code></pre></div>
+
+<p>maxsplit
+    Maximum number of splits (starting from the left).
+    -1 (the default value) means no limit.</p>
+<p>Splitting starts at the end of the string and works to the front.</p>
+<h4 id="rstrip">rstrip</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rstrip</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string with trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+<h4 id="split">split</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">maxsplit</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<p>sep
+    The separator used to split the string.</p>
+<div class="codehilite"><pre><span></span><code>When set to None (the default value), will split on any whitespace
+character (including \\n \\r \\t \\f and spaces) and will discard
+empty strings from the result.
+</code></pre></div>
+
+<p>maxsplit
+    Maximum number of splits (starting from the left).
+    -1 (the default value) means no limit.</p>
+<p>Note, str.split() is mainly useful for data that has been intentionally
+delimited.  With natural text that includes punctuation, consider using
+the regular expression module.</p>
+<h4 id="splitlines">splitlines</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">splitlines</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">keepends</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a list of the lines in the string, breaking at line boundaries.</p>
+<p>Line breaks are not included in the resulting list unless keepends is given and
+true.</p>
+<h4 id="startswith">startswith</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">startswith</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.startswith(prefix[, start[, end]]) -&gt; bool</p>
+<p>Return True if S starts with the specified prefix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+prefix can also be a tuple of strings to try.</p>
+<h4 id="strip">strip</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">strip</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string with leading and trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+<h4 id="swapcase">swapcase</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">swapcase</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Convert uppercase characters to lowercase and lowercase characters to uppercase.</p>
+<h4 id="title">title</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">title</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a version of the string where each word is titlecased.</p>
+<p>More specifically, words start with uppercased characters and all remaining
+cased characters have lower case.</p>
+<h4 id="translate">translate</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">translate</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">table</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Replace each character in the string using the given translation table.</p>
+<p>table
+    Translation table, which must be a mapping of Unicode ordinals to
+    Unicode ordinals, strings, or None.</p>
+<p>The table must implement lookup/indexing via <strong>getitem</strong>, for instance a
+dictionary or list.  If this operation raises LookupError, the character is
+left untouched.  Characters mapped to None are deleted.</p>
+<h4 id="upper">upper</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">upper</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string converted to uppercase.</p>
+<h4 id="zfill">zfill</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">zfill</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Pad a numeric string with zeros on the left, to fill a field of the given width.</p>
+<p>The string is never truncated.</p>
+<h3 id="parameteroutofrangestrategy">ParameterOutOfRangeStrategy</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ParameterOutOfRangeStrategy</span><span class="p">(</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwds</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>❓ strategy which defines what happens when there is no valid next value.</p>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">ParameterOutOfRangeStrategy</span>(<span class="n">str</span>, <span class="n">Enum</span>):
+
+    <span class="s">&quot;&quot;&quot;❓ strategy which defines what happens when there is no valid next value.&quot;&quot;&quot;</span>
+
+    <span class="n">HOLD</span> = <span class="s">&quot;hold&quot;</span>
+
+    <span class="s">&quot;&quot;&quot;Holds/Keeps the last valid value.&quot;&quot;&quot;</span>
+
+    <span class="n">CYCLE</span> = <span class="s">&quot;cycle&quot;</span>
+
+    <span class="s">&quot;&quot;&quot;Use the first valid value.&quot;&quot;&quot;</span>
+
+    <span class="n">RAISE_EXCEPTION</span> = <span class="s">&quot;raise exception&quot;</span>
+
+    <span class="s">&quot;&quot;&quot;Raises a ParameterOutOfRangeError.&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</details>
+<hr />
+<h4 id="ancestors-in-mro_1">Ancestors (in MRO)</h4>
+<ul>
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h4 id="class-variables_1">Class variables</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">CYCLE</span>
+</code></pre></div>
+
+<p>Use the first valid value.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">HOLD</span>
+</code></pre></div>
+
+<p>Holds/Keeps the last valid value.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">RAISE_EXCEPTION</span>
+</code></pre></div>
+
+<p>Raises a ParameterOutOfRangeError.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">name</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">value</span>
+</code></pre></div>
+
+<h4 id="static-methods_1">Static methods</h4>
+<h4 id="maketrans_1">maketrans</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">maketrans</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a translation table usable for str.translate().</p>
+<p>If there is only one argument, it must be a dictionary mapping Unicode
+ordinals (integers) or characters to Unicode ordinals, strings or None.
+Character keys will be then converted to ordinals.
+If there are two arguments, they must be strings of equal length, and
+in the resulting dictionary, each character in x will be mapped to the
+character at the same position in y. If there is a third argument, it
+must be a string, whose characters will be mapped to None in the result.</p>
+<h4 id="methods_1">Methods</h4>
+<h4 id="capitalize_1">capitalize</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">capitalize</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a capitalized version of the string.</p>
+<p>More specifically, make the first character have upper case and the rest lower
+case.</p>
+<h4 id="casefold_1">casefold</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">casefold</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a version of the string suitable for caseless comparisons.</p>
+<h4 id="center_1">center</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">center</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a centered string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+<h4 id="count_1">count</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.count(sub[, start[, end]]) -&gt; int</p>
+<p>Return the number of non-overlapping occurrences of substring sub in
+string S[start:end].  Optional arguments start and end are
+interpreted as in slice notation.</p>
+<h4 id="encode_1">encode</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
+    <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;strict&#39;</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Encode the string using the codec registered for encoding.</p>
+<p>encoding
+  The encoding in which to encode the string.
+errors
+  The error handling scheme to use for encoding errors.
+  The default is 'strict' meaning that encoding errors raise a
+  UnicodeEncodeError.  Other possible values are 'ignore', 'replace' and
+  'xmlcharrefreplace' as well as any other name registered with
+  codecs.register_error that can handle UnicodeEncodeErrors.</p>
+<h4 id="endswith_1">endswith</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">endswith</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.endswith(suffix[, start[, end]]) -&gt; bool</p>
+<p>Return True if S ends with the specified suffix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+suffix can also be a tuple of strings to try.</p>
+<h4 id="expandtabs_1">expandtabs</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">expandtabs</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">tabsize</span><span class="o">=</span><span class="mi">8</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy where all tab characters are expanded using spaces.</p>
+<p>If tabsize is not given, a tab size of 8 characters is assumed.</p>
+<h4 id="find_1">find</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.find(sub[, start[, end]]) -&gt; int</p>
+<p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+<h4 id="format_1">format</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.format(<em>args, </em>*kwargs) -&gt; str</p>
+<p>Return a formatted version of S, using substitutions from args and kwargs.
+The substitutions are identified by braces ('{' and '}').</p>
+<h4 id="format_map_1">format_map</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format_map</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.format_map(mapping) -&gt; str</p>
+<p>Return a formatted version of S, using substitutions from mapping.
+The substitutions are identified by braces ('{' and '}').</p>
+<h4 id="index_1">index</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">index</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.index(sub[, start[, end]]) -&gt; int</p>
+<p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+<h4 id="isalnum_1">isalnum</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalnum</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is an alpha-numeric string, False otherwise.</p>
+<p>A string is alpha-numeric if all characters in the string are alpha-numeric and
+there is at least one character in the string.</p>
+<h4 id="isalpha_1">isalpha</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalpha</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is an alphabetic string, False otherwise.</p>
+<p>A string is alphabetic if all characters in the string are alphabetic and there
+is at least one character in the string.</p>
+<h4 id="isascii_1">isascii</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isascii</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if all characters in the string are ASCII, False otherwise.</p>
+<p>ASCII characters have code points in the range U+0000-U+007F.
+Empty string is ASCII too.</p>
+<h4 id="isdecimal_1">isdecimal</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdecimal</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a decimal string, False otherwise.</p>
+<p>A string is a decimal string if all characters in the string are decimal and
+there is at least one character in the string.</p>
+<h4 id="isdigit_1">isdigit</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdigit</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a digit string, False otherwise.</p>
+<p>A string is a digit string if all characters in the string are digits and there
+is at least one character in the string.</p>
+<h4 id="isidentifier_1">isidentifier</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isidentifier</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a valid Python identifier, False otherwise.</p>
+<p>Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
+such as "def" or "class".</p>
+<h4 id="islower_1">islower</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">islower</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a lowercase string, False otherwise.</p>
+<p>A string is lowercase if all cased characters in the string are lowercase and
+there is at least one cased character in the string.</p>
+<h4 id="isnumeric_1">isnumeric</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isnumeric</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a numeric string, False otherwise.</p>
+<p>A string is numeric if all characters in the string are numeric and there is at
+least one character in the string.</p>
+<h4 id="isprintable_1">isprintable</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isprintable</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is printable, False otherwise.</p>
+<p>A string is printable if all of its characters are considered printable in
+repr() or if it is empty.</p>
+<h4 id="isspace_1">isspace</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isspace</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a whitespace string, False otherwise.</p>
+<p>A string is whitespace if all characters in the string are whitespace and there
+is at least one character in the string.</p>
+<h4 id="istitle_1">istitle</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">istitle</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a title-cased string, False otherwise.</p>
+<p>In a title-cased string, upper- and title-case characters may only
+follow uncased characters and lowercase characters only cased ones.</p>
+<h4 id="isupper_1">isupper</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isupper</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is an uppercase string, False otherwise.</p>
+<p>A string is uppercase if all cased characters in the string are uppercase and
+there is at least one cased character in the string.</p>
+<h4 id="join_1">join</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">join</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">iterable</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p>
+<h4 id="ljust_1">ljust</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">ljust</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a left-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+<h4 id="lower_1">lower</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lower</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string converted to lowercase.</p>
+<h4 id="lstrip_1">lstrip</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lstrip</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string with leading whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+<h4 id="partition_1">partition</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">partition</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">sep</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string.  If the separator is found,
+returns a 3-tuple containing the part before the separator, the separator
+itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing the original string
+and two empty strings.</p>
+<h4 id="removeprefix_1">removeprefix</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removeprefix</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">prefix</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a str with the given prefix string removed if present.</p>
+<p>If the string starts with the prefix string, return string[len(prefix):].
+Otherwise, return a copy of the original string.</p>
+<h4 id="removesuffix_1">removesuffix</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removesuffix</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">suffix</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a str with the given suffix string removed if present.</p>
+<p>If the string ends with the suffix string and that suffix is not empty,
+return string[:-len(suffix)]. Otherwise, return a copy of the original
+string.</p>
+<h4 id="replace_1">replace</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">replace</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">old</span><span class="p">,</span>
+    <span class="n">new</span><span class="p">,</span>
+    <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy with all occurrences of substring old replaced by new.</p>
+<p>count
+    Maximum number of occurrences to replace.
+    -1 (the default value) means replace all occurrences.</p>
+<p>If the optional argument count is given, only the first count occurrences are
+replaced.</p>
+<h4 id="rfind_1">rfind</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rfind</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.rfind(sub[, start[, end]]) -&gt; int</p>
+<p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+<h4 id="rindex_1">rindex</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rindex</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.rindex(sub[, start[, end]]) -&gt; int</p>
+<p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+<h4 id="rjust_1">rjust</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rjust</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a right-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+<h4 id="rpartition_1">rpartition</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rpartition</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">sep</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string, starting at the end. If
+the separator is found, returns a 3-tuple containing the part before the
+separator, the separator itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing two empty strings
+and the original string.</p>
+<h4 id="rsplit_1">rsplit</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rsplit</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">maxsplit</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<p>sep
+    The separator used to split the string.</p>
+<div class="codehilite"><pre><span></span><code>When set to None (the default value), will split on any whitespace
+character (including \\n \\r \\t \\f and spaces) and will discard
+empty strings from the result.
+</code></pre></div>
+
+<p>maxsplit
+    Maximum number of splits (starting from the left).
+    -1 (the default value) means no limit.</p>
+<p>Splitting starts at the end of the string and works to the front.</p>
+<h4 id="rstrip_1">rstrip</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rstrip</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string with trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+<h4 id="split_1">split</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">maxsplit</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<p>sep
+    The separator used to split the string.</p>
+<div class="codehilite"><pre><span></span><code>When set to None (the default value), will split on any whitespace
+character (including \\n \\r \\t \\f and spaces) and will discard
+empty strings from the result.
+</code></pre></div>
+
+<p>maxsplit
+    Maximum number of splits (starting from the left).
+    -1 (the default value) means no limit.</p>
+<p>Note, str.split() is mainly useful for data that has been intentionally
+delimited.  With natural text that includes punctuation, consider using
+the regular expression module.</p>
+<h4 id="splitlines_1">splitlines</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">splitlines</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">keepends</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a list of the lines in the string, breaking at line boundaries.</p>
+<p>Line breaks are not included in the resulting list unless keepends is given and
+true.</p>
+<h4 id="startswith_1">startswith</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">startswith</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.startswith(prefix[, start[, end]]) -&gt; bool</p>
+<p>Return True if S starts with the specified prefix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+prefix can also be a tuple of strings to try.</p>
+<h4 id="strip_1">strip</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">strip</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string with leading and trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+<h4 id="swapcase_1">swapcase</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">swapcase</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Convert uppercase characters to lowercase and lowercase characters to uppercase.</p>
+<h4 id="title_1">title</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">title</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a version of the string where each word is titlecased.</p>
+<p>More specifically, words start with uppercased characters and all remaining
+cased characters have lower case.</p>
+<h4 id="translate_1">translate</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">translate</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">table</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Replace each character in the string using the given translation table.</p>
+<p>table
+    Translation table, which must be a mapping of Unicode ordinals to
+    Unicode ordinals, strings, or None.</p>
+<p>The table must implement lookup/indexing via <strong>getitem</strong>, for instance a
+dictionary or list.  If this operation raises LookupError, the character is
+left untouched.  Characters mapped to None are deleted.</p>
+<h4 id="upper_1">upper</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">upper</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string converted to uppercase.</p>
+<h4 id="zfill_1">zfill</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">zfill</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Pad a numeric string with zeros on the left, to fill a field of the given width.</p>
+<p>The string is never truncated.</p>
+<h3 id="samplingstrategy">SamplingStrategy</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">SamplingStrategy</span><span class="p">(</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwds</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>🎲 strategy which defines how to sample a <code>streamgen.samplers.Sampler</code>.</p>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="n">SamplingStrategy</span>(<span class="n">str</span>, <span class="n">Enum</span>):
+
+    <span class="s">&quot;&quot;&quot;🎲 strategy which defines how to sample a `streamgen.samplers.Sampler`.&quot;&quot;&quot;</span>
+
+    <span class="n">STOCHASTIC</span> = <span class="s">&quot;stochastic&quot;</span>
+
+    <span class="s">&quot;&quot;&quot;Samples randomly. -&gt; The class distributions are determined by the probabilities of the decision nodes.&quot;&quot;&quot;</span>
+
+    <span class="n">BALANCED</span> = <span class="s">&quot;balanced&quot;</span>
+
+    <span class="s">&quot;&quot;&quot;Samples evenly/balanced/stratified among all classes.&quot;&quot;&quot;</span>
+
+    <span class="n">BALANCED_PRUNED</span> = <span class="s">&quot;balanced pruned&quot;</span>
+
+    <span class="s">&quot;&quot;&quot;Samples evenly/balanced/stratified among all classes that have a probability greater than zero.&quot;&quot;&quot;</span>
+</code></pre></div>
+
+</details>
+<hr />
+<h4 id="ancestors-in-mro_2">Ancestors (in MRO)</h4>
+<ul>
+<li>builtins.str</li>
+<li>enum.Enum</li>
+</ul>
+<h4 id="class-variables_2">Class variables</h4>
+<div class="codehilite"><pre><span></span><code><span class="n">BALANCED</span>
+</code></pre></div>
+
+<p>Samples evenly/balanced/stratified among all classes.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">BALANCED_PRUNED</span>
+</code></pre></div>
+
+<p>Samples evenly/balanced/stratified among all classes that have a probability greater than zero.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">STOCHASTIC</span>
+</code></pre></div>
+
+<p>Samples randomly. -&gt; The class distributions are determined by the probabilities of the decision nodes.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">name</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="n">value</span>
+</code></pre></div>
+
+<h4 id="static-methods_2">Static methods</h4>
+<h4 id="maketrans_2">maketrans</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">maketrans</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a translation table usable for str.translate().</p>
+<p>If there is only one argument, it must be a dictionary mapping Unicode
+ordinals (integers) or characters to Unicode ordinals, strings or None.
+Character keys will be then converted to ordinals.
+If there are two arguments, they must be strings of equal length, and
+in the resulting dictionary, each character in x will be mapped to the
+character at the same position in y. If there is a third argument, it
+must be a string, whose characters will be mapped to None in the result.</p>
+<h4 id="methods_2">Methods</h4>
+<h4 id="capitalize_2">capitalize</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">capitalize</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a capitalized version of the string.</p>
+<p>More specifically, make the first character have upper case and the rest lower
+case.</p>
+<h4 id="casefold_2">casefold</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">casefold</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a version of the string suitable for caseless comparisons.</p>
+<h4 id="center_2">center</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">center</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a centered string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+<h4 id="count_2">count</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.count(sub[, start[, end]]) -&gt; int</p>
+<p>Return the number of non-overlapping occurrences of substring sub in
+string S[start:end].  Optional arguments start and end are
+interpreted as in slice notation.</p>
+<h4 id="encode_2">encode</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
+    <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;strict&#39;</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Encode the string using the codec registered for encoding.</p>
+<p>encoding
+  The encoding in which to encode the string.
+errors
+  The error handling scheme to use for encoding errors.
+  The default is 'strict' meaning that encoding errors raise a
+  UnicodeEncodeError.  Other possible values are 'ignore', 'replace' and
+  'xmlcharrefreplace' as well as any other name registered with
+  codecs.register_error that can handle UnicodeEncodeErrors.</p>
+<h4 id="endswith_2">endswith</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">endswith</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.endswith(suffix[, start[, end]]) -&gt; bool</p>
+<p>Return True if S ends with the specified suffix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+suffix can also be a tuple of strings to try.</p>
+<h4 id="expandtabs_2">expandtabs</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">expandtabs</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">tabsize</span><span class="o">=</span><span class="mi">8</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy where all tab characters are expanded using spaces.</p>
+<p>If tabsize is not given, a tab size of 8 characters is assumed.</p>
+<h4 id="find_2">find</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.find(sub[, start[, end]]) -&gt; int</p>
+<p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+<h4 id="format_2">format</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.format(<em>args, </em>*kwargs) -&gt; str</p>
+<p>Return a formatted version of S, using substitutions from args and kwargs.
+The substitutions are identified by braces ('{' and '}').</p>
+<h4 id="format_map_2">format_map</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format_map</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.format_map(mapping) -&gt; str</p>
+<p>Return a formatted version of S, using substitutions from mapping.
+The substitutions are identified by braces ('{' and '}').</p>
+<h4 id="index_2">index</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">index</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.index(sub[, start[, end]]) -&gt; int</p>
+<p>Return the lowest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+<h4 id="isalnum_2">isalnum</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalnum</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is an alpha-numeric string, False otherwise.</p>
+<p>A string is alpha-numeric if all characters in the string are alpha-numeric and
+there is at least one character in the string.</p>
+<h4 id="isalpha_2">isalpha</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalpha</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is an alphabetic string, False otherwise.</p>
+<p>A string is alphabetic if all characters in the string are alphabetic and there
+is at least one character in the string.</p>
+<h4 id="isascii_2">isascii</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isascii</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if all characters in the string are ASCII, False otherwise.</p>
+<p>ASCII characters have code points in the range U+0000-U+007F.
+Empty string is ASCII too.</p>
+<h4 id="isdecimal_2">isdecimal</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdecimal</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a decimal string, False otherwise.</p>
+<p>A string is a decimal string if all characters in the string are decimal and
+there is at least one character in the string.</p>
+<h4 id="isdigit_2">isdigit</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdigit</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a digit string, False otherwise.</p>
+<p>A string is a digit string if all characters in the string are digits and there
+is at least one character in the string.</p>
+<h4 id="isidentifier_2">isidentifier</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isidentifier</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a valid Python identifier, False otherwise.</p>
+<p>Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
+such as "def" or "class".</p>
+<h4 id="islower_2">islower</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">islower</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a lowercase string, False otherwise.</p>
+<p>A string is lowercase if all cased characters in the string are lowercase and
+there is at least one cased character in the string.</p>
+<h4 id="isnumeric_2">isnumeric</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isnumeric</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a numeric string, False otherwise.</p>
+<p>A string is numeric if all characters in the string are numeric and there is at
+least one character in the string.</p>
+<h4 id="isprintable_2">isprintable</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isprintable</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is printable, False otherwise.</p>
+<p>A string is printable if all of its characters are considered printable in
+repr() or if it is empty.</p>
+<h4 id="isspace_2">isspace</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isspace</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a whitespace string, False otherwise.</p>
+<p>A string is whitespace if all characters in the string are whitespace and there
+is at least one character in the string.</p>
+<h4 id="istitle_2">istitle</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">istitle</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is a title-cased string, False otherwise.</p>
+<p>In a title-cased string, upper- and title-case characters may only
+follow uncased characters and lowercase characters only cased ones.</p>
+<h4 id="isupper_2">isupper</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isupper</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return True if the string is an uppercase string, False otherwise.</p>
+<p>A string is uppercase if all cased characters in the string are uppercase and
+there is at least one cased character in the string.</p>
+<h4 id="join_2">join</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">join</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">iterable</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Concatenate any number of strings.</p>
+<p>The string whose method is called is inserted in between each given string.
+The result is returned as a new string.</p>
+<p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p>
+<h4 id="ljust_2">ljust</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">ljust</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a left-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+<h4 id="lower_2">lower</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lower</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string converted to lowercase.</p>
+<h4 id="lstrip_2">lstrip</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lstrip</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string with leading whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+<h4 id="partition_2">partition</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">partition</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">sep</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string.  If the separator is found,
+returns a 3-tuple containing the part before the separator, the separator
+itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing the original string
+and two empty strings.</p>
+<h4 id="removeprefix_2">removeprefix</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removeprefix</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">prefix</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a str with the given prefix string removed if present.</p>
+<p>If the string starts with the prefix string, return string[len(prefix):].
+Otherwise, return a copy of the original string.</p>
+<h4 id="removesuffix_2">removesuffix</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removesuffix</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">suffix</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a str with the given suffix string removed if present.</p>
+<p>If the string ends with the suffix string and that suffix is not empty,
+return string[:-len(suffix)]. Otherwise, return a copy of the original
+string.</p>
+<h4 id="replace_2">replace</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">replace</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">old</span><span class="p">,</span>
+    <span class="n">new</span><span class="p">,</span>
+    <span class="n">count</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy with all occurrences of substring old replaced by new.</p>
+<p>count
+    Maximum number of occurrences to replace.
+    -1 (the default value) means replace all occurrences.</p>
+<p>If the optional argument count is given, only the first count occurrences are
+replaced.</p>
+<h4 id="rfind_2">rfind</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rfind</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.rfind(sub[, start[, end]]) -&gt; int</p>
+<p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Return -1 on failure.</p>
+<h4 id="rindex_2">rindex</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rindex</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.rindex(sub[, start[, end]]) -&gt; int</p>
+<p>Return the highest index in S where substring sub is found,
+such that sub is contained within S[start:end].  Optional
+arguments start and end are interpreted as in slice notation.</p>
+<p>Raises ValueError when the substring is not found.</p>
+<h4 id="rjust_2">rjust</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rjust</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a right-justified string of length width.</p>
+<p>Padding is done using the specified fill character (default is a space).</p>
+<h4 id="rpartition_2">rpartition</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rpartition</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">sep</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Partition the string into three parts using the given separator.</p>
+<p>This will search for the separator in the string, starting at the end. If
+the separator is found, returns a 3-tuple containing the part before the
+separator, the separator itself, and the part after it.</p>
+<p>If the separator is not found, returns a 3-tuple containing two empty strings
+and the original string.</p>
+<h4 id="rsplit_2">rsplit</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rsplit</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">maxsplit</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<p>sep
+    The separator used to split the string.</p>
+<div class="codehilite"><pre><span></span><code>When set to None (the default value), will split on any whitespace
+character (including \\n \\r \\t \\f and spaces) and will discard
+empty strings from the result.
+</code></pre></div>
+
+<p>maxsplit
+    Maximum number of splits (starting from the left).
+    -1 (the default value) means no limit.</p>
+<p>Splitting starts at the end of the string and works to the front.</p>
+<h4 id="rstrip_2">rstrip</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rstrip</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string with trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+<h4 id="split_2">split</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">maxsplit</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a list of the substrings in the string, using sep as the separator string.</p>
+<p>sep
+    The separator used to split the string.</p>
+<div class="codehilite"><pre><span></span><code>When set to None (the default value), will split on any whitespace
+character (including \\n \\r \\t \\f and spaces) and will discard
+empty strings from the result.
+</code></pre></div>
+
+<p>maxsplit
+    Maximum number of splits (starting from the left).
+    -1 (the default value) means no limit.</p>
+<p>Note, str.split() is mainly useful for data that has been intentionally
+delimited.  With natural text that includes punctuation, consider using
+the regular expression module.</p>
+<h4 id="splitlines_2">splitlines</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">splitlines</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span><span class="p">,</span>
+    <span class="n">keepends</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a list of the lines in the string, breaking at line boundaries.</p>
+<p>Line breaks are not included in the resulting list unless keepends is given and
+true.</p>
+<h4 id="startswith_2">startswith</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">startswith</span><span class="p">(</span>
+    <span class="o">...</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>S.startswith(prefix[, start[, end]]) -&gt; bool</p>
+<p>Return True if S starts with the specified prefix, False otherwise.
+With optional start, test S beginning at that position.
+With optional end, stop comparing S at that position.
+prefix can also be a tuple of strings to try.</p>
+<h4 id="strip_2">strip</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">strip</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string with leading and trailing whitespace removed.</p>
+<p>If chars is given and not None, remove characters in chars instead.</p>
+<h4 id="swapcase_2">swapcase</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">swapcase</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Convert uppercase characters to lowercase and lowercase characters to uppercase.</p>
+<h4 id="title_2">title</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">title</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a version of the string where each word is titlecased.</p>
+<p>More specifically, words start with uppercased characters and all remaining
+cased characters have lower case.</p>
+<h4 id="translate_2">translate</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">translate</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">table</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Replace each character in the string using the given translation table.</p>
+<p>table
+    Translation table, which must be a mapping of Unicode ordinals to
+    Unicode ordinals, strings, or None.</p>
+<p>The table must implement lookup/indexing via <strong>getitem</strong>, for instance a
+dictionary or list.  If this operation raises LookupError, the character is
+left untouched.  Characters mapped to None are deleted.</p>
+<h4 id="upper_2">upper</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">upper</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Return a copy of the string converted to uppercase.</p>
+<h4 id="zfill_2">zfill</h4>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">zfill</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span>
+    <span class="n">width</span><span class="p">,</span>
+    <span class="o">/</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Pad a numeric string with zeros on the left, to fill a field of the given width.</p>
+<p>The string is never truncated.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+    
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../../../CHANGELOG/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 🕰️ Changelog" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Previous
+                </span>
+                🕰️ Changelog
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../exceptions/" class="md-footer__link md-footer__link--next" aria-label="Next: Exceptions" rel="next">
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Next
+                </span>
+                Exceptions
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+            
+            Powered by
+            <a href="http://timothycrosley.github.io/portray">portray.</a>
+            You too can
+            <a href="http://timothycrosley.github.io/portray">
+              portray</a>
+            your Python project well using automatic documentation.
+          </div>
+        
+      </div>
+    </div>
+  </footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.078830c0.min.js"></script>
+      
+    
+  </body>
+</html>

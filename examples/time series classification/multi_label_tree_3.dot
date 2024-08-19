@@ -1,0 +1,17 @@
+digraph tree {
+    "0x0" [label="➡️ <lambda>" tooltip="None"];
+    "0x1" [label="➡️ background" tooltip="{
+    'background.offset': 0.0,
+    'background.signal_length': 512,
+    'background.strength': 0.1
+}"];
+    "0x2" [label="➡️ maybe_ramp" tooltip="{'maybe_ramp.height': 1.0, 'maybe_ramp.length': 64, 'maybe_ramp.p_apply': 0.8}"];
+    "0x3" [label="➡️ maybe_step" tooltip="{
+    'maybe_step.kernel_size': 1,
+    'maybe_step.length': 32,
+    'maybe_step.p_apply': 0.9
+}"];
+    "0x0" -> "0x1";
+    "0x1" -> "0x2";
+    "0x2" -> "0x3";
+}

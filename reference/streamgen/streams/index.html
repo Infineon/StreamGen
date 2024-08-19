@@ -1,0 +1,1408 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../docs/images/milky-way_animated.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.5.4">
+    
+    
+      
+        <title>Streams - streamgen</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.80dcb947.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#module-streamgenstreams" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="streamgen" class="md-header__button md-logo" aria-label="streamgen" data-md-component="logo">
+      
+  <img src="../../../docs/images/milky-way_animated.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            streamgen
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Streams
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Infineon/StreamGen" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.65 3C2.3 3 2 3.3 2 3.65v.12l2.73 16.5c.07.42.43.73.85.73h13.05c.31 0 .59-.22.64-.54L22 3.77a.643.643 0 0 0-.54-.73c-.03-.01-.07-.01-.11-.01L2.65 3M14.1 14.95H9.94L8.81 9.07h6.3l-1.01 5.88Z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Laurenz Farthofer (KAI DSC)/StreamGen
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="streamgen" class="md-nav__button md-logo" aria-label="streamgen" data-md-component="logo">
+      
+  <img src="../../../docs/images/milky-way_animated.png" alt="logo">
+
+    </a>
+    streamgen
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Infineon/StreamGen" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2.65 3C2.3 3 2 3.3 2 3.65v.12l2.73 16.5c.07.42.43.73.85.73h13.05c.31 0 .59-.22.64-.54L22 3.77a.643.643 0 0 0-.54-.73c-.03-.01-.07-.01-.11-.01L2.65 3M14.1 14.95H9.94L8.81 9.07h6.3l-1.01 5.88Z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Laurenz Farthofer (KAI DSC)/StreamGen
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        🏘️ Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/motivation_and_history/" class="md-nav__link">
+        🏛️ Motivation and History
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/project_structure/" class="md-nav__link">
+        🗂️ Project Structure
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          🪐📓 User Guide
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="🪐📓 User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          🪐📓 User Guide
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/time%20series%20classification/01-static-distributions/" class="md-nav__link">
+        🎲 Sampling from Static Distributions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/time%20series%20classification/02-data-streams/" class="md-nav__link">
+        🌌 Creating Data Streams
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/time%20series%20classification/03-drift-scenarios/" class="md-nav__link">
+        📊 Data Drift Scenarios
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/time%20series%20classification/04-multi-label-generation/" class="md-nav__link">
+        🏷️ Multi-Label Generation
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/wafer_map_generation/" class="md-nav__link">
+        🌐 Wafer Map Generation - WM811k patterns
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/wafer_map_scratch_generation/" class="md-nav__link">
+        🌐 Wafer Map Generation - generated patterns
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          👨‍💻 Developers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="👨‍💻 Developers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          👨‍💻 Developers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/developer_guide/" class="md-nav__link">
+        ⚒️ Guide
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/testing/" class="md-nav__link">
+        ⚗️ Testing
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CHANGELOG/" class="md-nav__link">
+        🕰️ Changelog
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          Reference
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Streamgen
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Streamgen" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Streamgen
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enums/" class="md-nav__link">
+        Enums
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exceptions/" class="md-nav__link">
+        Exceptions
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nodes/" class="md-nav__link">
+        Nodes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Streams
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Streams
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collect_stream" class="md-nav__link">
+    collect_stream
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construct_avalanche_classification_datasets" class="md-nav__link">
+    construct_avalanche_classification_datasets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construct_continuum_scenario" class="md-nav__link">
+    construct_continuum_scenario
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to_tensor_dataset" class="md-nav__link">
+    to_tensor_dataset
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transforms/" class="md-nav__link">
+        Transforms
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visualizations/" class="md-nav__link">
+        Visualizations
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_8" type="checkbox" id="__nav_7_1_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1_8">
+          Parameter
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Parameter" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          Parameter
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parameter/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parameter/store/" class="md-nav__link">
+        Store
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_9" type="checkbox" id="__nav_7_1_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1_9">
+          Samplers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Samplers" data-md-level="3">
+        <label class="md-nav__title" for="__nav_7_1_9">
+          <span class="md-nav__icon md-icon"></span>
+          Samplers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../samplers/" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../samplers/tree/" class="md-nav__link">
+        Tree
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#collect_stream" class="md-nav__link">
+    collect_stream
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construct_avalanche_classification_datasets" class="md-nav__link">
+    construct_avalanche_classification_datasets
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construct_continuum_scenario" class="md-nav__link">
+    construct_continuum_scenario
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to_tensor_dataset" class="md-nav__link">
+    to_tensor_dataset
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <a href="https://github.com/Infineon/StreamGen/edit/main/docs/reference/streamgen/streams.md" title="Edit this page" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+<h1 id="module-streamgenstreams">Module streamgen.streams</h1>
+<p>🌌 stream abstractions.</p>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;🌌 stream abstractions.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">avalanche.benchmarks.utils</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">as_classification_dataset</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">avalanche.benchmarks.utils.classification_dataset</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">ClassificationDataset</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">beartype</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">continuum.datasets</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">InMemoryDataset</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">continuum.scenarios.continual_scenario</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">ContinualScenario</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">logger</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">TensorDataset</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">is_extra_installed</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.samplers</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Sampler</span>
+
+<span class="k">if</span><span class="w"> </span><span class="n">is_extra_installed</span><span class="p">(</span><span class="s2">&quot;cl&quot;</span><span class="p">):</span>
+
+<span class="w">    </span><span class="nd">@beartype</span>
+
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">collect_stream</span><span class="p">(</span>
+
+<span class="w">        </span><span class="n">sampler</span><span class="p">:</span><span class="w"> </span><span class="n">Sampler</span><span class="p">,</span>
+
+<span class="w">        </span><span class="n">n_experiences</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
+
+<span class="w">        </span><span class="n">n_samples_per_experience</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+
+<span class="w">        </span><span class="s2">&quot;&quot;&quot;🌌 collects a stream of `n_experiences` with `n_samples_per_experience` by calling `sampler.collect`.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            sampler (Sampler): data generator</span>
+
+<span class="s2">            n_experiences (int, optional): Number of experiences. Each experience represents a different parameterization of the sampler.</span>
+
+<span class="s2">            n_samples_per_experience (int, optional): Number of samples to collect in each experience. Defaults to 100</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            list[Any]: a list of experiences. The format and type of each experience depends on the `collect` implementation of the sampler.</span>
+
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="w">        </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌌 collecting </span><span class="si">{</span><span class="n">n_experiences</span><span class="si">}</span><span class="s2"> experiences with </span><span class="si">{</span><span class="n">n_samples_per_experience</span><span class="si">}</span><span class="s2"> samples each.&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">sampler</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">n_samples_per_experience</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">n_experiences</span><span class="p">)]</span>
+
+<span class="w">    </span><span class="nd">@beartype</span>
+
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">to_tensor_dataset</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="p">:</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">TensorDataset</span><span class="p">:</span>
+
+<span class="w">        </span><span class="s2">&quot;&quot;&quot;🗃️ constructs a TensorDataset with a `targets` field from two numpy arrays.&quot;&quot;&quot;</span>
+
+<span class="w">        </span><span class="n">samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorDataset</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">dataset</span><span class="o">.</span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">targets</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">dataset</span>
+
+<span class="w">    </span><span class="nd">@beartype</span>
+
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">construct_avalanche_classification_datasets</span><span class="p">(</span><span class="n">experiences</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="n">ClassificationDataset</span><span class="p">]:</span>
+
+<span class="w">        </span><span class="s2">&quot;&quot;&quot;❄️ constructs a list of avalanche `ClassificationDataset`s.</span>
+
+<span class="s2">        This can be used with `avalanche.benchmarks.scenarios.dataset_scenario.benchmark_from_datasets` to create an avalanche benchmark.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            experiences (list[tuple[np.ndarray, np.ndarray]]): list of experiences.</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            list[ClassificationDataset]: list of avalanche `ClassificationDataset`s.</span>
+
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="w">        </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">experience</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">experiences</span><span class="p">:</span>
+
+<span class="w">            </span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">experience</span>
+
+<span class="w">            </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">to_tensor_dataset</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as_classification_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">stream</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">stream</span>
+
+<span class="w">    </span><span class="nd">@beartype</span>
+
+<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">construct_continuum_scenario</span><span class="p">(</span><span class="n">experiences</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">ContinualScenario</span><span class="p">:</span>
+
+<span class="w">        </span><span class="s2">&quot;&quot;&quot;🕑 constructs a continuum `ContinualScenario`.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            experiences (list[tuple[np.ndarray, np.ndarray]]): list of experiences.</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            ContinualScenario: generic continuum scenario.</span>
+
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<span class="w">        </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="p">[]</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">experience</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">enumerate</span><span class="p">(</span><span class="n">experiences</span><span class="p">):</span>
+
+<span class="w">            </span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">experience</span>
+
+<span class="w">            </span><span class="n">task_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">idx</span>
+
+<span class="w">            </span><span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task_ids</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InMemoryDataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ContinualScenario</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<h2 id="functions">Functions</h2>
+<h3 id="collect_stream">collect_stream</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">collect_stream</span><span class="p">(</span>
+    <span class="n">sampler</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">Sampler</span><span class="p">,</span>
+    <span class="n">n_experiences</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">n_samples_per_experience</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span>
+</code></pre></div>
+
+<p>🌌 collects a stream of <code>n_experiences</code> with <code>n_samples_per_experience</code> by calling <code>sampler.collect</code>.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sampler</td>
+<td>Sampler</td>
+<td>data generator</td>
+<td>None</td>
+</tr>
+<tr>
+<td>n_experiences</td>
+<td>int</td>
+<td>Number of experiences. Each experience represents a different parameterization of the sampler.</td>
+<td>None</td>
+</tr>
+<tr>
+<td>n_samples_per_experience</td>
+<td>int</td>
+<td>Number of samples to collect in each experience. Defaults to 100</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list[Any]</td>
+<td>a list of experiences. The format and type of each experience depends on the <code>collect</code> implementation of the sampler.</td>
+</tr>
+</tbody>
+</table>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="err">@</span><span class="nx">beartype</span>
+
+<span class="w">    </span><span class="nx">def</span><span class="w"> </span><span class="nx">collect_stream</span><span class="p">(</span>
+
+<span class="w">        </span><span class="nx">sampler</span><span class="p">:</span><span class="w"> </span><span class="nx">Sampler</span><span class="p">,</span>
+
+<span class="w">        </span><span class="nx">n_experiences</span><span class="p">:</span><span class="w"> </span><span class="nx">int</span><span class="p">,</span>
+
+<span class="w">        </span><span class="nx">n_samples_per_experience</span><span class="p">:</span><span class="w"> </span><span class="nx">int</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nx">list</span><span class="p">[</span><span class="nx">Any</span><span class="p">]:</span>
+
+<span class="w">        </span><span class="s">&quot;&quot;&quot;🌌 collects a stream of `n_experiences` with `n_samples_per_experience` by calling `sampler.collect`.</span>
+
+<span class="s">        Args:</span>
+
+<span class="s">            sampler (Sampler): data generator</span>
+
+<span class="s">            n_experiences (int, optional): Number of experiences. Each experience represents a different parameterization of the sampler.</span>
+
+<span class="s">            n_samples_per_experience (int, optional): Number of samples to collect in each experience. Defaults to 100</span>
+
+<span class="s">        Returns:</span>
+
+<span class="s">            list[Any]: a list of experiences. The format and type of each experience depends on the `collect` implementation of the sampler.</span>
+
+<span class="s">        &quot;&quot;&quot;</span>
+
+<span class="w">        </span><span class="nx">logger</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="nx">f</span><span class="s">&quot;🌌 collecting {n_experiences} experiences with {n_samples_per_experience} samples each.&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="nx">sampler</span><span class="p">.</span><span class="nx">collect</span><span class="p">(</span><span class="nx">n_samples_per_experience</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">_</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">range</span><span class="p">(</span><span class="nx">n_experiences</span><span class="p">)]</span>
+</code></pre></div>
+
+</details>
+<h3 id="construct_avalanche_classification_datasets">construct_avalanche_classification_datasets</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">construct_avalanche_classification_datasets</span><span class="p">(</span>
+    <span class="n">experiences</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">avalanche</span><span class="o">.</span><span class="n">benchmarks</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">classification_dataset</span><span class="o">.</span><span class="n">ClassificationDataset</span><span class="p">]</span>
+</code></pre></div>
+
+<p>❄️ constructs a list of avalanche <code>ClassificationDataset</code>s.</p>
+<p>This can be used with <code>avalanche.benchmarks.scenarios.dataset_scenario.benchmark_from_datasets</code> to create an avalanche benchmark.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>experiences</td>
+<td>list[tuple[np.ndarray, np.ndarray]]</td>
+<td>list of experiences.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>list[ClassificationDataset]</td>
+<td>list of avalanche <code>ClassificationDataset</code>s.</td>
+</tr>
+</tbody>
+</table>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="err">@</span><span class="n">beartype</span>
+
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">construct_avalanche_classification_datasets</span><span class="p">(</span><span class="n">experiences</span><span class="p">:</span><span class="w"> </span><span class="n">list</span><span class="p">[</span><span class="n">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">list</span><span class="p">[</span><span class="n">ClassificationDataset</span><span class="p">]:</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;❄️ constructs a list of avalanche `ClassificationDataset`s.</span>
+
+<span class="sd">        This can be used with `avalanche.benchmarks.scenarios.dataset_scenario.benchmark_from_datasets` to create an avalanche benchmark.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            experiences (list[tuple[np.ndarray, np.ndarray]]): list of experiences.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            list[ClassificationDataset]: list of avalanche `ClassificationDataset`s.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+<span class="w">        </span><span class="n">stream</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[]</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">experience</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">experiences</span><span class="p">:</span>
+
+<span class="w">            </span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">experience</span>
+
+<span class="w">            </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">to_tensor_dataset</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">as_classification_dataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">stream</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">stream</span>
+</code></pre></div>
+
+</details>
+<h3 id="construct_continuum_scenario">construct_continuum_scenario</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">construct_continuum_scenario</span><span class="p">(</span>
+    <span class="n">experiences</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">continuum</span><span class="o">.</span><span class="n">scenarios</span><span class="o">.</span><span class="n">continual_scenario</span><span class="o">.</span><span class="n">ContinualScenario</span>
+</code></pre></div>
+
+<p>🕑 constructs a continuum <code>ContinualScenario</code>.</p>
+<p><strong>Parameters:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>experiences</td>
+<td>list[tuple[np.ndarray, np.ndarray]]</td>
+<td>list of experiences.</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Returns:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ContinualScenario</td>
+<td>generic continuum scenario.</td>
+</tr>
+</tbody>
+</table>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nv">@beartype</span>
+
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">construct_continuum_scenario</span><span class="p">(</span><span class="n">experiences</span><span class="o">:</span><span class="w"> </span><span class="k">list</span><span class="err">[</span><span class="n">tuple</span><span class="err">[</span><span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">,</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="err">]]</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">ContinualScenario</span><span class="o">:</span>
+
+<span class="w">        </span><span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">🕑 constructs a continuum `ContinualScenario`.</span>
+
+<span class="s2">        Args:</span>
+
+<span class="s2">            experiences (list[tuple[np.ndarray, np.ndarray]]): list of experiences.</span>
+
+<span class="s2">        Returns:</span>
+
+<span class="s2">            ContinualScenario: generic continuum scenario.</span>
+
+<span class="s2">        </span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+<span class="w">        </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span><span class="p">,</span><span class="w"> </span><span class="err">[]</span><span class="p">,</span><span class="w"> </span><span class="err">[]</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">experience</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">experiences</span><span class="p">)</span><span class="o">:</span>
+
+<span class="w">            </span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">experience</span>
+
+<span class="w">            </span><span class="n">task_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">idx</span>
+
+<span class="w">            </span><span class="n">x</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">y</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+
+<span class="w">            </span><span class="n">t</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">task_ids</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InMemoryDataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ContinualScenario</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</code></pre></div>
+
+</details>
+<h3 id="to_tensor_dataset">to_tensor_dataset</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">to_tensor_dataset</span><span class="p">(</span>
+    <span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">targets</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">TensorDataset</span>
+</code></pre></div>
+
+<p>🗃️ constructs a TensorDataset with a <code>targets</code> field from two numpy arrays.</p>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nv">@beartype</span>
+
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">to_tensor_dataset</span><span class="p">(</span><span class="n">samples</span><span class="o">:</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="o">:</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">TensorDataset</span><span class="o">:</span>
+
+<span class="w">        </span><span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">🗃️ constructs a TensorDataset with a `targets` field from two numpy arrays.</span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+<span class="w">        </span><span class="n">samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorDataset</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="p">)</span>
+
+<span class="w">        </span><span class="n">dataset</span><span class="p">.</span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">targets</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">dataset</span>
+</code></pre></div>
+
+</details>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+    
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../nodes/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Nodes" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Previous
+                </span>
+                Nodes
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../transforms/" class="md-footer__link md-footer__link--next" aria-label="Next: Transforms" rel="next">
+            <div class="md-footer__title">
+              <div class="md-ellipsis">
+                <span class="md-footer__direction">
+                  Next
+                </span>
+                Transforms
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+            
+            Powered by
+            <a href="http://timothycrosley.github.io/portray">portray.</a>
+            You too can
+            <a href="http://timothycrosley.github.io/portray">
+              portray</a>
+            your Python project well using automatic documentation.
+          </div>
+        
+      </div>
+    </div>
+  </footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.078830c0.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,25 @@
+digraph tree {
+    "0x0" [label="➡️ background" tooltip="{
+    'background.offset': 0.0,
+    'background.signal_length': 256,
+    'background.strength': 0.1
+}"];
+    "0x1" [label="" shape=box image="background-samples.gif" imagescale=true];
+    "0x2" [label="🪴 branching point" shape=diamond tooltip="[0.333, 0.333, 0.333]"];
+    "0x3" [label="🏷️ label=background" shape=cds];
+    "0x4" [label="➡️ ramp" tooltip="{'ramp.height': 1.0, 'ramp.length': 128}"];
+    "0x5" [label="🏷️ label=ramp" shape=cds];
+    "0x6" [label="" shape=box image="ramp-samples.gif" imagescale=true];
+    "0x7" [label="➡️ step" tooltip="{'step.kernel_size': 10, 'step.length': 128}"];
+    "0x8" [label="🏷️ label=step" shape=cds];
+    "0x9" [label="" shape=box image="step-samples.gif" imagescale=true];
+    "0x0" -> "0x1";
+    "0x1" -> "0x2";
+    "0x2" -> "0x3";
+    "0x2" -> "0x4";
+    "0x2" -> "0x7";
+    "0x4" -> "0x5";
+    "0x5" -> "0x6";
+    "0x7" -> "0x8";
+    "0x8" -> "0x9";
+}
