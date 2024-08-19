@@ -16,7 +16,7 @@ affiliations:
     index: 1
   - name: Institute of Computer Graphics and Vision, Graz University of Technology, Austria
     index: 2
-date: 8 August 2024
+date: 19 August 2024
 bibliography: paper.bib
 ---
 
