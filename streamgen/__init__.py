@@ -6,7 +6,10 @@ from beartype import beartype
 
 EXTRAS = {
     "examples": ["perlin_numpy", "polars", "ipymlp"],
-    "cl": ["avalanche", "continuum"],
+    "cl": [
+        # "avalanche",
+        "continuum",
+    ],
     "all": [
         "perlin_numpy",
         "polars",

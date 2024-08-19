@@ -1,17 +1,17 @@
 """🧪 `streamgen.streams` tests."""
 
-# ruff: noqa: S101, D103, ANN001, ANN201, PLR2004
+# ruff: noqa: S101, D103, ANN001, ANN201, PLR2004, ERA001
 from typing import Any
 
 import numpy as np
 import pytest
-from avalanche.benchmarks.scenarios.dataset_scenario import benchmark_from_datasets
 
+# from avalanche.benchmarks.scenarios.dataset_scenario import benchmark_from_datasets
 from streamgen.nodes import TransformNode
 from streamgen.parameter import Parameter
 from streamgen.parameter.store import ParameterStore
 from streamgen.samplers.tree import SamplingTree
-from streamgen.streams import collect_stream, construct_avalanche_classification_datasets, construct_continuum_scenario
+from streamgen.streams import collect_stream, construct_continuum_scenario  # , construct_avalanche_classification_datasets
 from streamgen.transforms import LabelEncoder, noop, operate_on_index
 
 # ---------------------------------------------------------------------------- #
@@ -123,26 +123,26 @@ def test_construct_stream(tree) -> None:
     assert labels.shape == (250,)
 
 
-def test_avalanche_stream(tree) -> None:
-    """Tests the construction of an avalanche benchmark."""
-    experiences = collect_stream(tree, 2, 250)
+# def test_avalanche_stream(tree) -> None:
+#     """Tests the construction of an avalanche benchmark."""
+#     experiences = collect_stream(tree, 2, 250)
 
-    stream = construct_avalanche_classification_datasets(experiences)
+#     stream = construct_avalanche_classification_datasets(experiences)
 
-    assert len(stream) == 2
+#     assert len(stream) == 2
 
-    benchmark = benchmark_from_datasets(
-        train=stream,
-    )
+#     benchmark = benchmark_from_datasets(
+#         train=stream,
+#     )
 
-    assert len(benchmark.train_stream) == 2
+#     assert len(benchmark.train_stream) == 2
 
-    exp = benchmark.train_stream[0]
-    # current experience is the position of the experience in the stream.
-    # It must never be used during training or evaluation
-    # if you try to use it will fail with a MaskedAttributeError
+#     exp = benchmark.train_stream[0]
+#     # current experience is the position of the experience in the stream.
+#     # It must never be used during training or evaluation
+#     # if you try to use it will fail with a MaskedAttributeError
 
-    assert exp.current_experience == 0
+#     assert exp.current_experience == 0
 
 
 def test_continuum_stream(tree) -> None:
