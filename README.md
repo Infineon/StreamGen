@@ -243,7 +243,9 @@ Here is a preview of what we will create in the time series examples:
 
 ## 📖 Documentation
 
-Open the documentation by calling `poe docs`.
+The [documentation](https://reimagined-adventure-7kv2r5k.pages.github.io/) is hosted through github pages.
+
+To locally build and view it, call `poe docs_local`.
 
 ## 🙏 Acknowledgement
 

@@ -29,7 +29,8 @@ This project builds on these ideas and presents a general framework for generati
 - spring 2023: initial idea occurred during the planning phase of my PhD on Continual Learning
 - summer 2023: conceptualization of tree sampler and parameter schedules
 - winter 2024: implementation of a first proof-of-concept and several feedback rounds and iterations
-- spring 2024: white paper was written
+- spring 2024: white paper was written, last finishing touches performed
+- summer 2024: official streamgen release 🎉
 
 ---
 

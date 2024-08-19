@@ -13,8 +13,13 @@ keywords = ["Python", "Data Generation", "Data Streams", "Continual Learning", "
 [tool.poe.tasks]
 test = "coverage run --source=streamgen -m pytest -vv --durations=8"
 convert_notebooks = "jupyter nbconvert --to markdown --config .jupyter/cfg.py"
+publish_documentation = "portray on_github_pages"
 build_documentation = "portray in_browser"
 docs = [
+    "convert_notebooks",
+    "publish_documentation"
+]
+docs_local = [
     "convert_notebooks",
     "build_documentation"
 ]
