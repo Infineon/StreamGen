@@ -3563,8 +3563,8 @@ files = [
 [package.dependencies]
 numpy = [
     {version = ">=1.22.4", markers = "python_version < \"3.11\""},
-    {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
     {version = ">=1.23.2", markers = "python_version == \"3.11\""},
+    {version = ">=1.26.0", markers = "python_version >= \"3.12\""},
 ]
 python-dateutil = ">=2.8.2"
 pytz = ">=2020.1"
@@ -6471,4 +6471,4 @@ examples = ["ipympl", "polars", "scikit-image"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "5d877b89213906077277d7b8bcb4459f34d3220faeeee24727798a5a2f80b4d2"
+content-hash = "0050833168c35b6bf0ce1c236e00d143eecacedd9ca1221f90669240b1ff9920"

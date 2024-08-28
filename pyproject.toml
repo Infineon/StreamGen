@@ -39,6 +39,7 @@ matplotlib = "^3.8.3" # custom license -> seems permissive
 seaborn = "^0.13.2"   # multiple licenses -> seems permissive (like MIT) if licenses are included
 # ✍️ Typing
 beartype = "^0.17.2" # MIT license
+typing-extensions = "^4.12.2"
 # 🖨️ Logging
 loguru = "^0.7.2" # MIT license
 rich = "^13.7.1"  # MIT license
@@ -52,6 +53,8 @@ pytorchcv = { version = ">=0.0.67", optional = true } # MIT license
 polars = { version = "^0.20.13", optional = true }    # MIT license
 ipympl = { version = "^0.9.4", optional = true }
 scikit-image = { version = "^0.24", optional = true }
+
+
 
 [tool.poetry.extras]
 examples = ["polars", "ipympl", "scikit-image"]
@@ -120,6 +123,7 @@ ignore = [
     "EXE001",
     "EXE005",
     "PLR0913",
+    "UP035",
 ]
 
 [tool.ruff.lint.pydocstyle]
