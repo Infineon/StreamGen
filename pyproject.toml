@@ -27,33 +27,31 @@ docs_local = ["convert_notebooks", "build_documentation"]
 build_paper = "docker run --rm --volume $PWD/docs:/data --env JOURNAL=joss openjournals/inara"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 # 🌳 Graphs and Trees
-anytree = "^2.12.1"  # Apache license 2.0
-graphviz = "^0.20.3"
+anytree = ">=2.12.1"  # Apache license 2.0
+graphviz = ">=0.20.3"
 # 📄 Data handling
-numpy = "^1.26.4" # custom license -> seems permissive
-pandas = "^2.2.1" # BSD 3-clause license
+numpy = ">=1.26.4" # custom license -> seems permissive
+pandas = ">=2.2.1" # BSD 3-clause license
 # 🖼️ Visualizations
-matplotlib = "^3.8.3" # custom license -> seems permissive
-seaborn = "^0.13.2"   # multiple licenses -> seems permissive (like MIT) if licenses are included
+matplotlib = ">=3.8.3" # custom license -> seems permissive
+seaborn = ">=0.13.2"   # multiple licenses -> seems permissive (like MIT) if licenses are included
 # ✍️ Typing
-beartype = "^0.17.2" # MIT license
-typing-extensions = "^4.12.2"
+beartype = ">=0.17.2" # MIT license
 # 🖨️ Logging
-loguru = "^0.7.2" # MIT license
-rich = "^13.7.1"  # MIT license
+loguru = ">=0.7.2" # MIT license
+rich = ">=13.7.1"  # MIT license
 # 🔁 Continual Learning
 #avalanche-lib = { version = "^0.5.0", optional = true } # MIT license
-continuum = { version = "^1.2.7", optional = true }     # MIT license
+continuum = { version = ">=1.2.7", optional = true }     # MIT license
 # version pins required for an import error caused by avalanche
-torch = { version = "<=2.3", optional = true }        # MIT license
+torch = { version = ">=2.3", optional = true }        # MIT license
 pytorchcv = { version = ">=0.0.67", optional = true } # MIT license
 # 👾 Example/Application Dependencies
-polars = { version = "^0.20.13", optional = true }    # MIT license
-ipympl = { version = "^0.9.4", optional = true }
-scikit-image = { version = "^0.24", optional = true }
-
+polars = { version = ">=0.20.13", optional = true }    # MIT license
+ipympl = { version = ">=0.9.4", optional = true }
+scikit-image = { version = ">=0.24", optional = true }
 
 
 [tool.poetry.extras]
@@ -72,20 +70,20 @@ all = [
 ]
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.3.4"
-pre-commit = "^3.6.2"
-poethepoet = "^0.25.0"
-pytest = "^8.0.2"
-coverage = "^7.4.3"
-jupyter = "^1.0.0"
-ipywidgets = "^8.1.2"
-nbconvert = "^7.16.2"
-portray = "^1.8.0"
-itables = "^2.0.0" # MIT license
+ruff = ">=0.3.4"
+pre-commit = ">=3.6.2"
+poethepoet = ">=0.25.0"
+pytest = ">=8.0.2"
+coverage = ">=7.4.3"
+jupyter = ">=1.0.0"
+ipywidgets = ">=8.1.2"
+nbconvert = ">=7.16.2"
+portray = ">=1.8.0"
+itables = ">=2.0.0" # MIT license
 qpsolvers = { extras = [
     "open-source-solvers",
-], version = "^4.3.2" } # explicit install required to solve plotting issue in pytest
-towncrier = "^24.7.1"
+], version = ">=4.3.2" } # explicit install required to solve plotting issue in pytest
+towncrier = ">=24.7.1"
 
 [tool.ruff]
 exclude = [

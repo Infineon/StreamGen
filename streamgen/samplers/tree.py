@@ -5,7 +5,7 @@ from collections.abc import Callable
 from copy import deepcopy
 from itertools import pairwise
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 import anytree
 import numpy as np
@@ -18,7 +18,6 @@ from matplotlib import animation
 from matplotlib import pyplot as plt
 from pandas import DataFrame
 from rich.progress import track
-from typing_extensions import Self
 
 from streamgen.enums import SamplingStrategy, SamplingStrategyLit
 from streamgen.nodes import ClassLabelNode, SampleBufferNode, TransformNode

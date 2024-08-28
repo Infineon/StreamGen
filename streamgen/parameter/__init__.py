@@ -5,10 +5,9 @@ from __future__ import annotations
 from collections.abc import Iterable
 from copy import deepcopy
 from itertools import cycle
-from typing import Generic, TypedDict, TypeVar
+from typing import Generic, Self, TypedDict, TypeVar
 
 from beartype import beartype
-from typing_extensions import Self
 
 from streamgen.enums import (
     ParameterOutOfRangeStrategy,
