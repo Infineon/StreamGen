@@ -18,7 +18,7 @@ a 🐍 Python framework for generating streams of labelled data
 </p>
 
 <p align="center">
-    <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.11-yellow?logo=python"></a>
+    <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.10|3.11|3.12-yellow?logo=python"></a>
     <a href="https://python-poetry.org/"><img alt="Poetry" src="https://img.shields.io/badge/Poetry-1.8.2-blue?logo=Poetry"></a>
     <a href="https://joss.theoj.org/papers/4b6bac90bd1eb54700f8afb9f32caebe"><img src="https://joss.theoj.org/papers/4b6bac90bd1eb54700f8afb9f32caebe/status.svg"></a>
 </p>
