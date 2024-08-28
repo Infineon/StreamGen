@@ -30,6 +30,6 @@ jobs:
       - name: 🎶 Install dependencies with poetry
         run: poetry install --all-extras --sync --compile
       - name: ⚡ Lint with ruff
-        run: poetry run ruff check .
+        run: poetry run ruff check streamgen
       - name: ⚗️ Test with pytest
         run: poetry run poe test

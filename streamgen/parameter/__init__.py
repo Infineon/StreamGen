@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 from copy import deepcopy
 from itertools import cycle
-from typing import Generic, Self, TypedDict, TypeVar
+from typing import Generic, Self, TypeAlias, TypedDict, TypeVar
 
 from beartype import beartype
 
@@ -127,7 +127,7 @@ class ParameterDict(Generic[T], TypedDict, total=False):
     strategy: ParameterOutOfRangeStrategy | ParameterOutOfRangeStrategyLit | None
 
 
-ScopedParameterDict = dict[str, ParameterDict | dict[str, ParameterDict]]
+ScopedParameterDict: TypeAlias = dict[str, ParameterDict | dict[str, ParameterDict]]
 """🔭📖 representation of multiple `streamgen.parameter.Parameter` as a dictionary.
 
 The dictionary can be nested one level to create parameter scopes.

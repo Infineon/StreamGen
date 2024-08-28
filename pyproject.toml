@@ -38,7 +38,7 @@ pandas = ">=2.2.1" # BSD 3-clause license
 matplotlib = ">=3.8.3" # custom license -> seems permissive
 seaborn = ">=0.13.2"   # multiple licenses -> seems permissive (like MIT) if licenses are included
 # ✍️ Typing
-beartype = ">=0.17.2" # MIT license
+beartype = "<0.18" # MIT license
 # 🖨️ Logging
 loguru = ">=0.7.2" # MIT license
 rich = ">=13.7.1"  # MIT license
@@ -122,6 +122,7 @@ ignore = [
     "EXE005",
     "PLR0913",
     "UP035",
+    "C901"
 ]
 
 [tool.ruff.lint.pydocstyle]

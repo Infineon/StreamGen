@@ -148,9 +148,9 @@ attrs==24.2.0 ; python_version >= "3.11" and python_version < "4.0" \
 babel==2.16.0 ; python_version >= "3.11" and python_version < "4.0" \
     --hash=sha256:368b5b98b37c06b7daf6696391c3240c938b37767d4584413e8438c5c435fa8b \
     --hash=sha256:d1f3554ca26605fe173f3de0c65f750f5a42f924499bf134de6423582298e316
-beartype==0.18.5 ; python_version >= "3.11" and python_version < "4.0" \
-    --hash=sha256:264ddc2f1da9ec94ff639141fbe33d22e12a9f75aa863b83b7046ffff1381927 \
-    --hash=sha256:5301a14f2a9a5540fe47ec6d34d758e9cd8331d36c4760fc7a5499ab86310089
+beartype==0.17.2 ; python_version >= "3.11" and python_version < "4.0" \
+    --hash=sha256:c22b21e1f785cfcf5c4d3d13070f532b6243a3ad67e68d2298ff08d539847dce \
+    --hash=sha256:e911e1ae7de4bccd15745f7643609d8732f64de5c2fb844e89cbbed1c5a8d495
 beautifulsoup4==4.12.3 ; python_version >= "3.11" and python_version < "4.0" \
     --hash=sha256:74e3d1928edc070d21748185c46e3fb33490f22f52a3addee9aee0f4f7781051 \
     --hash=sha256:b80878c9f40111313e55da8ba20bdba06d8fa3969fc68304167741bbf9e082ed
