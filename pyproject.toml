@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "streamgen"
-version = "1.0.2"
+version = "1.0.3"
 description = "🌌 a framework for generating streams of labeled data."
 authors = ["Laurenz A. Farthofer <laurenz@hey.com>"]
 packages = [{ include = "streamgen" }]

@@ -8,6 +8,17 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/) to build the 
 
 <!-- towncrier release notes start -->
 
+## [1.0.3](https://github.com/Infineon/StreamGen/tree/1.0.3) - 2024-08-29
+
+### ➖ Removed
+
+- 🐍 dropped support for python 3.10 ([#4](https://github.com/Infineon/StreamGen/issues/4))
+
+### 📦 Misc
+
+- 🤖 added CI github actions ([#3](https://github.com/Infineon/StreamGen/issues/3))
+
+
 ## [1.0.1](https://github.com/Infineon/StreamGen/tree/1.0.1) - 2024-08-19
 
 ### ➖ Removed
