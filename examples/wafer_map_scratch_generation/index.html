@@ -778,7 +778,6 @@
 <span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
-<span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span>
 <span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">draw</span>
 
 <span class="kn">from</span> <span class="nn">streamgen</span> <span class="kn">import</span> <span class="n">visualizations</span>
@@ -968,7 +967,7 @@
 </code></pre></div>
 
 <p><img alt="png" src="../wafer_map_scratch_generation-files/wafer_map_scratch_generation_9_0.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">tree</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="mi">10000</span><span class="p">))</span>
+<div class="codehilite"><pre><span></span><code><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">tree</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="mi">10000</span><span class="p">),</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code>Output()
