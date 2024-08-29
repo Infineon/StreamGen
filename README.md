@@ -202,18 +202,20 @@ The proposed tree structure can model all three common data drift scenarios by s
 
 ## 📦 Installation
 
-The basic version of the package (without special dependencies) can be installed from [PyPi](https://pypi.org/project/streamgen/) with:
+The graph visualizations require [Graphviz](https://www.graphviz.org/download/) to be installed on your system.
+
+The basic version of the package can be installed from [PyPi](https://pypi.org/project/streamgen/) with:
 ```sh
 pip install streamgen
 ```
 
-`streamgen` provides a few extras:
+`streamgen` provides a few (pip) extras:
 
 | extras group | needed for                                                                 | additional dependencies      |
 | ------------ | -------------------------------------------------------------------------- | ---------------------------- |
 | **examples** | running the example notebooks with their application specific dependencies | `perlin-numpy`, `polars`     |
-| **cl**       | continual learning frameworks                                              | `avalanche-lib`, `continuum` |
-| **all**      | shortcut for installing every extra                                        | * |
+| **cl**       | continual learning frameworks                                              | `continuum`                  |
+| **all**      | shortcut for installing every extra                                        | *                            |
 
 To install the package with specific extras execute:
 
