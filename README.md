@@ -176,7 +176,7 @@ Currently, `streamgen` does not support scheduling topological changes (like add
     <img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/unrolled_static_tree.png?raw=true"/></a>
 </p>
 
-> 💡 the directed acyclic graph above is not a tree anymore due to the *merging* of certain branches. Because these merges are very conveniently in certain scenarios, `streamgen` support the definition of such trees by copying the paths below the merge to every branch before the merge. For an example of this, have a look at `examples/time series classification/04-multi-label-generation.ipynb`.
+> 💡 the directed acyclic graph above is not a tree anymore due to the *merging* of certain branches. Because these merges are very convenient in certain scenarios, `streamgen` support the definition of such trees by copying the paths below the merge to every branch before the merge. For an example of this, have a look at `examples/time series classification/04-multi-label-generation.ipynb`.
 
 ### 📈 Data Drift Scenarios
 
