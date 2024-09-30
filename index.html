@@ -1198,7 +1198,7 @@ In python, you can use `functools.reduce` to create simple monoids:
 </p>
 
 <blockquote>
-<p>💡 the directed acyclic graph above is not a tree anymore due to the <em>merging</em> of certain branches. Because these merges are very conveniently in certain scenarios, <code>streamgen</code> support the definition of such trees by copying the paths below the merge to every branch before the merge. For an example of this, have a look at <code>examples/time series classification/04-multi-label-generation.ipynb</code>.</p>
+<p>💡 the directed acyclic graph above is not a tree anymore due to the <em>merging</em> of certain branches. Because these merges are very convenient in certain scenarios, <code>streamgen</code> support the definition of such trees by copying the paths below the merge to every branch before the merge. For an example of this, have a look at <code>examples/time series classification/04-multi-label-generation.ipynb</code>.</p>
 </blockquote>
 <h3 id="data-drift-scenarios">📈 Data Drift Scenarios</h3>
 <p>The proposed tree structure can model all three common data drift scenarios by scheduling the parameters of the transformations at specific nodes.</p>
@@ -1218,7 +1218,12 @@ In python, you can use `functools.reduce` to create simple monoids:
 </p>
 
 <h2 id="installation">📦 Installation</h2>
-<p>The graph visualizations require <a href="https://www.graphviz.org/download/">Graphviz</a> to be installed on your system.</p>
+<p>The graph visualizations require <a href="https://www.graphviz.org/download/">Graphviz</a> to be installed on your system. Depending on your operating system and package manager, you might try one of the following options:</p>
+<ul>
+<li>ubuntu: <code>sudo apt-get install graphviz</code></li>
+<li>windows: <code>choco install graphviz</code></li>
+<li>macOs: <code>brew install graphviz</code></li>
+</ul>
 <p>The basic version of the package can be installed from <a href="https://pypi.org/project/streamgen/">PyPi</a> with:</p>
 <div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>streamgen
 </code></pre></div>
