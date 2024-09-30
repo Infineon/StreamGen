@@ -1,0 +1,37 @@
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: MacOs CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - name: 🕸️ Install Graphviz
+        run: |
+          brew update
+          brew install graphviz
+      - uses: actions/checkout@v4
+      - name: 🐍 Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: Gr1N/setup-poetry@v9
+        with:
+          poetry-version: "1.8.3"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+      - name: 🎶 Install dependencies with poetry
+        run: poetry install --all-extras --sync --compile
+      - name: ⚡ Lint with ruff
+        run: poetry run ruff check streamgen
+      - name: ⚗️ Test with pytest
+        run: poetry run poe test

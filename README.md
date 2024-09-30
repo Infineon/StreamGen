@@ -202,7 +202,11 @@ The proposed tree structure can model all three common data drift scenarios by s
 
 ## 📦 Installation
 
-The graph visualizations require [Graphviz](https://www.graphviz.org/download/) to be installed on your system.
+The graph visualizations require [Graphviz](https://www.graphviz.org/download/) to be installed on your system. Depending on your operating system and package manager, you might try one of the following options:
+
+- ubuntu: `sudo apt-get install graphviz`
+- windows: `choco install graphviz`
+- macOs: `brew install graphviz`
 
 The basic version of the package can be installed from [PyPi](https://pypi.org/project/streamgen/) with:
 ```sh
