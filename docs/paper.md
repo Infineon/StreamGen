@@ -89,10 +89,8 @@ More declarative ways to build schedules and distributions with special characte
 
 This work was funded by the Austrian Research Promotion Agency (FFG, Project No. 905107).
 
-Special thanks to Benjamin Steinwender, Marius Birkenbach and Nikolaus Neugebauer for their valuable feedback.
-
-I  also want to thank Infineon and KAI for letting me publish this project under a permissive and open license.
-
+Special thanks to Benjamin Steinwender, Marius Birkenbach, Nikolaus Neugebauer, Matthew Feickert, Hoang Anh Ngo and Iztok Fister Jr. for their valuable feedback.
+I also want to thank Infineon and KAI for letting me publish this project under a permissive and open license.
 Finally, I want to thank my university supervisors Thomas Pock and Marc Masana for their guidance.
 
 # References
