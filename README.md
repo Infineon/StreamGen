@@ -14,7 +14,7 @@ a 🐍 Python framework for generating streams of labelled data
     <a href="https://pypi.org/project/streamgen/"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/streamgen?label=%F0%9F%93%A6%20PyPi">
 </a>
     <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a>
-    <a href="https://github.com/Infineon/StreamGen/actions/workflows/python-package.yaml"><img alt="🐍 Python package" src="https://github.com/Infineon/StreamGen/actions/workflows/python-package.yaml/badge.svg"></a>
+    <a href="https://github.com/Infineon/StreamGen/actions/workflows/python-package-ubuntu.yaml"><img alt="🐍 Python package" src="https://github.com/Infineon/StreamGen/actions/workflows/python-package-ubuntu.yaml/badge.svg"></a>
     <img alt="Static Badge" src="https://img.shields.io/badge/Coverage-88%25-yellow?logo=codecov">
 </p>
 
