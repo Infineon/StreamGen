@@ -35,7 +35,7 @@ Such a tree comprised of fixed transformations represents a static, class-condit
 StreamGen implements the following **abstractions** and utility functions to design data streams:
 
 - Classes and functions to construct, schedule and visualize time-dependent parameters
-- A selection of custom nodes based on [anytree](https://github.com/c0fec0de/anytree)'s `NodeMixin` [@c0fec0de_anytree_2016]
+- A selection of custom nodes based on the `NodeMixin` from [anytree](https://github.com/c0fec0de/anytree) [@c0fec0de_anytree_2016]
 - A `SamplingTree` class with:
   - A pythonic short-hand construction via nested lists and dictionaries
   - Parameter scheduling and configuration of all nodes via one `update()` call
@@ -49,12 +49,12 @@ The documentation also contains different stream generation examples:
 2. An analog version of the WM811k dataset [@wu_wafer_2015] (binary images) with covariate shift for Domain Adaptation research
 3. A defect density wafer map dataset with geometrically generated patterns
 
-![Changes in the topology of the tree of transformations are one possibility to represent evolving (time-dependent) distributions with different data drift scenarios. In this example, the sampling function and transformations labelled as $d$ represent the *domain* - the data distribution common to all classes. $c$ and $nc$ represent class-specific transformations responsible for adding the class-specific parts of the signal. By changing the parameters or the transformations of the tree's root (the sequence of transformations before the first branching point), **covariate shift** can be simulated. By changing the probabilities of the branching points, (class-) **prior-probability shift** can be simulated. Concept shift is modelled through a change in the class-specific branches. New classes can be introduced by adding branches to the tree and new domains can be introduced by exchanging the trunk of the tree.\label{fig:parameter_schedule}](images/data_drifts_by_topology_changes.png){ width=100% }
+![Changes in the topology of the tree of transformations are one possibility to represent evolving (time-dependent) distributions with different data drift scenarios. \label{fig:parameter_schedule}](images/data_drifts_by_topology_changes.png){ width=100% }
 
 # Statement of need
 
 Most machine learning systems rely on *stationary, labeled, balanced and large-scale* datasets.
-**Incremental learning** (IL), also referred to as **lifelong learning** (LL) or **continual learning** (CL), extends the traditional paradigm to dynamic and evolving environments, where learners need to acquire knowledge continually from a stream of experiences (as opposed to learning those concepts jointly from a single dataset) without forgetting concepts from past experiences - a phenomenon referred to as catastrophic forgetting [@masana_class-incremental_2022].
+**Incremental learning** (IL), also referred to as **lifelong learning** (LL) or **continual learning** (CL), extends the traditional paradigm to dynamic and evolving environments, where learners need to acquire knowledge continually from a stream of experiences (as opposed to learning those concepts jointly from a single dataset) without forgetting concepts from past experiences &mdash; a phenomenon referred to as catastrophic forgetting [@masana_class-incremental_2022].
 
 Existing CL frameworks like [avalanche](https://github.com/ContinualAI/avalanche) [@lomonaco_avalanche_2021] or [continuum](https://github.com/Continvvm/continuum) [@douillard_continuum_2021] construct data streams by *splitting* large classification datasets into multiple *experiences* containing different classes (class-incremental learning), which has a few shortcomings:
 
@@ -77,11 +77,7 @@ StreamGen builds on these ideas and provides researchers with a general and intu
 
 # Future work
 
-The generation of multi-label samples requires loops and cycles for a compact and convenient representation. Such scenarios are still representable with tree data structures by unrolling these cycles through many redundant paths and transformations. A representation using less restricted types of graphs presents an interesting future extension to the framework.
-
-StreamGen already defines protocols and base classes to include different sampler concepts in the future.
-
-More declarative ways to build schedules and distributions with special characteristic represent other promising extensions.
+The generation of multi-label samples requires loops and cycles for a compact and convenient representation. Such scenarios are still representable with tree data structures by unrolling these cycles through many redundant paths and transformations. A representation using less restricted types of graphs presents an interesting future extension to the framework. StreamGen already defines protocols and base classes to include different sampler concepts in the future. More declarative ways to build schedules and distributions with special characteristic represent other promising extensions.
 
 # Acknowledgements
 
