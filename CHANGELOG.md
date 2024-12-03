@@ -8,6 +8,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/) to build the 
 
 <!-- towncrier release notes start -->
 
+## [1.0.4](https://github.com/Infineon/StreamGen/tree/1.0.4) - 2024-12-03
+
+### 📦 Misc
+
+- 📦 lowered anytree version constraint to >=2.7 ([#7](https://github.com/Infineon/StreamGen/issues/7))
+
+
 ## [1.0.3](https://github.com/Infineon/StreamGen/tree/1.0.3) - 2024-08-29
 
 ### ➖ Removed
