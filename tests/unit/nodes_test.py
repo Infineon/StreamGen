@@ -34,7 +34,7 @@ def add(input: int, number):  # noqa: A002
 # ---------------------------------------------------------------------------- #
 
 
-@pytest.fixture()
+@pytest.fixture
 def multiple_params():
     return ParameterStore(
         Parameter("inc", schedule=[2, 3]),
@@ -42,7 +42,7 @@ def multiple_params():
     )
 
 
-@pytest.fixture()
+@pytest.fixture
 def single_param():
     return Parameter("inc", schedule=[2, 3])
 
@@ -108,7 +108,7 @@ def test_class_label_node():
     """🏷️tests the labelling process using `ClassLabelNode`."""
     tree = SamplingTree(
         [
-            lambda input: 0,  # noqa: A002, ARG005
+            lambda input: 0,  # noqa: ARG005
             {
                 "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
                 "1": [
@@ -142,7 +142,7 @@ def test_sample_buffer_node() -> None:
     buffer = SampleBufferNode(num_samples=3)
     tree = SamplingTree(
         [
-            lambda input: 0,  # noqa: A002, ARG005
+            lambda input: 0,  # noqa: ARG005
             {
                 "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
                 "1": [

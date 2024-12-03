@@ -281,7 +281,7 @@ def test_merging_after_branching():
     """🪴🔀 tests the merging of branches."""
     tree = SamplingTree(
         [
-            lambda input: 0,  # noqa: A002, ARG005
+            lambda input: 0,  # noqa: ARG005
             {
                 "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
                 "1": [
@@ -369,7 +369,7 @@ def test_tree_visualization(tmp_path):
                     },
                 ],
             },
-            TransformNode(lambda input, offset: input + offset, name="postprocessing_offset", emoji="➕"),  # noqa: A002
+            TransformNode(lambda input, offset: input + offset, name="postprocessing_offset", emoji="➕"),
         ],
         params,
     )
@@ -410,7 +410,7 @@ def test_get_paths():
 
     tree = SamplingTree(
         [
-            lambda input: 0,  # noqa: A002, ARG005
+            lambda input: 0,  # noqa: ARG005
             {
                 "class": [
                     add,

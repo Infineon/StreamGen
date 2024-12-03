@@ -95,7 +95,8 @@ exclude = [
     "__pypackages__",
     "dist",
     "venv",
-    "examples/perlin_numpy.py",
+    "tests",
+    "examples"
 ]
 line-length = 140
 target-version = "py311"
@@ -111,11 +112,10 @@ docstring-code-format = true
 select = ["ALL"]
 ignore = [
     "RUF001",
-    "ANN101",
     "D211",
     "D213",
     "EXE003",
-    "TCH003",
+    "TC003",
     "TD002",
     "PD901",
     "EXE001",

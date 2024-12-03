@@ -46,7 +46,7 @@ def add(input: int, number):  # noqa: A002
 # ---------------------------------------------------------------------------- #
 
 
-@pytest.fixture()
+@pytest.fixture
 def tree() -> SamplingTree:
     """A simple sampling tree that generates labeled time series."""
     params = ParameterStore(

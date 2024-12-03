@@ -161,7 +161,7 @@ class ClassLabelNode(TransformNode):
     def __init__(  # noqa: D107
         self,
         label: str | int,
-        label_func: Callable[[Any, str | int], Any] = lambda input, label: (input, label),  # noqa: A002
+        label_func: Callable[[Any, str | int], Any] = lambda input, label: (input, label),
     ) -> None:
         self.label = label
         self.label_func = label_func
