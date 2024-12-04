@@ -1,9 +1,29 @@
-cff-version: 1.1.0
-message: "🤚 if you use this software, please cite it as below:"
-authors:
-- family-names: Farthofer
-  given-names: Laurenz
-orcid: https://orcid.org/0000-0003-1477-1327
-title: StreamGen: a Python framework for generating streams of labeled data
-version: 1.0.5
-date-released: 2024-12-04
+cff-version: 1.2.0
+message: 🤚 if you use this software, please cite it using these metadata.
+title: >-
+  StreamGen: a Python framework for generating streams of labeled data
+type: journalArticle
+license: MIT
+copyright: Copyright (c) 2024 Infineon Technologies AG. All rights reserved.
+journal: JOSS
+url: https://github.com/Infineon/StreamGen
+keywords: 
+  - Python
+  - Data Generation
+  - Synthetic Data
+  - Data Streams
+  - Continual Learning
+  - Function Composition
+authors: 
+  - family-names: Farthofer
+    given-names: Laurenz A.
+editors: 
+  - family-names: Feickert
+    given-names: Matthew
+recipients: 
+  - family-names: Farthofer
+    given-names: Laurenz A.
+translators: 
+  - family-names: Farthofer
+    given-names: Laurenz A.
+date-published: 2024-12-04
