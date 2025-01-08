@@ -8,6 +8,15 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/) to build the 
 
 <!-- towncrier release notes start -->
 
+## [1.1.0](https://github.com/Infineon/StreamGen/tree/1.1.0) - 2025-01-08
+
+### ➕ Added
+
+- 📲 implemented `__setitem__` method for ParameterStore ([#9](https://github.com/Infineon/StreamGen/issues/9))
+- 🤘 add additional shorthand initialization of a `ParameterStore` for Parameters without a schedule. ([#10](https://github.com/Infineon/StreamGen/issues/10))
+- 🔮 global scope parameter passing logic. ([#11](https://github.com/Infineon/StreamGen/issues/11))
+
+
 ## [1.0.6](https://github.com/Infineon/StreamGen/tree/1.0.6) - 2025-01-08
 
 ### 📦 Misc
