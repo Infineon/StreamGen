@@ -20,7 +20,7 @@ a 🐍 Python framework for generating streams of labelled data
 
 <p align="center">
     <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.11|3.12-yellow?logo=python"></a>
-    <a href="https://python-poetry.org/"><img alt="Poetry" src="https://img.shields.io/badge/Poetry-1.8.2-blue?logo=Poetry"></a>
+    <a href="https://python-poetry.org/"><img alt="Poetry" src="https://img.shields.io/badge/Poetry-2.0.0-blue?logo=Poetry"></a>
     <a href="https://joss.theoj.org/papers/4b6bac90bd1eb54700f8afb9f32caebe"><img src="https://joss.theoj.org/papers/4b6bac90bd1eb54700f8afb9f32caebe/status.svg"></a>
     <a href="https://zenodo.org/records/14273611"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.14273611.svg"></a>
 </p>

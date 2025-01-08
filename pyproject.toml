@@ -1,13 +1,12 @@
-[tool.poetry]
+[project]
 name = "streamgen"
-version = "1.0.5"
+version = "1.0.6"
 description = "🌌 a framework for generating streams of labeled data."
-authors = ["Laurenz A. Farthofer <laurenz@hey.com>"]
-packages = [{ include = "streamgen" }]
+authors = [
+    {name = "Laurenz Farthofer", email = "laurenz@hey.com"}
+]
 readme = "README.md"
 license = "MIT"
-repository = "https://github.com/Infineon/StreamGen"
-documentation = "https://infineon.github.io/StreamGen/"
 keywords = [
     "Python",
     "Data Generation",
@@ -17,7 +16,14 @@ keywords = [
     "Function Composition",
 ]
 
+[tool.poetry]
+requires-poetry = ">=2.0"
+packages = [{ include = "streamgen" }]
+repository = "https://github.com/Infineon/StreamGen"
+documentation = "https://infineon.github.io/StreamGen/"
+
 [tool.poe.tasks]
+export = "poetry export -f requirements.txt --with dev --all-extras --without-hashes --without-urls -o requirements.txt"
 test = "coverage run --source=streamgen -m pytest -vv --durations=8"
 convert_notebooks = "jupyter nbconvert --to markdown --config .jupyter/cfg.py"
 publish_documentation = "portray on_github_pages"
@@ -231,5 +237,5 @@ name = "📦 Misc"
 showcontent = true
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0"]
 build-backend = "poetry.core.masonry.api"
