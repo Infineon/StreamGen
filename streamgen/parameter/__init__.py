@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 from copy import deepcopy
 from itertools import cycle
-from typing import Generic, Self, TypeAlias, TypedDict, TypeVar
+from typing import Any, Generic, Self, TypeAlias, TypedDict, TypeVar
 
 from beartype import beartype
 
@@ -127,7 +127,12 @@ class ParameterDict(Generic[T], TypedDict, total=False):
     strategy: ParameterOutOfRangeStrategy | ParameterOutOfRangeStrategyLit | None
 
 
-ScopedParameterDict: TypeAlias = dict[str, ParameterDict | dict[str, ParameterDict]]
+def is_parameter(d: dict) -> bool:
+    """❓📖 check wether a dictionary has the fields of a `ParameterDict`."""
+    return "value" in d or "schedule" in d
+
+
+ScopedParameterDict: TypeAlias = dict[str, Any | ParameterDict | dict[str, Any | ParameterDict]]
 """🔭📖 representation of multiple `streamgen.parameter.Parameter` as a dictionary.
 
 The dictionary can be nested one level to create parameter scopes.
@@ -144,6 +149,7 @@ Examples:
                 "name": "var2", # can be present, but is not needed
                 "schedule": [0.1, 0.2, 0.3],
             },
+            "var3": 42, # shorthand for a parameter without a schedule
             "scope1": {
                 "var1": { # var1 can be used again since its inside a scope
                     "value": 1,

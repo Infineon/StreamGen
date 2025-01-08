@@ -62,12 +62,14 @@ def test_parameter_dict_initialization() -> None:
             "name": "var2",  # can be present, but is not needed
             "schedule": [0.0, 1.0, 0.3],
         },
+        "var3": 42, # shorthand for a parameter without a schedule
     }
 
     store = ParameterStore(params)
 
     assert store["var1"].value == 1
     assert store["var2"].value == 0.0
+    assert store["var3"].value == 42
 
     store.update()
 
@@ -150,12 +152,14 @@ def test_scoped_parameter_dict_initialization() -> None:
             "name": "var2",  # can be present, but is not needed
             "schedule": [0.1, 0.2, 0.3],
         },
+        "var3": 42, # shorthand for a parameter without a schedule
         "scope1": {
             "var1": {  # var1 can be used again since its inside a scope
                 "value": -1,
                 "schedule": [-2, -3],
                 "strategy": "cycle",
             },
+            "var2": 42, # shorthand for a parameter without a schedule
         },
     }
 
@@ -163,7 +167,9 @@ def test_scoped_parameter_dict_initialization() -> None:
 
     assert store["var1"].value == 1
     assert store["var2"].value == 0.1
+    assert store["var3"].value == 42
     assert store["scope1.var1"].value == -1
+    assert store["scope1.var2"].value == 42
     assert store.scopes == {"scope1"}
 
     store.update()

@@ -7,7 +7,7 @@ from beartype import beartype
 from loguru import logger
 from rich.pretty import pretty_repr
 
-from streamgen.parameter import Parameter, ScopedParameterDict
+from streamgen.parameter import Parameter, ScopedParameterDict, is_parameter
 
 
 @beartype()
@@ -35,6 +35,7 @@ class ParameterStore:
                         "name": "var2", # can be present, but is not needed
                         "schedule": [0.1, 0.2, 0.3],
                     },
+                    "var3": 42, # shorthand for a parameter without a schedule
                     "scope1": {
                         "var1": { # var1 can be used again since its inside a scope
                             "value": 1,
@@ -67,24 +68,33 @@ class ParameterStore:
                 self.parameters = {}
                 self.parameter_names: set[str] = set()
 
-                for key, dictionary in parameters.items():
-                    if self._dict_depth(dictionary) == 2:  # then key is a scope name  # noqa: PLR2004
-                        scope = key
-                        self.scopes.add(scope)
-                        self.parameters[scope] = {}
-                        # remove `name` entries since they are redundant
-                        for name, parameter_kwargs in parameters[scope].items():
-                            parameter_kwargs.pop("name", None)
-                            self.parameters[scope][name] = Parameter(name=name, **parameter_kwargs)
-                            self.parameter_names.add(f"{scope}.{name}")
-                    elif self._dict_depth(dictionary) == 1:  # otherwise its a top-level parameter
-                        name = key
-                        parameters[key].pop("name", None)
-                        self.parameters[name] = Parameter(name=name, **parameters[key])
-                        self.parameter_names.add(name)
-                    else:
-                        logger.warning("📚 parameters of type `ScopedParameterDict` should not be nested more than two levels.")
-                        raise ValueError
+                for key, value in parameters.items():
+                    if type(value) is not dict:  # shorthand for parameters without a schedule
+                        self.parameters[key] = Parameter(key, value)
+                        self.parameter_names.add(key)
+                    else:  # check if the value is a parameter or a scope
+                        if self._dict_depth(value) > 2:  # noqa: PLR2004
+                            logger.warning("📚 parameters of type `ScopedParameterDict` should not be nested more than two levels.")
+                            raise ValueError
+                        # check if the dictionary contains a value or a schedule key
+                        if is_parameter(value):
+                            name = key
+                            parameters[key].pop("name", None)
+                            self.parameters[name] = Parameter(name=name, **parameters[key])
+                            self.parameter_names.add(name)
+                        else:  # must be a scope:
+                            scope = key
+                            self.scopes.add(scope)
+                            self.parameters[scope] = {}
+                            # remove `name` entries since they are redundant
+                            for name, value in parameters[scope].items():  # noqa: PLW2901
+                                if type(value) is not dict:  # shorthand for parameters without a schedule
+                                    self.parameters[scope][name] = Parameter(name, value)
+                                    self.parameter_names.add(f"{scope}.{name}")
+                                else:
+                                    value.pop("name", None)
+                                    self.parameters[scope][name] = Parameter(name=name, **value)
+                                    self.parameter_names.add(f"{scope}.{name}")
 
     @staticmethod
     def _dict_depth(dictionary: Any) -> int:  # noqa: ANN401

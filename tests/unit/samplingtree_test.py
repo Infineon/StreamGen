@@ -51,20 +51,19 @@ def add(input: int, number):  # noqa: A002
 
 def test_sampling_tree_decision_node_with_probs():
     """Tests the initialization, sampling and parameter fetching of a `SamplingTree`."""
-    params = ParameterStore(
-        {
-            "noise": {
-                "size": {
-                    "schedule": [16, 18],
-                },
-            },
-            "add_random_points": {
-                "num_points": {
-                    "schedule": [1, 8],
-                },
+    params = {
+        "noise": {
+            "size": {
+                "schedule": [16, 18],
             },
         },
-    )
+        "add_random_points": {
+            "num_points": {
+                "schedule": [1, 8],
+            },
+        },
+    }
+
     tree = SamplingTree(
         [
             noise,

@@ -224,18 +224,19 @@ class SamplingTree(Sampler):
     Args:
         nodes (list[Callable | TransformNode | dict| str]): pythonic short-hand description of a graph/tree.
             `streamgen.samplers.tree.construct_tree` will be called to construct the tree.
-        params (ParameterStore | DataFrame | None, optional): parameter store containing additional parameters
-            that are passed to the nodes based on the scope. Dataframes will be converted to `ParameterStore`. Defaults to None.
+        params (ParameterStore | dict | DataFrame | None, optional): parameter store containing additional parameters
+            that are passed to the nodes based on the scope. Dataframes and dictionaries will be converted to `ParameterStore`.
+            Defaults to None.
         collate_func (Callable[[list[Any]], Any] | None, optional): function to collate samples when using `self.collect(num_samples)`.
             If None, return a list of samples. Defaults to None.
-        string_node (Callable[[str], TransformNode], optional): `TransfromNode` constructor from strings used in `construct_tree`.
+        string_node (Callable[[str], TransformNode], optional): `TransformNode` constructor from strings used in `construct_tree`.
             Defaults to `ClassLabelNode`.
     """
 
     def __init__(  # noqa: D107
         self,
         nodes: list[Callable | TransformNode | dict | str],
-        params: ParameterStore | DataFrame | None = None,
+        params: ParameterStore | dict | DataFrame | None = None,
         collate_func: Callable[[list[Any]], Any] | None = None,
         string_node: Callable[[str], TransformNode] = ClassLabelNode,
     ) -> None:
@@ -250,6 +251,8 @@ class SamplingTree(Sampler):
                 self.params = ParameterStore.from_dataframe(params)
             case ParameterStore():
                 self.params = params
+            case dict():
+                self.params = ParameterStore(params)
 
         # pass parameters to nodes
         for node in self.nodes:
