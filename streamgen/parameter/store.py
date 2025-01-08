@@ -18,7 +18,7 @@ class ParameterStore:
     All top-level parameters are considered as having `scope=None`.
 
     Args:
-        parameters (list[Parameter] | ScopedParameterDict): parameters to store
+        parameters (None | list[Parameter] | ScopedParameterDict, optional): parameters to store. Defaults to None.
 
     Raises:
         ValueError: if `parameters` are of type `ScopedParameterDict` and are nested more than two levels.
@@ -52,9 +52,13 @@ class ParameterStore:
             })
     """
 
-    def __init__(self, parameters: list[Parameter] | ScopedParameterDict) -> None:  # noqa: D107
+    def __init__(self, parameters: None | list[Parameter] | ScopedParameterDict = None) -> None:  # noqa: D107
         self.scopes: set[str] = set()
         match parameters:
+            case None:
+                self.parameters = {}
+                self.parameter_names = set()
+
             case list(parameters):
                 self.parameters: dict[str, Parameter] = {p.name: p for p in parameters}
                 self.parameter_names: set[str] = {p.name for p in parameters}
@@ -72,11 +76,12 @@ class ParameterStore:
                         for name, parameter_kwargs in parameters[scope].items():
                             parameter_kwargs.pop("name", None)
                             self.parameters[scope][name] = Parameter(name=name, **parameter_kwargs)
-                            self.parameter_names.add(f"{scope}.{self.parameters[scope][name].name}")
+                            self.parameter_names.add(f"{scope}.{name}")
                     elif self._dict_depth(dictionary) == 1:  # otherwise its a top-level parameter
+                        name = key
                         parameters[key].pop("name", None)
-                        self.parameters[key] = Parameter(name=key, **parameters[key])
-                        self.parameter_names.add(self.parameters[key].name)
+                        self.parameters[name] = Parameter(name=name, **parameters[key])
+                        self.parameter_names.add(name)
                     else:
                         logger.warning("📚 parameters of type `ScopedParameterDict` should not be nested more than two levels.")
                         raise ValueError
@@ -117,6 +122,32 @@ class ParameterStore:
             return self.parameters[scope][name]
 
         return self.parameters[name]
+
+    def __setitem__(self, name: str, value: Parameter | Any) -> None:  # noqa: ANN401
+        """🫱 sets a parameter using `store[name] = value` syntax.
+
+        Scoped parameters are set using `{scope}.{parameter.name}` as the `name`.
+
+        Args:
+            name (str): (possibly scoped) name of the parameter
+            value (Parameter | Any): the parameter to set. If `value` is not of
+                type `Parameter`, one without a schedule will be constructed.
+        """
+        if not isinstance(value, Parameter):
+            value = Parameter(value=value)
+
+        if "." in name:
+            scope, name = name.split(".")
+            if scope not in self.scopes:
+                self.scopes.add(scope)
+                self.parameters[scope] = {}
+            value.name = name
+            self.parameters[scope][name] = value
+            self.parameter_names.add(f"{scope}.{name}")
+        else:
+            value.name = name
+            self.parameters[name] = value
+            self.parameter_names.add(f"{name}")
 
     def set_update_step(self, idx: int) -> None:
         """🕐 updates every parameter of `self` to a certain update step using `param[idx]`.

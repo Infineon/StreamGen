@@ -18,6 +18,15 @@ def test_parameter_empty_list_initialization() -> None:
     assert store.scopes == set()
 
 
+def test_parameter_empty_initialization() -> None:
+    """Tests the empty list initialization behavior of a parameter store."""
+    store = ParameterStore()
+
+    assert store.parameters == {}
+    assert store.parameter_names == set()
+    assert store.scopes == set()
+
+
 def test_parameter_list_initialization() -> None:
     """Tests the list initialization behavior of a parameter store."""
     params = [
@@ -64,6 +73,29 @@ def test_parameter_dict_initialization() -> None:
 
     assert store["var1"].value == 2
     assert store["var2"].value == 1.0
+
+
+def test_parameter_dict_setitem() -> None:
+    """Tests the dynamic setting of parameters."""
+    params = {
+        "var1": {
+            "value": 1,
+            "schedule": [2, 3],
+            "strategy": "cycle",
+        },
+        "var2": {
+            "name": "var2",  # can be present, but is not needed
+            "schedule": [0.0, 1.0, 0.3],
+        },
+    }
+
+    store = ParameterStore(params)
+
+    store["var3"] = Parameter("var3", 42)
+    store["nested.var4"] = (1,2)
+
+    assert store.scopes == {"nested"}
+    assert store.parameter_names == {"var1", "var2", "var3", "nested.var4"}
 
 
 def test_updating_parameters_by_index() -> None:
