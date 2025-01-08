@@ -1598,15 +1598,17 @@
 
 <span class="sd">            `streamgen.samplers.tree.construct_tree` will be called to construct the tree.</span>
 
-<span class="sd">        params (ParameterStore | DataFrame | None, optional): parameter store containing additional parameters</span>
+<span class="sd">        params (ParameterStore | dict | DataFrame | None, optional): parameter store containing additional parameters</span>
 
-<span class="sd">            that are passed to the nodes based on the scope. Dataframes will be converted to `ParameterStore`. Defaults to None.</span>
+<span class="sd">            that are passed to the nodes based on the scope. Dataframes and dictionaries will be converted to `ParameterStore`.</span>
+
+<span class="sd">            Defaults to None.</span>
 
 <span class="sd">        collate_func (Callable[[list[Any]], Any] | None, optional): function to collate samples when using `self.collect(num_samples)`.</span>
 
 <span class="sd">            If None, return a list of samples. Defaults to None.</span>
 
-<span class="sd">        string_node (Callable[[str], TransformNode], optional): `TransfromNode` constructor from strings used in `construct_tree`.</span>
+<span class="sd">        string_node (Callable[[str], TransformNode], optional): `TransformNode` constructor from strings used in `construct_tree`.</span>
 
 <span class="sd">            Defaults to `ClassLabelNode`.</span>
 
@@ -1618,7 +1620,7 @@
 
         <span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Callable</span> <span class="o">|</span> <span class="n">TransformNode</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span><span class="p">],</span>
 
-        <span class="n">params</span><span class="p">:</span> <span class="n">ParameterStore</span> <span class="o">|</span> <span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">ParameterStore</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">|</span> <span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 
         <span class="n">collate_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 
@@ -1643,6 +1645,10 @@
             <span class="k">case</span> <span class="n">ParameterStore</span><span class="p">():</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+
+            <span class="k">case</span> <span class="nb">dict</span><span class="p">():</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">ParameterStore</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 
         <span class="c1"># pass parameters to nodes</span>
 
@@ -3147,7 +3153,7 @@ Node('/Udo')</p>
 <h3 id="samplingtree">SamplingTree</h3>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SamplingTree</span><span class="p">(</span>
     <span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span> <span class="o">|</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">TransformNode</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span><span class="p">],</span>
-    <span class="n">params</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span> <span class="o">|</span> <span class="n">pandas</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">|</span> <span class="n">pandas</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">collate_func</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">list</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">string_node</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">TransformNode</span><span class="p">]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="err">&#39;</span><span class="nc">streamgen</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">ClassLabelNode</span><span class="s1">&#39;&gt;</span>
 <span class="p">)</span>
@@ -3175,8 +3181,8 @@ Node('/Udo')</p>
 <tr>
 <td>params</td>
 <td>ParameterStore</td>
+<td>dict</td>
 <td>DataFrame</td>
-<td>None</td>
 </tr>
 <tr>
 <td>collate_func</td>
@@ -3187,7 +3193,7 @@ Node('/Udo')</p>
 <tr>
 <td>string_node</td>
 <td>Callable[[str], TransformNode]</td>
-<td><code>TransfromNode</code> constructor from strings used in <code>construct_tree</code>.<br>Defaults to <code>ClassLabelNode</code>.</td>
+<td><code>TransformNode</code> constructor from strings used in <code>construct_tree</code>.<br>Defaults to <code>ClassLabelNode</code>.</td>
 <td>None</td>
 </tr>
 </tbody>
@@ -3206,15 +3212,17 @@ Node('/Udo')</p>
 
 <span class="sd">            `streamgen.samplers.tree.construct_tree` will be called to construct the tree.</span>
 
-<span class="sd">        params (ParameterStore | DataFrame | None, optional): parameter store containing additional parameters</span>
+<span class="sd">        params (ParameterStore | dict | DataFrame | None, optional): parameter store containing additional parameters</span>
 
-<span class="sd">            that are passed to the nodes based on the scope. Dataframes will be converted to `ParameterStore`. Defaults to None.</span>
+<span class="sd">            that are passed to the nodes based on the scope. Dataframes and dictionaries will be converted to `ParameterStore`.</span>
+
+<span class="sd">            Defaults to None.</span>
 
 <span class="sd">        collate_func (Callable[[list[Any]], Any] | None, optional): function to collate samples when using `self.collect(num_samples)`.</span>
 
 <span class="sd">            If None, return a list of samples. Defaults to None.</span>
 
-<span class="sd">        string_node (Callable[[str], TransformNode], optional): `TransfromNode` constructor from strings used in `construct_tree`.</span>
+<span class="sd">        string_node (Callable[[str], TransformNode], optional): `TransformNode` constructor from strings used in `construct_tree`.</span>
 
 <span class="sd">            Defaults to `ClassLabelNode`.</span>
 
@@ -3226,7 +3234,7 @@ Node('/Udo')</p>
 
 <span class="w">        </span><span class="n">nodes</span><span class="p">:</span><span class="w"> </span><span class="n">list</span><span class="p">[</span><span class="n">Callable</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">TransformNode</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">dict</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">str</span><span class="p">],</span>
 
-<span class="w">        </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">DataFrame</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">None</span><span class="p">,</span>
+<span class="w">        </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">dict</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">DataFrame</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">None</span><span class="p">,</span>
 
 <span class="w">        </span><span class="n">collate_func</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">[[</span><span class="n">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]],</span><span class="w"> </span><span class="n">Any</span><span class="p">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">None</span><span class="p">,</span>
 
@@ -3251,6 +3259,10 @@ Node('/Udo')</p>
 <span class="w">            </span><span class="n">case</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">():</span>
 
 <span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span>
+
+<span class="w">            </span><span class="n">case</span><span class="w"> </span><span class="n">dict</span><span class="p">():</span>
+
+<span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 
 <span class="w">        </span><span class="c1"># pass parameters to nodes</span>
 

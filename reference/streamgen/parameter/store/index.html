@@ -1002,7 +1002,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.pretty</span><span class="w"> </span><span class="kn">import</span> <span class="n">pretty_repr</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameter</span><span class="p">,</span> <span class="n">ScopedParameterDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameter</span><span class="p">,</span> <span class="n">ScopedParameterDict</span><span class="p">,</span> <span class="n">is_parameter</span>
 
 <span class="nd">@beartype</span><span class="p">()</span>
 
@@ -1016,7 +1016,7 @@
 
 <span class="sd">    Args:</span>
 
-<span class="sd">        parameters (list[Parameter] | ScopedParameterDict): parameters to store</span>
+<span class="sd">        parameters (None | list[Parameter] | ScopedParameterDict, optional): parameters to store. Defaults to None.</span>
 
 <span class="sd">    Raises:</span>
 
@@ -1045,6 +1045,8 @@
 <span class="sd">                        &quot;schedule&quot;: [0.1, 0.2, 0.3],</span>
 
 <span class="sd">                    },</span>
+
+<span class="sd">                    &quot;var3&quot;: 42, # shorthand for a parameter without a schedule</span>
 
 <span class="sd">                    &quot;scope1&quot;: {</span>
 
@@ -1076,11 +1078,17 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Parameter</span><span class="p">]</span> <span class="o">|</span> <span class="n">ScopedParameterDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: D107</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Parameter</span><span class="p">]</span> <span class="o">|</span> <span class="n">ScopedParameterDict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: D107</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
         <span class="k">match</span> <span class="n">parameters</span><span class="p">:</span>
+
+            <span class="k">case</span> <span class="kc">None</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
             <span class="k">case</span> <span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
 
@@ -1094,39 +1102,59 @@
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
-                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">dictionary</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
-                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># then key is a scope name  # noqa: PLR2004</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">dict</span><span class="p">:</span>  <span class="c1"># shorthand for parameters without a schedule</span>
 
-                        <span class="n">scope</span> <span class="o">=</span> <span class="n">key</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-                        <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
-                        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">else</span><span class="p">:</span>  <span class="c1"># check if the value is a parameter or a scope</span>
 
-                        <span class="c1"># remove `name` entries since they are redundant</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># noqa: PLR2004</span>
 
-                        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">parameter_kwargs</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;📚 parameters of type `ScopedParameterDict` should not be nested more than two levels.&quot;</span><span class="p">)</span>
 
-                            <span class="n">parameter_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                            <span class="k">raise</span> <span class="ne">ValueError</span>
 
-                            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">parameter_kwargs</span><span class="p">)</span>
+                        <span class="c1"># check if the dictionary contains a value or a schedule key</span>
 
-                            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">is_parameter</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
 
-                    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># otherwise its a top-level parameter</span>
+                            <span class="n">name</span> <span class="o">=</span> <span class="n">key</span>
 
-                        <span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                            <span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-                        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
 
-                        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
-                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">else</span><span class="p">:</span>  <span class="c1"># must be a scope:</span>
 
-                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;📚 parameters of type `ScopedParameterDict` should not be nested more than two levels.&quot;</span><span class="p">)</span>
+                            <span class="n">scope</span> <span class="o">=</span> <span class="n">key</span>
 
-                        <span class="k">raise</span> <span class="ne">ValueError</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+
+                            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+                            <span class="c1"># remove `name` entries since they are redundant</span>
+
+                            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>  <span class="c1"># noqa: PLW2901</span>
+
+                                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">dict</span><span class="p">:</span>  <span class="c1"># shorthand for parameters without a schedule</span>
+
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                                <span class="k">else</span><span class="p">:</span>
+
+                                    <span class="n">value</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">value</span><span class="p">)</span>
+
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
 
@@ -1181,6 +1209,50 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Parameter</span> <span class="o">|</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: ANN401</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🫱 sets a parameter using `store[name] = value` syntax.</span>
+
+<span class="sd">        Scoped parameters are set using `{scope}.{parameter.name}` as the `name`.</span>
+
+<span class="sd">        Args:</span>
+
+<span class="sd">            name (str): (possibly scoped) name of the parameter</span>
+
+<span class="sd">            value (Parameter | Any): the parameter to set. If `value` is not of</span>
+
+<span class="sd">                type `Parameter`, one without a schedule will be constructed.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">):</span>
+
+            <span class="n">value</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+
+            <span class="n">scope</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">scope</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="n">value</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+
+            <span class="n">value</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">set_update_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
@@ -1399,7 +1471,7 @@
 <h2 id="classes">Classes</h2>
 <h3 id="parameterstore">ParameterStore</h3>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ParameterStore</span><span class="p">(</span>
-    <span class="n">parameters</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">Parameter</span><span class="p">]</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">ParameterDict</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">ParameterDict</span><span class="p">]]</span>
+    <span class="n">parameters</span><span class="p">:</span> <span class="kc">None</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">Parameter</span><span class="p">]</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">|</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">ParameterDict</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">|</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">ParameterDict</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -1419,9 +1491,9 @@ All top-level parameters are considered as having <code>scope=None</code>.</p>
 <tbody>
 <tr>
 <td>parameters</td>
+<td>None</td>
 <td>list[Parameter]</td>
 <td>ScopedParameterDict</td>
-<td>parameters to store</td>
 </tr>
 </tbody>
 </table>
@@ -1439,7 +1511,7 @@ All top-level parameters are considered as having <code>scope=None</code>.</p>
 
 <span class="ss">    Args:</span>
 
-<span class="ss">        parameters (list[Parameter] | ScopedParameterDict): parameters to store</span>
+<span class="ss">        parameters (None | list[Parameter] | ScopedParameterDict, optional): parameters to store. Defaults to None.</span>
 
 <span class="ss">    Raises:</span>
 
@@ -1468,6 +1540,8 @@ All top-level parameters are considered as having <code>scope=None</code>.</p>
 <span class="ss">                        &quot;</span><span class="n">schedule</span><span class="ss">&quot;: [0.1, 0.2, 0.3],</span>
 
 <span class="ss">                    },</span>
+
+<span class="ss">                    &quot;</span><span class="n">var3</span><span class="ss">&quot;: 42, # shorthand for a parameter without a schedule</span>
 
 <span class="ss">                    &quot;</span><span class="n">scope1</span><span class="ss">&quot;: {</span>
 
@@ -1499,11 +1573,17 @@ All top-level parameters are considered as having <code>scope=None</code>.</p>
 
 <span class="ss">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">parameters</span><span class="err">:</span><span class="w"> </span><span class="n">list</span><span class="o">[</span><span class="n">Parameter</span><span class="o">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ScopedParameterDict</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">None</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nl">noqa</span><span class="p">:</span><span class="w"> </span><span class="n">D107</span>
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="k">parameters</span><span class="err">:</span><span class="w"> </span><span class="k">None</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">list</span><span class="o">[</span><span class="n">Parameter</span><span class="o">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ScopedParameterDict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">None</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">None</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nl">noqa</span><span class="p">:</span><span class="w"> </span><span class="n">D107</span>
 
 <span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="nl">scopes</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="o">[</span><span class="n">str</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">set</span><span class="p">()</span>
 
 <span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="k">parameters</span><span class="err">:</span>
+
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="k">None</span><span class="err">:</span>
+
+<span class="w">                </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span>
+
+<span class="w">                </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">set</span><span class="p">()</span>
 
 <span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="n">list</span><span class="p">(</span><span class="k">parameters</span><span class="p">)</span><span class="err">:</span>
 
@@ -1517,39 +1597,59 @@ All top-level parameters are considered as having <code>scope=None</code>.</p>
 
 <span class="w">                </span><span class="n">self</span><span class="p">.</span><span class="nl">parameter_names</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="o">[</span><span class="n">str</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">set</span><span class="p">()</span>
 
-<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="k">dictionary</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">parameters</span><span class="p">.</span><span class="n">items</span><span class="p">()</span><span class="err">:</span>
+<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">parameters</span><span class="p">.</span><span class="n">items</span><span class="p">()</span><span class="err">:</span>
 
-<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="k">dictionary</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">scope</span><span class="w"> </span><span class="n">name</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nl">noqa</span><span class="p">:</span><span class="w"> </span><span class="n">PLR2004</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="n">type</span><span class="p">(</span><span class="k">value</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nl">dict</span><span class="p">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">shorthand</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">parameters</span><span class="w"> </span><span class="k">without</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">schedule</span>
 
-<span class="w">                        </span><span class="k">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">key</span>
+<span class="w">                        </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Parameter</span><span class="p">(</span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
 
-<span class="w">                        </span><span class="n">self</span><span class="p">.</span><span class="n">scopes</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="k">scope</span><span class="p">)</span>
+<span class="w">                        </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="k">key</span><span class="p">)</span>
 
-<span class="w">                        </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span>
+<span class="w">                    </span><span class="k">else</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="k">check</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">scope</span>
 
-<span class="w">                        </span><span class="err">#</span><span class="w"> </span><span class="n">remove</span><span class="w"> </span><span class="err">`</span><span class="n">name</span><span class="err">`</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="n">they</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">redundant</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="k">value</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nl">noqa</span><span class="p">:</span><span class="w"> </span><span class="n">PLR2004</span>
 
-<span class="w">                        </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">parameter_kwargs</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">]</span><span class="p">.</span><span class="n">items</span><span class="p">()</span><span class="err">:</span>
+<span class="w">                            </span><span class="n">logger</span><span class="p">.</span><span class="n">warning</span><span class="p">(</span><span class="ss">&quot;📚 parameters of type `ScopedParameterDict` should not be nested more than two levels.&quot;</span><span class="p">)</span>
 
-<span class="w">                            </span><span class="n">parameter_kwargs</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="ss">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
+<span class="w">                            </span><span class="n">raise</span><span class="w"> </span><span class="n">ValueError</span>
 
-<span class="w">                            </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">][</span><span class="n">name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">parameter_kwargs</span><span class="p">)</span>
+<span class="w">                        </span><span class="err">#</span><span class="w"> </span><span class="k">check</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">dictionary</span><span class="w"> </span><span class="k">contains</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">schedule</span><span class="w"> </span><span class="k">key</span>
 
-<span class="w">                            </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;{scope}.{self.parameters[scope][name].name}&quot;</span><span class="p">)</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="n">is_parameter</span><span class="p">(</span><span class="k">value</span><span class="p">)</span><span class="err">:</span>
 
-<span class="w">                    </span><span class="n">elif</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="k">dictionary</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">otherwise</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">top</span><span class="o">-</span><span class="k">level</span><span class="w"> </span><span class="k">parameter</span>
+<span class="w">                            </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">key</span>
 
-<span class="w">                        </span><span class="k">parameters</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="ss">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
+<span class="w">                            </span><span class="k">parameters</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="ss">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
 
-<span class="w">                        </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="k">key</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="k">parameters</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="p">)</span>
+<span class="w">                            </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="k">parameters</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="p">)</span>
 
-<span class="w">                        </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+<span class="w">                            </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
-<span class="w">                    </span><span class="k">else</span><span class="err">:</span>
+<span class="w">                        </span><span class="k">else</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">scope</span><span class="err">:</span>
 
-<span class="w">                        </span><span class="n">logger</span><span class="p">.</span><span class="n">warning</span><span class="p">(</span><span class="ss">&quot;📚 parameters of type `ScopedParameterDict` should not be nested more than two levels.&quot;</span><span class="p">)</span>
+<span class="w">                            </span><span class="k">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">key</span>
 
-<span class="w">                        </span><span class="n">raise</span><span class="w"> </span><span class="n">ValueError</span>
+<span class="w">                            </span><span class="n">self</span><span class="p">.</span><span class="n">scopes</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="k">scope</span><span class="p">)</span>
+
+<span class="w">                            </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span>
+
+<span class="w">                            </span><span class="err">#</span><span class="w"> </span><span class="n">remove</span><span class="w"> </span><span class="err">`</span><span class="n">name</span><span class="err">`</span><span class="w"> </span><span class="n">entries</span><span class="w"> </span><span class="n">since</span><span class="w"> </span><span class="n">they</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="n">redundant</span>
+
+<span class="w">                            </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">]</span><span class="p">.</span><span class="n">items</span><span class="p">()</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nl">noqa</span><span class="p">:</span><span class="w"> </span><span class="n">PLW2901</span>
+
+<span class="w">                                </span><span class="k">if</span><span class="w"> </span><span class="n">type</span><span class="p">(</span><span class="k">value</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="nl">dict</span><span class="p">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="n">shorthand</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">parameters</span><span class="w"> </span><span class="k">without</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">schedule</span>
+
+<span class="w">                                    </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">][</span><span class="n">name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Parameter</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="p">)</span>
+
+<span class="w">                                    </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;{scope}.{name}&quot;</span><span class="p">)</span>
+
+<span class="w">                                </span><span class="k">else</span><span class="err">:</span>
+
+<span class="w">                                    </span><span class="k">value</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="ss">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
+
+<span class="w">                                    </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">][</span><span class="n">name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="k">value</span><span class="p">)</span>
+
+<span class="w">                                    </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;{scope}.{name}&quot;</span><span class="p">)</span>
 
 <span class="w">    </span><span class="nv">@staticmethod</span>
 
@@ -1604,6 +1704,50 @@ All top-level parameters are considered as having <code>scope=None</code>.</p>
 <span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">][</span><span class="n">name</span><span class="o">]</span>
 
 <span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">name</span><span class="o">]</span>
+
+<span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">__setitem__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="nl">name</span><span class="p">:</span><span class="w"> </span><span class="nf">str</span><span class="p">,</span><span class="w"> </span><span class="k">value</span><span class="err">:</span><span class="w"> </span><span class="k">Parameter</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ow">Any</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">None</span><span class="err">:</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nl">noqa</span><span class="p">:</span><span class="w"> </span><span class="n">ANN401</span>
+
+<span class="w">        </span><span class="ss">&quot;&quot;&quot;🫱 sets a parameter using `store[name] = value` syntax.</span>
+
+<span class="ss">        Scoped parameters are set using `{scope}.{parameter.name}` as the `name`.</span>
+
+<span class="ss">        Args:</span>
+
+<span class="ss">            name (str): (possibly scoped) name of the parameter</span>
+
+<span class="ss">            value (Parameter | Any): the parameter to set. If `value` is not of</span>
+
+<span class="ss">                type `Parameter`, one without a schedule will be constructed.</span>
+
+<span class="ss">        &quot;&quot;&quot;</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">isinstance</span><span class="p">(</span><span class="k">value</span><span class="p">,</span><span class="w"> </span><span class="k">Parameter</span><span class="p">)</span><span class="err">:</span>
+
+<span class="w">            </span><span class="k">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Parameter</span><span class="p">(</span><span class="k">value</span><span class="o">=</span><span class="k">value</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="ss">&quot;.&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">name</span><span class="p">:</span>
+
+<span class="w">            </span><span class="k">scope</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="ss">&quot;.&quot;</span><span class="p">)</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="k">scope</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="nl">scopes</span><span class="p">:</span>
+
+<span class="w">                </span><span class="n">self</span><span class="p">.</span><span class="n">scopes</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="k">scope</span><span class="p">)</span>
+
+<span class="w">                </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">{}</span>
+
+<span class="w">            </span><span class="k">value</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span>
+
+<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">scope</span><span class="o">][</span><span class="n">name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span>
+
+<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;{scope}.{name}&quot;</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">else</span><span class="err">:</span>
+
+<span class="w">            </span><span class="k">value</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span>
+
+<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">value</span>
+
+<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;{name}&quot;</span><span class="p">)</span>
 
 <span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">set_update_step</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="nl">idx</span><span class="p">:</span><span class="w"> </span><span class="nc">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">None</span><span class="err">:</span>
 

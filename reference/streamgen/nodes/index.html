@@ -1474,6 +1474,8 @@
 <summary>View Source</summary>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;🪢 different node implementations using [anytree](https://anytree.readthedocs.io/en/stable/) `NodeMixin`.&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
@@ -1646,7 +1648,11 @@
 
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
 
-<span class="sd">        If the node was explicitly parameterized, use those params.</span>
+<span class="sd">        The parameters are fetched from both a matching scope and</span>
+
+<span class="sd">        the top-level/global scope with the scope having precedence.</span>
+
+<span class="sd">        Skips fetching if the node was explicitly parameterized.</span>
 
 <span class="sd">        Args:</span>
 
@@ -1658,9 +1664,27 @@
 
             <span class="k">return</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">ParameterStore</span><span class="p">()</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get_scope</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="c1"># infer missing arguments that were not present in the scope of the transform</span>
+
+        <span class="n">missing_arguments</span> <span class="o">=</span> <span class="p">[</span>
+
+            <span class="n">param</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">)</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">parameter_names</span>
+
+        <span class="p">]</span>
+
+        <span class="c1"># if those missing arguments are in the top-level scope, add those parameters</span>
+
+        <span class="k">for</span> <span class="n">param_name</span> <span class="ow">in</span> <span class="n">missing_arguments</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">param_name</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParameterStore</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 
@@ -1890,7 +1914,7 @@
 <h3 id="classlabelnode">ClassLabelNode</h3>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ClassLabelNode</span><span class="p">(</span>
     <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">label_func</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">ClassLabelNode</span><span class="o">.&lt;</span><span class="k">lambda</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x0000028F42AD0400</span><span class="o">&gt;</span>
+    <span class="n">label_func</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">ClassLabelNode</span><span class="o">.&lt;</span><span class="k">lambda</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x000002087FBC8680</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -2354,7 +2378,9 @@ loui.size
 </code></pre></div>
 
 <p>⚙️ fetches params from a ParameterStore.</p>
-<p>If the node was explicitly parameterized, use those params.</p>
+<p>The parameters are fetched from both a matching scope and
+the top-level/global scope with the scope having precedence.</p>
+<p>Skips fetching if the node was explicitly parameterized.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -2376,25 +2402,47 @@ loui.size
 </table>
 <details class="example">
 <summary>View Source</summary>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">fetch_params</span><span class="p">(</span><span class="kr">self</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">None</span><span class="o">:</span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">fetch_params</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="nl">params</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">None</span><span class="err">:</span>
 
-<span class="w">        </span><span class="s">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
+<span class="w">        </span><span class="ss">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
 
-<span class="s">        If the node was explicitly parameterized, use those params.</span>
+<span class="ss">        The parameters are fetched from both a matching scope and</span>
 
-<span class="s">        Args:</span>
+<span class="ss">        the top-level/global scope with the scope having precedence.</span>
 
-<span class="s">            params (ParameterStore): _description_</span>
+<span class="ss">        Skips fetching if the node was explicitly parameterized.</span>
 
-<span class="s">        &quot;&quot;&quot;</span>
+<span class="ss">        Args:</span>
 
-<span class="w">        </span><span class="nf">if</span><span class="w"> </span><span class="kr">self</span><span class="p">.</span><span class="n">params</span><span class="o">:</span>
+<span class="ss">            params (ParameterStore): _description_</span>
 
-<span class="w">            </span><span class="kr">return</span>
+<span class="ss">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="nf">if</span><span class="w"> </span><span class="kr">self</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">scopes</span><span class="o">:</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="nl">params</span><span class="p">:</span>
 
-<span class="w">            </span><span class="kr">self</span><span class="p">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">get_scope</span><span class="p">(</span><span class="kr">self</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span>
+
+<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">()</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="nl">scopes</span><span class="p">:</span>
+
+<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">get_scope</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="n">infer</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">were</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">scope</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">transform</span>
+
+<span class="w">        </span><span class="n">missing_arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+
+<span class="n">            param.name for param in inspect.signature(self.transform).parameters.values() if param.name not in self.params.parameter_names</span>
+
+<span class="n">        </span><span class="o">]</span>
+
+<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">those</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">top</span><span class="o">-</span><span class="k">level</span><span class="w"> </span><span class="k">scope</span><span class="p">,</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">those</span><span class="w"> </span><span class="k">parameters</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">param_name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">missing_arguments</span><span class="p">:</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">param_name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="nl">parameter_names</span><span class="p">:</span>
+
+<span class="w">                </span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="o">[</span><span class="n">param_name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="n">param_name</span><span class="o">]</span>
 </code></pre></div>
 
 </details>
@@ -3208,7 +3256,9 @@ loui.size
 </code></pre></div>
 
 <p>⚙️ fetches params from a ParameterStore.</p>
-<p>If the node was explicitly parameterized, use those params.</p>
+<p>The parameters are fetched from both a matching scope and
+the top-level/global scope with the scope having precedence.</p>
+<p>Skips fetching if the node was explicitly parameterized.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -3230,25 +3280,47 @@ loui.size
 </table>
 <details class="example">
 <summary>View Source</summary>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">fetch_params</span><span class="p">(</span><span class="kr">self</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">None</span><span class="o">:</span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">fetch_params</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="nl">params</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">None</span><span class="err">:</span>
 
-<span class="w">        </span><span class="s">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
+<span class="w">        </span><span class="ss">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
 
-<span class="s">        If the node was explicitly parameterized, use those params.</span>
+<span class="ss">        The parameters are fetched from both a matching scope and</span>
 
-<span class="s">        Args:</span>
+<span class="ss">        the top-level/global scope with the scope having precedence.</span>
 
-<span class="s">            params (ParameterStore): _description_</span>
+<span class="ss">        Skips fetching if the node was explicitly parameterized.</span>
 
-<span class="s">        &quot;&quot;&quot;</span>
+<span class="ss">        Args:</span>
 
-<span class="w">        </span><span class="nf">if</span><span class="w"> </span><span class="kr">self</span><span class="p">.</span><span class="n">params</span><span class="o">:</span>
+<span class="ss">            params (ParameterStore): _description_</span>
 
-<span class="w">            </span><span class="kr">return</span>
+<span class="ss">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="nf">if</span><span class="w"> </span><span class="kr">self</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">scopes</span><span class="o">:</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="nl">params</span><span class="p">:</span>
 
-<span class="w">            </span><span class="kr">self</span><span class="p">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">get_scope</span><span class="p">(</span><span class="kr">self</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span>
+
+<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">()</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="nl">scopes</span><span class="p">:</span>
+
+<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">get_scope</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="n">infer</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">were</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">scope</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">transform</span>
+
+<span class="w">        </span><span class="n">missing_arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+
+<span class="n">            param.name for param in inspect.signature(self.transform).parameters.values() if param.name not in self.params.parameter_names</span>
+
+<span class="n">        </span><span class="o">]</span>
+
+<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">those</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">top</span><span class="o">-</span><span class="k">level</span><span class="w"> </span><span class="k">scope</span><span class="p">,</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">those</span><span class="w"> </span><span class="k">parameters</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">param_name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">missing_arguments</span><span class="p">:</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">param_name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="nl">parameter_names</span><span class="p">:</span>
+
+<span class="w">                </span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="o">[</span><span class="n">param_name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="n">param_name</span><span class="o">]</span>
 </code></pre></div>
 
 </details>
@@ -3817,7 +3889,11 @@ The main idea of a <code>TransformNode</code> is that is contains a transformati
 
         <span class="s2">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
 
-<span class="s2">        If the node was explicitly parameterized, use those params.</span>
+<span class="s2">        The parameters are fetched from both a matching scope and</span>
+
+<span class="s2">        the top-level/global scope with the scope having precedence.</span>
+
+<span class="s2">        Skips fetching if the node was explicitly parameterized.</span>
 
 <span class="s2">        Args:</span>
 
@@ -3829,9 +3905,27 @@ The main idea of a <code>TransformNode</code> is that is contains a transformati
 
             <span class="s s-Atom">return</span>
 
+        <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">params</span> <span class="o">=</span> <span class="nv">ParameterStore</span><span class="p">()</span>
+
         <span class="s s-Atom">if</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">name</span> <span class="s s-Atom">in</span> <span class="s s-Atom">params</span><span class="p">.</span><span class="s s-Atom">scopes</span><span class="p">:</span>
 
             <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">params</span> <span class="o">=</span> <span class="s s-Atom">params</span><span class="p">.</span><span class="nf">get_scope</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">name</span><span class="p">)</span>
+
+        <span class="s s-Atom">#</span> <span class="s s-Atom">infer</span> <span class="s s-Atom">missing</span> <span class="s s-Atom">arguments</span> <span class="s s-Atom">that</span> <span class="s s-Atom">were</span> <span class="o">not</span> <span class="s s-Atom">present</span> <span class="s s-Atom">in</span> <span class="s s-Atom">the</span> <span class="s s-Atom">scope</span> <span class="s s-Atom">of</span> <span class="s s-Atom">the</span> <span class="s s-Atom">transform</span>
+
+        <span class="s s-Atom">missing_arguments</span> <span class="o">=</span> <span class="p">[</span>
+
+            <span class="s s-Atom">param</span><span class="p">.</span><span class="s s-Atom">name</span> <span class="s s-Atom">for</span> <span class="s s-Atom">param</span> <span class="s s-Atom">in</span> <span class="s s-Atom">inspect</span><span class="p">.</span><span class="nf">signature</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">transform</span><span class="p">).</span><span class="s s-Atom">parameters</span><span class="p">.</span><span class="nb">val</span><span class="nf">ues</span><span class="p">()</span> <span class="s s-Atom">if</span> <span class="s s-Atom">param</span><span class="p">.</span><span class="s s-Atom">name</span> <span class="o">not</span> <span class="s s-Atom">in</span> <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">params</span><span class="p">.</span><span class="s s-Atom">parameter_names</span>
+
+        <span class="p">]</span>
+
+        <span class="s s-Atom">#</span> <span class="s s-Atom">if</span> <span class="s s-Atom">those</span> <span class="s s-Atom">missing</span> <span class="s s-Atom">arguments</span> <span class="s s-Atom">are</span> <span class="s s-Atom">in</span> <span class="s s-Atom">the</span> <span class="s s-Atom">top</span><span class="o">-</span><span class="s s-Atom">level</span> <span class="s s-Atom">scope</span><span class="p">,</span> <span class="s s-Atom">add</span> <span class="s s-Atom">those</span> <span class="s s-Atom">parameters</span>
+
+        <span class="s s-Atom">for</span> <span class="s s-Atom">param_name</span> <span class="s s-Atom">in</span> <span class="s s-Atom">missing_arguments</span><span class="o">:</span>
+
+            <span class="s s-Atom">if</span> <span class="s s-Atom">param_name</span> <span class="s s-Atom">in</span> <span class="s s-Atom">params</span><span class="p">.</span><span class="s s-Atom">parameter_names</span><span class="o">:</span>
+
+                <span class="s s-Atom">self</span><span class="p">.</span><span class="s s-Atom">params</span><span class="p">[</span><span class="s s-Atom">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="s s-Atom">params</span><span class="p">[</span><span class="s s-Atom">param_name</span><span class="p">]</span>
 
     <span class="s s-Atom">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="s s-Atom">self</span><span class="p">)</span> <span class="s s-Atom">-&gt;</span> <span class="nv">ParameterStore</span> <span class="p">|</span> <span class="nv">None</span><span class="o">:</span>
 
@@ -4248,7 +4342,9 @@ loui.size
 </code></pre></div>
 
 <p>⚙️ fetches params from a ParameterStore.</p>
-<p>If the node was explicitly parameterized, use those params.</p>
+<p>The parameters are fetched from both a matching scope and
+the top-level/global scope with the scope having precedence.</p>
+<p>Skips fetching if the node was explicitly parameterized.</p>
 <p><strong>Parameters:</strong></p>
 <table>
 <thead>
@@ -4270,25 +4366,47 @@ loui.size
 </table>
 <details class="example">
 <summary>View Source</summary>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">fetch_params</span><span class="p">(</span><span class="kr">self</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="o">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">None</span><span class="o">:</span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">def</span><span class="w"> </span><span class="n">fetch_params</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="nl">params</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">None</span><span class="err">:</span>
 
-<span class="w">        </span><span class="s">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
+<span class="w">        </span><span class="ss">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
 
-<span class="s">        If the node was explicitly parameterized, use those params.</span>
+<span class="ss">        The parameters are fetched from both a matching scope and</span>
 
-<span class="s">        Args:</span>
+<span class="ss">        the top-level/global scope with the scope having precedence.</span>
 
-<span class="s">            params (ParameterStore): _description_</span>
+<span class="ss">        Skips fetching if the node was explicitly parameterized.</span>
 
-<span class="s">        &quot;&quot;&quot;</span>
+<span class="ss">        Args:</span>
 
-<span class="w">        </span><span class="nf">if</span><span class="w"> </span><span class="kr">self</span><span class="p">.</span><span class="n">params</span><span class="o">:</span>
+<span class="ss">            params (ParameterStore): _description_</span>
 
-<span class="w">            </span><span class="kr">return</span>
+<span class="ss">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="nf">if</span><span class="w"> </span><span class="kr">self</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="kr">in</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">scopes</span><span class="o">:</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="nl">params</span><span class="p">:</span>
 
-<span class="w">            </span><span class="kr">self</span><span class="p">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">get_scope</span><span class="p">(</span><span class="kr">self</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span>
+
+<span class="w">        </span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">()</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="nl">scopes</span><span class="p">:</span>
+
+<span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="n">get_scope</span><span class="p">(</span><span class="n">self</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="n">infer</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">were</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">present</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">scope</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">transform</span>
+
+<span class="w">        </span><span class="n">missing_arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span>
+
+<span class="n">            param.name for param in inspect.signature(self.transform).parameters.values() if param.name not in self.params.parameter_names</span>
+
+<span class="n">        </span><span class="o">]</span>
+
+<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">those</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="k">are</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">top</span><span class="o">-</span><span class="k">level</span><span class="w"> </span><span class="k">scope</span><span class="p">,</span><span class="w"> </span><span class="k">add</span><span class="w"> </span><span class="n">those</span><span class="w"> </span><span class="k">parameters</span>
+
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">param_name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nl">missing_arguments</span><span class="p">:</span>
+
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">param_name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">params</span><span class="p">.</span><span class="nl">parameter_names</span><span class="p">:</span>
+
+<span class="w">                </span><span class="n">self</span><span class="p">.</span><span class="n">params</span><span class="o">[</span><span class="n">param_name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">[</span><span class="n">param_name</span><span class="o">]</span>
 </code></pre></div>
 
 </details>

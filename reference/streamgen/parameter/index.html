@@ -673,6 +673,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_parameter" class="md-nav__link">
+    is_parameter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#classes" class="md-nav__link">
     Classes
   </a>
@@ -975,6 +995,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_parameter" class="md-nav__link">
+    is_parameter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#classes" class="md-nav__link">
     Classes
   </a>
@@ -1166,7 +1206,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cycle</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Self</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">Self</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">TypeVar</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span> <span class="n">beartype</span>
 
@@ -1346,7 +1386,13 @@
 
     <span class="n">strategy</span><span class="p">:</span> <span class="n">ParameterOutOfRangeStrategy</span> <span class="o">|</span> <span class="n">ParameterOutOfRangeStrategyLit</span> <span class="o">|</span> <span class="kc">None</span>
 
-<span class="n">ScopedParameterDict</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ParameterDict</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ParameterDict</span><span class="p">]]</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_parameter</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;❓📖 check wether a dictionary has the fields of a `ParameterDict`.&quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="s2">&quot;value&quot;</span> <span class="ow">in</span> <span class="n">d</span> <span class="ow">or</span> <span class="s2">&quot;schedule&quot;</span> <span class="ow">in</span> <span class="n">d</span>
+
+<span class="n">ScopedParameterDict</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span> <span class="o">|</span> <span class="n">ParameterDict</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span> <span class="o">|</span> <span class="n">ParameterDict</span><span class="p">]]</span>
 
 <span class="sd">&quot;&quot;&quot;🔭📖 representation of multiple `streamgen.parameter.Parameter` as a dictionary.</span>
 
@@ -1375,6 +1421,8 @@
 <span class="sd">                &quot;schedule&quot;: [0.1, 0.2, 0.3],</span>
 
 <span class="sd">            },</span>
+
+<span class="sd">            &quot;var3&quot;: 42, # shorthand for a parameter without a schedule</span>
 
 <span class="sd">            &quot;scope1&quot;: {</span>
 
@@ -1408,6 +1456,24 @@
 <div class="codehilite"><pre><span></span><code><span class="n">T</span>
 </code></pre></div>
 
+<h2 id="functions">Functions</h2>
+<h3 id="is_parameter">is_parameter</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_parameter</span><span class="p">(</span>
+    <span class="n">d</span><span class="p">:</span> <span class="s1">&#39;dict&#39;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;bool&#39;</span>
+</code></pre></div>
+
+<p>❓📖 check wether a dictionary has the fields of a <code>ParameterDict</code>.</p>
+<details class="example">
+<summary>View Source</summary>
+<div class="codehilite"><pre><span></span><code><span class="n">def</span><span class="w"> </span><span class="n">is_parameter</span><span class="p">(</span><span class="n">d</span><span class="o">:</span><span class="w"> </span><span class="n">dict</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">bool</span><span class="o">:</span>
+
+<span class="w">    </span><span class="s2">&quot;</span><span class="se">&quot;&quot;</span><span class="s2">❓📖 check wether a dictionary has the fields of a `ParameterDict`.</span><span class="se">&quot;&quot;</span><span class="s2">&quot;</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s2">&quot;value&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="s2">&quot;schedule&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">d</span>
+</code></pre></div>
+
+</details>
 <h2 id="classes">Classes</h2>
 <h3 id="parameter">Parameter</h3>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Parameter</span><span class="p">(</span>
