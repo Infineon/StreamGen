@@ -8,6 +8,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/) to build the 
 
 <!-- towncrier release notes start -->
 
+## [1.0.6](https://github.com/Infineon/StreamGen/tree/1.0.6) - 2025-01-08
+
+### 📦 Misc
+
+- 🎵🎶 migrated to poetry 2.0.0 ([#8](https://github.com/Infineon/StreamGen/issues/8))
+
+
 ## [1.0.4](https://github.com/Infineon/StreamGen/tree/1.0.4) - 2024-12-03
 
 ### 📦 Misc
