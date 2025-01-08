@@ -38,6 +38,9 @@ def add_random_points(input, num_points):  # noqa: A002
 def add(input: int, number):  # noqa: A002
     return input + number
 
+def add_and_subtract(input: int, number, number2): # noqa: A002
+    return input + number - number2
+
 
 # ---------------------------------------------------------------------------- #
 # *                                 fixtures                                   #
@@ -47,6 +50,48 @@ def add(input: int, number):  # noqa: A002
 # ---------------------------------------------------------------------------- #
 # *                                   tests                                    #
 # ---------------------------------------------------------------------------- #
+
+def test_parameter_fetching_from_global_scope():
+    """Tests if nodes fetch their missing arguments from the top-level/global scope."""
+    tree = SamplingTree(
+        [
+            lambda input: 0,  # noqa: ARG005
+            {
+                "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
+                "1": [
+                    add,
+                    "one",
+                ],
+                "2": [
+                    TransformNode(add, name="two"),
+                    add_and_subtract,
+                    "two",
+                ],
+            },
+            TransformNode(operate_on_index()(add), Parameter("number", 3)),
+        ],
+        {
+            "two": {
+                "number": 3
+            },
+            "add_and_subtract": {
+                "number": 5
+            },
+            "number": 1,
+            "number2": 2
+        }
+    )
+
+    output, target = tree.sample()
+
+    assert output == 4, "The last `partial(add, 3)` transform should be connected to both branches."
+    assert target == "one"
+
+    tree.update()
+    output, target = tree.sample()
+
+    assert output == 9
+    assert target == "two"
 
 
 def test_sampling_tree_decision_node_with_probs():

@@ -1,5 +1,6 @@
 """🪢 different node implementations using [anytree](https://anytree.readthedocs.io/en/stable/) `NodeMixin`."""
 
+import inspect
 from collections import deque
 from collections.abc import Callable
 from typing import Any, Protocol, runtime_checkable
@@ -112,15 +113,28 @@ class TransformNode(anytree.NodeMixin):
     def fetch_params(self, params: ParameterStore) -> None:
         """⚙️ fetches params from a ParameterStore.
 
-        If the node was explicitly parameterized, use those params.
+        The parameters are fetched from both a matching scope and
+        the top-level/global scope with the scope having precedence.
+
+        Skips fetching if the node was explicitly parameterized.
 
         Args:
             params (ParameterStore): _description_
         """
         if self.params:
             return
+        self.params = ParameterStore()
         if self.name in params.scopes:
             self.params = params.get_scope(self.name)
+
+        # infer missing arguments that were not present in the scope of the transform
+        missing_arguments = [
+            param.name for param in inspect.signature(self.transform).parameters.values() if param.name not in self.params.parameter_names
+        ]
+        # if those missing arguments are in the top-level scope, add those parameters
+        for param_name in missing_arguments:
+            if param_name in params.parameter_names:
+                self.params[param_name] = params[param_name]
 
     def get_params(self) -> ParameterStore | None:
         """⚙️ returns current parameters.
