@@ -866,303 +866,303 @@
 <summary>View Source</summary>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;➡️ useful transformations.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">wraps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">LabelEncoder</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🏷️ index of class-name lookup transform.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🏷️ index of class-name lookup transform.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        classes (List[str]): list of labels/class-names. Order determines the indices.</span>
+<span class="sd">        classes (List[str]): list of labels/class-names. Order determines the indices.</span>
 
-<span class="s2">    Example:</span>
+<span class="sd">    Example:</span>
 
-<span class="s2">        &gt;&gt;&gt; LabelEncoder([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])(&quot;C&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; LabelEncoder([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])(&quot;C&quot;)</span>
 
-<span class="s2">        array(2, dtype=int64)</span>
+<span class="sd">        array(2, dtype=int64)</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: D107</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: D107</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">class_</span><span class="p">:</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">class_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">enumerate</span><span class="p">(</span><span class="n">classes</span><span class="p">)}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="p">{</span><span class="n">class_</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">class_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">classes</span><span class="p">)}</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;Standard call method.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Standard call method.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            label (str): class name</span>
+<span class="sd">            label (str): class name</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            np.ndarray: index encoded target array</span>
+<span class="sd">            np.ndarray: index encoded target array</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">label</span><span class="p">],</span><span class="w"> </span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">label</span><span class="p">],</span> <span class="kp">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">LabelDecoder</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🏷️ label/class-name for index lookup transform.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🏷️ label/class-name for index lookup transform.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        classes (List[str]): list of labels/class-names. Order determines the indices.</span>
+<span class="sd">        classes (List[str]): list of labels/class-names. Order determines the indices.</span>
 
-<span class="s2">    Example:</span>
+<span class="sd">    Example:</span>
 
-<span class="s2">        &gt;&gt;&gt; LabelDecoder([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])(1)</span>
+<span class="sd">        &gt;&gt;&gt; LabelDecoder([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])(1)</span>
 
-<span class="s2">        &#39;B&#39;</span>
+<span class="sd">        &#39;B&#39;</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: D107</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: D107</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;Standard call method.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Standard call method.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            idx (int): index of the target class</span>
+<span class="sd">            idx (int): index of the target class</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            str: class name</span>
+<span class="sd">            str: class name</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">MultiLabelEncoder</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🏷️ encoding of multiple labels/class-names.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🏷️ encoding of multiple labels/class-names.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        classes (List[str]): list of labels/class-names. Order determines the indices.</span>
+<span class="sd">        classes (List[str]): list of labels/class-names. Order determines the indices.</span>
 
-<span class="s2">    Example:</span>
+<span class="sd">    Example:</span>
 
-<span class="s2">        &gt;&gt;&gt; MultiLabelEncoder([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])([&quot;A&quot;, &quot;C&quot;])</span>
+<span class="sd">        &gt;&gt;&gt; MultiLabelEncoder([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])([&quot;A&quot;, &quot;C&quot;])</span>
 
-<span class="s2">        array([1., 0., 1.], dtype=float32)</span>
+<span class="sd">        array([1., 0., 1.], dtype=float32)</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: D107</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: D107</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;Standard call method.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Standard call method.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            labels (list[str]): (potentially empty) list of class_ names.</span>
+<span class="sd">            labels (list[str]): (potentially empty) list of class_ names.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            np.ndarray: encoded array of targets</span>
+<span class="sd">            np.ndarray: encoded array of targets</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">labels</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">],</span><span class="w"> </span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span> <span class="ow">in</span> <span class="n">labels</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">],</span> <span class="kp">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">MultiLabelDecoder</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🏷️ decoding of labels/class-names.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🏷️ decoding of labels/class-names.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        classes (List[str]): list of labels/class-names. Order determines the indices.</span>
+<span class="sd">        classes (List[str]): list of labels/class-names. Order determines the indices.</span>
 
-<span class="s2">    Example:</span>
+<span class="sd">    Example:</span>
 
-<span class="s2">        &gt;&gt;&gt; MultiLabelDecoder([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])([1.0, 0.0, 1.0])</span>
+<span class="sd">        &gt;&gt;&gt; MultiLabelDecoder([&quot;A&quot;, &quot;B&quot;, &quot;C&quot;])([1.0, 0.0, 1.0])</span>
 
-<span class="s2">        array([1., 0., 1.], dtype=float32)</span>
+<span class="sd">        array([1., 0., 1.], dtype=float32)</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: D107</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: D107</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">float</span><span class="p">])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;Standard call method.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Standard call method.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            labels (list[int | float]): encoded array of targets.</span>
+<span class="sd">            labels (list[int | float]): encoded array of targets.</span>
 
-<span class="s2">                must have the same length as `self.classes`.</span>
+<span class="sd">                must have the same length as `self.classes`.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            list[str]: (potentially empty) list of class_ names</span>
+<span class="sd">            list[str]: (potentially empty) list of class_ names</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">p</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">bool</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">)</span> <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">noop</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span><span class="w"> </span><span class="n">Any</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Any</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: ANN401, A002</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">noop</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>  <span class="c1"># noqa: ANN401, A002</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🤷 no-operation. Passes through the input.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🤷 no-operation. Passes through the input.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        input (Any): any input</span>
+<span class="sd">        input (Any): any input</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        Any: unmodified input</span>
+<span class="sd">        Any: unmodified input</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">input</span>
+    <span class="k">return</span> <span class="nb">input</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">set_value_in_dict</span><span class="p">(</span><span class="n">dictionary</span><span class="p">:</span><span class="w"> </span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Any</span><span class="p">],</span><span class="w"> </span><span class="n">value</span><span class="p">:</span><span class="w"> </span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">dict</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: ANN401</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">set_value_in_dict</span><span class="p">(</span><span class="n">dictionary</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>  <span class="c1"># noqa: ANN401</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;📖 sets `dictionary[key]` to `value` and returns the result.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;📖 sets `dictionary[key]` to `value` and returns the result.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        dictionary (dict): any dictionary</span>
+<span class="sd">        dictionary (dict): any dictionary</span>
 
-<span class="s2">        value (Any): any value</span>
+<span class="sd">        value (Any): any value</span>
 
-<span class="s2">        key (str): key of the value in `dictionary`. Defaults to &quot;target&quot;.</span>
+<span class="sd">        key (str): key of the value in `dictionary`. Defaults to &quot;target&quot;.</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        dict: labeled `dictionary`</span>
+<span class="sd">        dict: labeled `dictionary`</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span>
+    <span class="n">dictionary</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">dictionary</span>
+    <span class="k">return</span> <span class="n">dictionary</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">operate_on_key</span><span class="p">(</span><span class="n">key</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;input&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Callable</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">operate_on_key</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;input&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🗝️ function decorator, that converts `func(input: dict, ...)` to `func(input[key], ...)`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🗝️ function decorator, that converts `func(input: dict, ...)` to `func(input[key], ...)`.</span>
 
-<span class="s2">    The result is put back into `input`, the first argument to `func`.</span>
+<span class="sd">    The result is put back into `input`, the first argument to `func`.</span>
 
-<span class="s2">    This facilitates working with dictionaries as first arguments.</span>
+<span class="sd">    This facilitates working with dictionaries as first arguments.</span>
 
-<span class="s2">    Examples:</span>
+<span class="sd">    Examples:</span>
 
-<span class="s2">        &gt;&gt;&gt; @operate_on_key(key=&quot;x&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; @operate_on_key(key=&quot;x&quot;)</span>
 
-<span class="s2">            def add(x, n):</span>
+<span class="sd">            def add(x, n):</span>
 
-<span class="s2">                return x + n</span>
+<span class="sd">                return x + n</span>
 
-<span class="s2">        &gt;&gt;&gt; add({&quot;x&quot;: 1, &quot;target&quot;: None}, 2)</span>
+<span class="sd">        &gt;&gt;&gt; add({&quot;x&quot;: 1, &quot;target&quot;: None}, 2)</span>
 
-<span class="s2">        {&#39;x&#39;: 3, &#39;target&#39;: None}</span>
+<span class="sd">        {&#39;x&#39;: 3, &#39;target&#39;: None}</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        key (str, optional): key for fetching the value from `input`. Defaults to &quot;input&quot;.</span>
+<span class="sd">        key (str, optional): key for fetching the value from `input`. Defaults to &quot;input&quot;.</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        Callable: modified function</span>
+<span class="sd">        Callable: modified function</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span><span class="w">  </span><span class="c1"># noqa: ANN202, ANN001</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>  <span class="c1"># noqa: ANN202, ANN001</span>
 
-<span class="w">        </span><span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span><span class="w">  </span><span class="c1"># noqa: ANN202, ANN001, A002, ANN002, ANN003</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  <span class="c1"># noqa: ANN202, ANN001, A002, ANN002, ANN003</span>
 
-<span class="w">            </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">input</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 
-<span class="w">            </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="w">            </span><span class="nb">input</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">out</span>
+            <span class="nb">input</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">input</span>
+            <span class="k">return</span> <span class="nb">input</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">wrapper</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">decorator</span>
+    <span class="k">return</span> <span class="n">decorator</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">operate_on_index</span><span class="p">(</span><span class="n">idx</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Callable</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">operate_on_index</span><span class="p">(</span><span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;#️⃣ function decorator, that converts `func(input: Sequence, ...)` to `func(input[idx], ...)`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;#️⃣ function decorator, that converts `func(input: Sequence, ...)` to `func(input[idx], ...)`.</span>
 
-<span class="s2">    The other parts of the input sequence are not passed to the function, but still returned by the decorator.</span>
+<span class="sd">    The other parts of the input sequence are not passed to the function, but still returned by the decorator.</span>
 
-<span class="s2">    This facilitates working with sequences (like tuples) as first arguments.</span>
+<span class="sd">    This facilitates working with sequences (like tuples) as first arguments.</span>
 
-<span class="s2">    Examples:</span>
+<span class="sd">    Examples:</span>
 
-<span class="s2">        &gt;&gt;&gt; @operate_on_index()</span>
+<span class="sd">        &gt;&gt;&gt; @operate_on_index()</span>
 
-<span class="s2">            def add(x, n):</span>
+<span class="sd">            def add(x, n):</span>
 
-<span class="s2">                return x + n</span>
+<span class="sd">                return x + n</span>
 
-<span class="s2">        &gt;&gt;&gt; add((1, &quot;target&quot;), 2)</span>
+<span class="sd">        &gt;&gt;&gt; add((1, &quot;target&quot;), 2)</span>
 
-<span class="s2">        (3, &quot;target&quot;)</span>
+<span class="sd">        (3, &quot;target&quot;)</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        idx (int, optional): index for fetching the value from `input`. Defaults to 0 (the first element).</span>
+<span class="sd">        idx (int, optional): index for fetching the value from `input`. Defaults to 0 (the first element).</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        Callable: modified function</span>
+<span class="sd">        Callable: modified function</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span><span class="w">  </span><span class="c1"># noqa: ANN202, ANN001</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>  <span class="c1"># noqa: ANN202, ANN001</span>
 
-<span class="w">        </span><span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span><span class="w">  </span><span class="c1"># noqa: ANN202, ANN001, A002, ANN002, ANN003</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  <span class="c1"># noqa: ANN202, ANN001, A002, ANN002, ANN003</span>
 
-<span class="w">            </span><span class="n">input_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">type</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+            <span class="n">input_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 
-<span class="w">            </span><span class="nb">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">list</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span><span class="w">  </span><span class="c1"># noqa: A001</span>
+            <span class="nb">input</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>  <span class="c1"># noqa: A001</span>
 
-<span class="w">            </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">input</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
-<span class="w">            </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="w">            </span><span class="nb">input</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">out</span>
+            <span class="nb">input</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">out</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">input_type</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">input_type</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">wrapper</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">decorator</span>
+    <span class="k">return</span> <span class="n">decorator</span>
 </code></pre></div>
 
 </details>
 <h2 id="functions">Functions</h2>
 <h3 id="noop">noop</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">noop</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">noop</span><span class="p">(</span>
     <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre></div>
@@ -1223,7 +1223,7 @@
 
 </details>
 <h3 id="operate_on_index">operate_on_index</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">operate_on_index</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">operate_on_index</span><span class="p">(</span>
     <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span>
 </code></pre></div>
@@ -1322,7 +1322,7 @@
 
 </details>
 <h3 id="operate_on_key">operate_on_key</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">operate_on_key</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">operate_on_key</span><span class="p">(</span>
     <span class="n">key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;input&#39;</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span>
 </code></pre></div>
@@ -1417,7 +1417,7 @@
 
 </details>
 <h3 id="set_value_in_dict">set_value_in_dict</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">set_value_in_dict</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_value_in_dict</span><span class="p">(</span>
     <span class="n">dictionary</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">],</span>
     <span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
     <span class="n">key</span><span class="p">:</span> <span class="nb">str</span>
@@ -1499,7 +1499,7 @@
 </details>
 <h2 id="classes">Classes</h2>
 <h3 id="labeldecoder">LabelDecoder</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">LabelDecoder</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LabelDecoder</span><span class="p">(</span>
     <span class="n">classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -1566,7 +1566,7 @@
 </details>
 <hr />
 <h3 id="labelencoder">LabelEncoder</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">LabelEncoder</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">LabelEncoder</span><span class="p">(</span>
     <span class="n">classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -1633,7 +1633,7 @@
 </details>
 <hr />
 <h3 id="multilabeldecoder">MultiLabelDecoder</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MultiLabelDecoder</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MultiLabelDecoder</span><span class="p">(</span>
     <span class="n">classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -1702,7 +1702,7 @@
 </details>
 <hr />
 <h3 id="multilabelencoder">MultiLabelEncoder</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">MultiLabelEncoder</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MultiLabelEncoder</span><span class="p">(</span>
     <span class="n">classes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 <span class="p">)</span>
 </code></pre></div>

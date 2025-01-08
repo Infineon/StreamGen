@@ -882,163 +882,163 @@
 
 <span class="c1"># ruff: noqa: ERA001</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">beartype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span> <span class="n">beartype</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">is_extra_installed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_extra_installed</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.samplers</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Sampler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.samplers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sampler</span>
 
-<span class="k">if</span><span class="w"> </span><span class="n">is_extra_installed</span><span class="p">(</span><span class="s2">&quot;cl&quot;</span><span class="p">):</span>
+<span class="k">if</span> <span class="n">is_extra_installed</span><span class="p">(</span><span class="s2">&quot;cl&quot;</span><span class="p">):</span>
 
-<span class="w">    </span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 
-<span class="w">    </span><span class="c1">#! avalanche-lib has a broken version constraint on torchcv</span>
+    <span class="c1">#! avalanche-lib has a broken version constraint on torchcv</span>
 
-<span class="w">    </span><span class="c1"># * because I do not want to wait for the fix and since these mehtods</span>
+    <span class="c1"># * because I do not want to wait for the fix and since these mehtods</span>
 
-<span class="w">    </span><span class="c1"># * only provide application-specific starting points, I decided to exclude them temporarily</span>
+    <span class="c1"># * only provide application-specific starting points, I decided to exclude them temporarily</span>
 
-<span class="w">    </span><span class="c1"># from avalanche.benchmarks.utils import as_classification_dataset</span>
+    <span class="c1"># from avalanche.benchmarks.utils import as_classification_dataset</span>
 
-<span class="w">    </span><span class="c1"># from avalanche.benchmarks.utils.classification_dataset import ClassificationDataset</span>
+    <span class="c1"># from avalanche.benchmarks.utils.classification_dataset import ClassificationDataset</span>
 
-<span class="w">    </span><span class="kn">from</span><span class="w"> </span><span class="nn">continuum.datasets</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">InMemoryDataset</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">continuum.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">InMemoryDataset</span>
 
-<span class="w">    </span><span class="kn">from</span><span class="w"> </span><span class="nn">continuum.scenarios.continual_scenario</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">ContinualScenario</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">continuum.scenarios.continual_scenario</span><span class="w"> </span><span class="kn">import</span> <span class="n">ContinualScenario</span>
 
-<span class="w">    </span><span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">TensorDataset</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">TensorDataset</span>
 
-<span class="w">    </span><span class="nd">@beartype</span>
+    <span class="nd">@beartype</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">collect_stream</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">collect_stream</span><span class="p">(</span>
 
-<span class="w">        </span><span class="n">sampler</span><span class="p">:</span><span class="w"> </span><span class="n">Sampler</span><span class="p">,</span>
+        <span class="n">sampler</span><span class="p">:</span> <span class="n">Sampler</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">n_experiences</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">n_experiences</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">n_samples_per_experience</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">n_samples_per_experience</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
 
-<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🌌 collects a stream of `n_experiences` with `n_samples_per_experience` by calling `sampler.collect`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🌌 collects a stream of `n_experiences` with `n_samples_per_experience` by calling `sampler.collect`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            sampler (Sampler): data generator</span>
+<span class="sd">            sampler (Sampler): data generator</span>
 
-<span class="s2">            n_experiences (int, optional): Number of experiences. Each experience represents a different parameterization of the sampler.</span>
+<span class="sd">            n_experiences (int, optional): Number of experiences. Each experience represents a different parameterization of the sampler.</span>
 
-<span class="s2">            n_samples_per_experience (int, optional): Number of samples to collect in each experience. Defaults to 100</span>
+<span class="sd">            n_samples_per_experience (int, optional): Number of samples to collect in each experience. Defaults to 100</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            list[Any]: a list of experiences. The format and type of each experience depends on the `collect` implementation of the sampler.</span>
+<span class="sd">            list[Any]: a list of experiences. The format and type of each experience depends on the `collect` implementation of the sampler.</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌌 collecting </span><span class="si">{</span><span class="n">n_experiences</span><span class="si">}</span><span class="s2"> experiences with </span><span class="si">{</span><span class="n">n_samples_per_experience</span><span class="si">}</span><span class="s2"> samples each.&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="kp">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🌌 collecting </span><span class="si">{</span><span class="n">n_experiences</span><span class="si">}</span><span class="s2"> experiences with </span><span class="si">{</span><span class="n">n_samples_per_experience</span><span class="si">}</span><span class="s2"> samples each.&quot;</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span><span class="n">sampler</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">n_samples_per_experience</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">n_experiences</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">sampler</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">n_samples_per_experience</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_experiences</span><span class="p">)]</span>
 
-<span class="w">    </span><span class="nd">@beartype</span>
+    <span class="nd">@beartype</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">to_tensor_dataset</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="p">:</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">TensorDataset</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_tensor_dataset</span><span class="p">(</span><span class="n">samples</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">targets</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TensorDataset</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🗃️ constructs a TensorDataset with a `targets` field from two numpy arrays.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🗃️ constructs a TensorDataset with a `targets` field from two numpy arrays.&quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+        <span class="n">targets</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TensorDataset</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">TensorDataset</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">dataset</span><span class="o">.</span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">targets</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="n">targets</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">dataset</span>
+        <span class="k">return</span> <span class="n">dataset</span>
 
-<span class="w">    </span><span class="c1"># @beartype</span>
+    <span class="c1"># @beartype</span>
 
-<span class="w">    </span><span class="c1"># def construct_avalanche_classification_datasets(experiences: list[tuple[np.ndarray, np.ndarray]]) -&gt; list[ClassificationDataset]:</span>
+    <span class="c1"># def construct_avalanche_classification_datasets(experiences: list[tuple[np.ndarray, np.ndarray]]) -&gt; list[ClassificationDataset]:</span>
 
-<span class="w">    </span><span class="c1">#     &quot;&quot;&quot;❄️ constructs a list of avalanche `ClassificationDataset`s.</span>
+    <span class="c1">#     &quot;&quot;&quot;❄️ constructs a list of avalanche `ClassificationDataset`s.</span>
 
-<span class="w">    </span><span class="c1">#     This can be used with `avalanche.benchmarks.scenarios.dataset_scenario.benchmark_from_datasets` to create an avalanche benchmark.</span>
+    <span class="c1">#     This can be used with `avalanche.benchmarks.scenarios.dataset_scenario.benchmark_from_datasets` to create an avalanche benchmark.</span>
 
-<span class="w">    </span><span class="c1">#     Args:</span>
+    <span class="c1">#     Args:</span>
 
-<span class="w">    </span><span class="c1">#         experiences (list[tuple[np.ndarray, np.ndarray]]): list of experiences.</span>
+    <span class="c1">#         experiences (list[tuple[np.ndarray, np.ndarray]]): list of experiences.</span>
 
-<span class="w">    </span><span class="c1">#     Returns:</span>
+    <span class="c1">#     Returns:</span>
 
-<span class="w">    </span><span class="c1">#         list[ClassificationDataset]: list of avalanche `ClassificationDataset`s.</span>
+    <span class="c1">#         list[ClassificationDataset]: list of avalanche `ClassificationDataset`s.</span>
 
-<span class="w">    </span><span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="c1">#     stream = []</span>
+    <span class="c1">#     stream = []</span>
 
-<span class="w">    </span><span class="c1">#     for experience in experiences:</span>
+    <span class="c1">#     for experience in experiences:</span>
 
-<span class="w">    </span><span class="c1">#         samples, targets = experience</span>
+    <span class="c1">#         samples, targets = experience</span>
 
-<span class="w">    </span><span class="c1">#         dataset = to_tensor_dataset(samples, targets)</span>
+    <span class="c1">#         dataset = to_tensor_dataset(samples, targets)</span>
 
-<span class="w">    </span><span class="c1">#         dataset = as_classification_dataset(dataset)</span>
+    <span class="c1">#         dataset = as_classification_dataset(dataset)</span>
 
-<span class="w">    </span><span class="c1">#         stream.append(dataset)</span>
+    <span class="c1">#         stream.append(dataset)</span>
 
-<span class="w">    </span><span class="c1">#     return stream</span>
+    <span class="c1">#     return stream</span>
 
-<span class="w">    </span><span class="nd">@beartype</span>
+    <span class="nd">@beartype</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">construct_continuum_scenario</span><span class="p">(</span><span class="n">experiences</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">ContinualScenario</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">construct_continuum_scenario</span><span class="p">(</span><span class="n">experiences</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">ContinualScenario</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🕑 constructs a continuum `ContinualScenario`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🕑 constructs a continuum `ContinualScenario`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            experiences (list[tuple[np.ndarray, np.ndarray]]): list of experiences.</span>
+<span class="sd">            experiences (list[tuple[np.ndarray, np.ndarray]]): list of experiences.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            ContinualScenario: generic continuum scenario.</span>
+<span class="sd">            ContinualScenario: generic continuum scenario.</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="p">[],</span><span class="w"> </span><span class="p">[]</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
 
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">experience</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">enumerate</span><span class="p">(</span><span class="n">experiences</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">experience</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">experiences</span><span class="p">):</span>
 
-<span class="w">            </span><span class="n">samples</span><span class="p">,</span><span class="w"> </span><span class="n">targets</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">experience</span>
+            <span class="n">samples</span><span class="p">,</span> <span class="n">targets</span> <span class="o">=</span> <span class="n">experience</span>
 
-<span class="w">            </span><span class="n">task_ids</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">idx</span>
+            <span class="n">task_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">ones_like</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="o">*</span> <span class="n">idx</span>
 
-<span class="w">            </span><span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+            <span class="n">x</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+            <span class="n">y</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">task_ids</span><span class="p">)</span>
+            <span class="n">t</span><span class="o">.</span><span class="kp">append</span><span class="p">(</span><span class="n">task_ids</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">concatenate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">concatenate</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">concatenate</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">dataset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InMemoryDataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">InMemoryDataset</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ContinualScenario</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ContinualScenario</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </code></pre></div>
 
 </details>
 <h2 id="functions">Functions</h2>
 <h3 id="collect_stream">collect_stream</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">collect_stream</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">collect_stream</span><span class="p">(</span>
     <span class="n">sampler</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">Sampler</span><span class="p">,</span>
     <span class="n">n_experiences</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">n_samples_per_experience</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
@@ -1129,7 +1129,7 @@
 
 </details>
 <h3 id="construct_continuum_scenario">construct_continuum_scenario</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">construct_continuum_scenario</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">construct_continuum_scenario</span><span class="p">(</span>
     <span class="n">experiences</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">continuum</span><span class="o">.</span><span class="n">scenarios</span><span class="o">.</span><span class="n">continual_scenario</span><span class="o">.</span><span class="n">ContinualScenario</span>
 </code></pre></div>
@@ -1214,7 +1214,7 @@
 
 </details>
 <h3 id="to_tensor_dataset">to_tensor_dataset</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">to_tensor_dataset</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_tensor_dataset</span><span class="p">(</span>
     <span class="n">samples</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
     <span class="n">targets</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">TensorDataset</span>

@@ -869,17 +869,17 @@ Finally, we will add <code>ClassLabelNode</code>s, which will allow us to sample
 <li><a href="#🌳-sampling-trees">🌳 Sampling trees</a></li>
 <li><a href="#🏷️-generating-labels">🏷️ Generating labels</a></li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich</span><span class="w"> </span><span class="kn">import</span> <span class="nb">print</span>
 
-<span class="kn">from</span> <span class="nn">streamgen</span> <span class="kn">import</span> <span class="n">visualizations</span>
-<span class="kn">from</span> <span class="nn">streamgen.nodes</span> <span class="kn">import</span> <span class="n">SampleBufferNode</span>
-<span class="kn">from</span> <span class="nn">streamgen.parameter.store</span> <span class="kn">import</span> <span class="n">ParameterStore</span>
-<span class="kn">from</span> <span class="nn">streamgen.samplers.tree</span> <span class="kn">import</span> <span class="n">SamplingTree</span>
-<span class="kn">from</span> <span class="nn">streamgen.transforms</span> <span class="kn">import</span> <span class="n">noop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen</span><span class="w"> </span><span class="kn">import</span> <span class="n">visualizations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.nodes</span><span class="w"> </span><span class="kn">import</span> <span class="n">SampleBufferNode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParameterStore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.samplers.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingTree</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">noop</span>
 
 <span class="n">SEED</span> <span class="o">=</span> <span class="mi">42</span>
 <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
@@ -911,18 +911,18 @@ This dataset consists of three classes with the following parameters:</p>
 </ul>
 </li>
 </ol>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">background</span><span class="p">(</span><span class="n">signal_</span><span class="p">,</span> <span class="n">signal_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">strength</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103, ANN001, ARG001</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">background</span><span class="p">(</span><span class="n">signal_</span><span class="p">,</span> <span class="n">signal_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">strength</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103, ANN001, ARG001</span>
     <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">strength</span><span class="p">,</span> <span class="n">signal_length</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">ramp</span><span class="p">(</span><span class="n">signal</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ramp</span><span class="p">(</span><span class="n">signal</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103</span>
     <span class="n">ramp_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
     <span class="n">ramp_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span><span class="p">))</span>
     <span class="n">ramp_signal</span><span class="p">[</span><span class="n">ramp_start</span> <span class="p">:</span> <span class="n">ramp_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">signal</span> <span class="o">+</span> <span class="n">ramp_signal</span>
 
 
-<span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">signal</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="n">signal</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">kernel_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>  <span class="c1"># noqa: D103</span>
     <span class="n">step_signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
     <span class="n">step_start</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span> <span class="o">-</span> <span class="n">length</span><span class="p">))</span>
     <span class="n">step_signal</span><span class="p">[</span><span class="n">step_start</span> <span class="p">:</span> <span class="n">step_start</span> <span class="o">+</span> <span class="n">length</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
@@ -962,7 +962,7 @@ This dataset consists of three classes with the following parameters:</p>
 <li>dependencies (like <code>step</code> and <code>ramp</code> requiring <code>background</code> as input) are not clear</li>
 </ul>
 <p>To address all of these issues, <code>streamgen</code> provides the <code>SamplingTree</code> class, which organizes and calls functions very similar to <code>torchvision.transforms.Compose</code> or <code>torch.nn.Sequential</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">torchvision.transforms</span> <span class="kn">import</span> <span class="n">v2</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">torchvision.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">v2</span>
 
 <span class="n">transforms</span> <span class="o">=</span> <span class="n">v2</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
     <span class="n">v2</span><span class="o">.</span><span class="n">RandomHorizontalFlip</span><span class="p">(),</span>
@@ -1084,7 +1084,7 @@ For convenient construction, we also provide a shorthand description following t
 <div class="codehilite"><pre><span></span><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">notebook</span>
 
 
-<span class="k">def</span> <span class="nf">plotting_func</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plotting_func</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ax</span>
 

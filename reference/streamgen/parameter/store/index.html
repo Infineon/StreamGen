@@ -992,413 +992,413 @@
 <summary>View Source</summary>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;🗃️ parameter stores are dictionary-like collections of parameters and schedules.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">Self</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Self</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">beartype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span> <span class="n">beartype</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">rich.pretty</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">pretty_repr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich.pretty</span><span class="w"> </span><span class="kn">import</span> <span class="n">pretty_repr</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Parameter</span><span class="p">,</span><span class="w"> </span><span class="n">ScopedParameterDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameter</span><span class="p">,</span> <span class="n">ScopedParameterDict</span>
 
 <span class="nd">@beartype</span><span class="p">()</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">ParameterStore</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🗃️ a dictionary-like container of `streamgen.parameter.Parameter` with their names as keys.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🗃️ a dictionary-like container of `streamgen.parameter.Parameter` with their names as keys.</span>
 
-<span class="s2">    The dictionary can be nested one level to create parameter scopes.</span>
+<span class="sd">    The dictionary can be nested one level to create parameter scopes.</span>
 
-<span class="s2">    All top-level parameters are considered as having `scope=None`.</span>
+<span class="sd">    All top-level parameters are considered as having `scope=None`.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        parameters (list[Parameter] | ScopedParameterDict): parameters to store</span>
+<span class="sd">        parameters (list[Parameter] | ScopedParameterDict): parameters to store</span>
 
-<span class="s2">    Raises:</span>
+<span class="sd">    Raises:</span>
 
-<span class="s2">        ValueError: if `parameters` are of type `ScopedParameterDict` and are nested more than two levels.</span>
+<span class="sd">        ValueError: if `parameters` are of type `ScopedParameterDict` and are nested more than two levels.</span>
 
-<span class="s2">    Examples:</span>
+<span class="sd">    Examples:</span>
 
-<span class="s2">        &gt;&gt;&gt; store = ParameterStore(</span>
+<span class="sd">        &gt;&gt;&gt; store = ParameterStore(</span>
 
-<span class="s2">                {</span>
+<span class="sd">                {</span>
 
-<span class="s2">                    &quot;var1&quot;: {</span>
+<span class="sd">                    &quot;var1&quot;: {</span>
 
-<span class="s2">                        &quot;value&quot;: 1,</span>
+<span class="sd">                        &quot;value&quot;: 1,</span>
 
-<span class="s2">                        &quot;schedule&quot;: [2,3],</span>
+<span class="sd">                        &quot;schedule&quot;: [2,3],</span>
 
-<span class="s2">                        &quot;strategy&quot;: &quot;cycle&quot;,</span>
+<span class="sd">                        &quot;strategy&quot;: &quot;cycle&quot;,</span>
 
-<span class="s2">                    },</span>
+<span class="sd">                    },</span>
 
-<span class="s2">                    &quot;var2&quot;: {</span>
+<span class="sd">                    &quot;var2&quot;: {</span>
 
-<span class="s2">                        &quot;name&quot;: &quot;var2&quot;, # can be present, but is not needed</span>
+<span class="sd">                        &quot;name&quot;: &quot;var2&quot;, # can be present, but is not needed</span>
 
-<span class="s2">                        &quot;schedule&quot;: [0.1, 0.2, 0.3],</span>
+<span class="sd">                        &quot;schedule&quot;: [0.1, 0.2, 0.3],</span>
 
-<span class="s2">                    },</span>
+<span class="sd">                    },</span>
 
-<span class="s2">                    &quot;scope1&quot;: {</span>
+<span class="sd">                    &quot;scope1&quot;: {</span>
 
-<span class="s2">                        &quot;var1&quot;: { # var1 can be used again since its inside a scope</span>
+<span class="sd">                        &quot;var1&quot;: { # var1 can be used again since its inside a scope</span>
 
-<span class="s2">                            &quot;value&quot;: 1,</span>
+<span class="sd">                            &quot;value&quot;: 1,</span>
 
-<span class="s2">                            &quot;schedule&quot;: [2,3],</span>
+<span class="sd">                            &quot;schedule&quot;: [2,3],</span>
 
-<span class="s2">                            &quot;strategy&quot;: &quot;cycle&quot;,</span>
+<span class="sd">                            &quot;strategy&quot;: &quot;cycle&quot;,</span>
 
-<span class="s2">                        },</span>
+<span class="sd">                        },</span>
 
-<span class="s2">                    },</span>
+<span class="sd">                    },</span>
 
-<span class="s2">                }</span>
+<span class="sd">                }</span>
 
-<span class="s2">            )</span>
+<span class="sd">            )</span>
 
-<span class="s2">        &gt;&gt;&gt; store = ParameterStore([</span>
+<span class="sd">        &gt;&gt;&gt; store = ParameterStore([</span>
 
-<span class="s2">                    Parameter(&quot;var1&quot;, 1, [2]),</span>
+<span class="sd">                    Parameter(&quot;var1&quot;, 1, [2]),</span>
 
-<span class="s2">                    Parameter(&quot;var2&quot;, schedule=[0.0, 1.0]),</span>
+<span class="sd">                    Parameter(&quot;var2&quot;, schedule=[0.0, 1.0]),</span>
 
-<span class="s2">                ]</span>
+<span class="sd">                ]</span>
 
-<span class="s2">            })</span>
+<span class="sd">            })</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">parameters</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="n">Parameter</span><span class="p">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ScopedParameterDict</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: D107</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Parameter</span><span class="p">]</span> <span class="o">|</span> <span class="n">ScopedParameterDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># noqa: D107</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span><span class="w"> </span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
-<span class="w">        </span><span class="n">match</span><span class="w"> </span><span class="n">parameters</span><span class="p">:</span>
+        <span class="k">match</span> <span class="n">parameters</span><span class="p">:</span>
 
-<span class="w">            </span><span class="n">case</span><span class="w"> </span><span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+            <span class="k">case</span> <span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
 
-<span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span><span class="w"> </span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Parameter</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">parameters</span><span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">}</span>
 
-<span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span><span class="w"> </span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">parameters</span><span class="p">}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">}</span>
 
-<span class="w">            </span><span class="n">case</span><span class="w"> </span><span class="nb">dict</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+            <span class="k">case</span> <span class="nb">dict</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
 
-<span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span><span class="w"> </span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">set</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
 
-<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">dictionary</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">dictionary</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
-<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w">  </span><span class="c1"># then key is a scope name  # noqa: PLR2004</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># then key is a scope name  # noqa: PLR2004</span>
 
-<span class="w">                        </span><span class="n">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">key</span>
+                        <span class="n">scope</span> <span class="o">=</span> <span class="n">key</span>
 
-<span class="w">                        </span><span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
 
-<span class="w">                        </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="w">                        </span><span class="c1"># remove `name` entries since they are redundant</span>
+                        <span class="c1"># remove `name` entries since they are redundant</span>
 
-<span class="w">                        </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">parameter_kwargs</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">parameter_kwargs</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
-<span class="w">                            </span><span class="n">parameter_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">None</span><span class="p">)</span>
+                            <span class="n">parameter_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-<span class="w">                            </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">parameter_kwargs</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">parameter_kwargs</span><span class="p">)</span>
 
-<span class="w">                            </span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="w">                    </span><span class="k">elif</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w">  </span><span class="c1"># otherwise its a top-level parameter</span>
+                    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dict_depth</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># otherwise its a top-level parameter</span>
 
-<span class="w">                        </span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">None</span><span class="p">)</span>
+                        <span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-<span class="w">                        </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
 
-<span class="w">                        </span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-<span class="w">                    </span><span class="k">else</span><span class="p">:</span>
+                    <span class="k">else</span><span class="p">:</span>
 
-<span class="w">                        </span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;📚 parameters of type `ScopedParameterDict` should not be nested more than two levels.&quot;</span><span class="p">)</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;📚 parameters of type `ScopedParameterDict` should not be nested more than two levels.&quot;</span><span class="p">)</span>
 
-<span class="w">                        </span><span class="k">raise</span><span class="w"> </span><span class="n">ValueError</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span>
 
-<span class="w">    </span><span class="nd">@staticmethod</span>
+    <span class="nd">@staticmethod</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">_dict_depth</span><span class="p">(</span><span class="n">dictionary</span><span class="p">:</span><span class="w"> </span><span class="n">Any</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">int</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: ANN401</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_dict_depth</span><span class="p">(</span><span class="n">dictionary</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>  <span class="c1"># noqa: ANN401</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;📚 get the nesting-level/depth of a dictionary.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;📚 get the nesting-level/depth of a dictionary.</span>
 
-<span class="s2">        Code adapted from https://www.geeksforgeeks.org/python-find-depth-of-a-dictionary/</span>
+<span class="sd">        Code adapted from https://www.geeksforgeeks.org/python-find-depth-of-a-dictionary/</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            dictionary (Any): a dictionary or any of its values</span>
+<span class="sd">            dictionary (Any): a dictionary or any of its values</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            int: depth of dictionary</span>
+<span class="sd">            int: depth of dictionary</span>
 
-<span class="s2">        Examples:</span>
+<span class="sd">        Examples:</span>
 
-<span class="s2">            &gt;&gt;&gt; store = ParameterStore._dict_depth({1: &quot;a&quot;, 2: {3: {4: </span><span class="si">{}</span><span class="s2">}}})</span>
+<span class="sd">            &gt;&gt;&gt; store = ParameterStore._dict_depth({1: &quot;a&quot;, 2: {3: {4: {}}}})</span>
 
-<span class="s2">            4</span>
+<span class="sd">            4</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span><span class="w"> </span><span class="nb">dict</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">ParameterStore</span><span class="o">.</span><span class="n">_dict_depth</span><span class="p">,</span><span class="w"> </span><span class="n">dictionary</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">dictionary</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">ParameterStore</span><span class="o">.</span><span class="n">_dict_depth</span><span class="p">,</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="k">if</span> <span class="n">dictionary</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span>
+        <span class="k">return</span> <span class="mi">0</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Parameter</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Parameter</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🫱 gets a parameter by its name using `store[name]` syntax.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🫱 gets a parameter by its name using `store[name]` syntax.</span>
 
-<span class="s2">        Scoped parameters are fetched using `</span><span class="si">{scope}</span><span class="s2">.</span><span class="si">{parameter.name}</span><span class="s2">`.</span>
+<span class="sd">        Scoped parameters are fetched using `{scope}.{parameter.name}`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            name (str): name of the parameter</span>
+<span class="sd">            name (str): name of the parameter</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            Parameter: the parameter</span>
+<span class="sd">            Parameter: the parameter</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
 
-<span class="w">            </span><span class="n">scope</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+            <span class="n">scope</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">set_update_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_update_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🕐 updates every parameter of `self` to a certain update step using `param[idx]`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🕐 updates every parameter of `self` to a certain update step using `param[idx]`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            idx (int): parameter update step</span>
+<span class="sd">            idx (int): parameter update step</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            None: this function mutates `self`</span>
+<span class="sd">            None: this function mutates `self`</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">param</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
 
-<span class="w">            </span><span class="c1"># indexing of parameters mutates their internal state, so we do not have to set anything</span>
+            <span class="c1"># indexing of parameters mutates their internal state, so we do not have to set anything</span>
 
-<span class="w">            </span><span class="n">param</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">param</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">get_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">scope</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Self</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_scope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scope</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🔭 get all parameters in a scope as a new `ParameterStore`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🔭 get all parameters in a scope as a new `ParameterStore`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            scope (str): scope name</span>
+<span class="sd">            scope (str): scope name</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            ParameterStore | None: parameter store of all parameters inside the scope. None if scope is not present.</span>
+<span class="sd">            ParameterStore | None: parameter store of all parameters inside the scope. None if scope is not present.</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">scope</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">scope</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">ParameterStore</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;📖 get the current parameters as one dictionary.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;📖 get the current parameters as one dictionary.</span>
 
-<span class="s2">        Scoped parameters are represented by &quot;</span><span class="si">{scope}</span><span class="s2">.</span><span class="si">{parameter.name}</span><span class="s2">&quot;.</span>
+<span class="sd">        Scoped parameters are represented by &quot;{scope}.{parameter.name}&quot;.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            dict[str, Any]: dictionary with scoped parameter names as keys and `parameter.value` as values.</span>
+<span class="sd">            dict[str, Any]: dictionary with scoped parameter names as keys and `parameter.value` as values.</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">)}</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Any</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🆙 updates every parameter and returns them using `ParameterStore.get_params`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🆙 updates every parameter and returns them using `ParameterStore.get_params`.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            dict[str, Any]: dictionary with `parameter.name` as keys and `parameter.value` as values</span>
+<span class="sd">            dict[str, Any]: dictionary with `parameter.name` as keys and `parameter.value` as values</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span>
 
-<span class="w">            </span><span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">number_of_update_steps</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number_of_update_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;📅🐼 rolls out `number_of_update_steps` and returns the result as a `pd.DataFrame`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;📅🐼 rolls out `number_of_update_steps` and returns the result as a `pd.DataFrame`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            number_of_update_steps (int, optional): number of rows in the dataframe. Defaults to 0.</span>
+<span class="sd">            number_of_update_steps (int, optional): number of rows in the dataframe. Defaults to 0.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            pd.DataFrame: parameter store as dataframe</span>
+<span class="sd">            pd.DataFrame: parameter store as dataframe</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 
-<span class="w">            </span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_params</span><span class="p">()]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">number_of_update_steps</span><span class="p">)]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">number_of_update_steps</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">[]),</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_params</span><span class="p">()]</span> <span class="o">+</span> <span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number_of_update_steps</span><span class="p">)]</span> <span class="k">if</span> <span class="n">number_of_update_steps</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">[]),</span>
 
-<span class="w">        </span><span class="p">)</span>
+        <span class="p">)</span>
 
-<span class="w">    </span><span class="nd">@staticmethod</span>
+    <span class="nd">@staticmethod</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">:</span><span class="w"> </span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Self</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;📅🐼 constructs a `ParameterStore` from a dataframe.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;📅🐼 constructs a `ParameterStore` from a dataframe.</span>
 
-<span class="s2">        Each columns represents a parameter.</span>
+<span class="sd">        Each columns represents a parameter.</span>
 
-<span class="s2">        columns can be namespaced following the same &quot;</span><span class="si">{scope}</span><span class="s2">.</span><span class="si">{parameter.name}</span><span class="s2">&quot; rules as `ParameterStore.__getitem__`.</span>
+<span class="sd">        columns can be namespaced following the same &quot;{scope}.{parameter.name}&quot; rules as `ParameterStore.__getitem__`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            df (pd.DataFrame): dataframe</span>
+<span class="sd">            df (pd.DataFrame): dataframe</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            ParameterStore: parameter store</span>
+<span class="sd">            ParameterStore: parameter store</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">scopes</span><span class="p">:</span><span class="w"> </span><span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">name</span><span class="p">}</span>
+        <span class="n">scopes</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">}</span>
 
-<span class="w">        </span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">scope</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">scopes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">scope</span> <span class="ow">in</span> <span class="n">scopes</span><span class="p">:</span>
 
-<span class="w">            </span><span class="n">params</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
 
-<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">scope</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">):</span>
 
-<span class="w">                    </span><span class="k">continue</span>
+                    <span class="k">continue</span>
 
-<span class="w">                </span><span class="n">parameter_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">parameter_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
 
-<span class="w">                </span><span class="n">params</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">parameter_name</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;schedule&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]}</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">parameter_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;schedule&quot;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]}</span>
 
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">name</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
 
-<span class="w">                </span><span class="k">continue</span>
+                <span class="k">continue</span>
 
-<span class="w">            </span><span class="n">params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s2">&quot;schedule&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]}</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;schedule&quot;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]}</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ParameterStore</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">Parameter</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Self</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">Parameter</span> <span class="o">|</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;➕ combines self with another `Parameter` or `ParameterStore` using `|`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;➕ combines self with another `Parameter` or `ParameterStore` using `|`.</span>
 
-<span class="s2">        This function takes care of merging the scopes properly.</span>
+<span class="sd">        This function takes care of merging the scopes properly.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            params (Parameter | ParameterStore): another parameter or store</span>
+<span class="sd">            params (Parameter | ParameterStore): another parameter or store</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            ParameterStore: combined parameter store</span>
+<span class="sd">            ParameterStore: combined parameter store</span>
 
-<span class="s2">        &quot;&quot;&quot;</span><span class="w">  </span><span class="c1"># noqa: RUF002</span>
+<span class="sd">        &quot;&quot;&quot;</span>  <span class="c1"># noqa: RUF002</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="w"> </span><span class="n">Parameter</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">):</span>
 
-<span class="w">            </span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">([</span><span class="n">params</span><span class="p">])</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">ParameterStore</span><span class="p">([</span><span class="n">params</span><span class="p">])</span>
 
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">scope</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">scope</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">scope</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">scope</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
 
-<span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">param</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="s2">&quot;.&quot;</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">param</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">param</span><span class="p">:</span>
 
-<span class="w">                </span><span class="n">scope</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">param</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+                <span class="n">scope</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
 
-<span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">scope</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
 
-<span class="w">            </span><span class="k">else</span><span class="p">:</span>
+            <span class="k">else</span><span class="p">:</span>
 
-<span class="w">                </span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
 
-<span class="w">            </span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">self</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🏷️ Returns the debug string representation of self.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🏷️ Returns the debug string representation of self.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            str: string representation of self</span>
+<span class="sd">            str: string representation of self</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;(&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;(&quot;</span>
 
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">):</span>
 
-<span class="w">            </span><span class="n">s</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">])</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;, &quot;</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;)&quot;</span>
+        <span class="k">return</span> <span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🏷️ Returns the string representation `str(self)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🏷️ Returns the string representation `str(self)`.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            str: string representation of self</span>
+<span class="sd">            str: string representation of self</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">pretty_repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_params</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">pretty_repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_params</span><span class="p">())</span>
 </code></pre></div>
 
 </details>
 <h2 id="classes">Classes</h2>
 <h3 id="parameterstore">ParameterStore</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ParameterStore</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ParameterStore</span><span class="p">(</span>
     <span class="n">parameters</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">Parameter</span><span class="p">]</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">ParameterDict</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">ParameterDict</span><span class="p">]]</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -1822,7 +1822,7 @@ All top-level parameters are considered as having <code>scope=None</code>.</p>
 <hr />
 <h4 id="static-methods">Static methods</h4>
 <h4 id="from_dataframe">from_dataframe</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">from_dataframe</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">from_dataframe</span><span class="p">(</span>
     <span class="n">df</span><span class="p">:</span> <span class="n">pandas</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">DataFrame</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span>
 </code></pre></div>
@@ -1918,7 +1918,7 @@ columns can be namespaced following the same "{scope}.{parameter.name}" rules as
 </details>
 <h4 id="methods">Methods</h4>
 <h4 id="get_params">get_params</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span>
 </code></pre></div>
@@ -1959,7 +1959,7 @@ columns can be namespaced following the same "{scope}.{parameter.name}" rules as
 
 </details>
 <h4 id="get_scope">get_scope</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_scope</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_scope</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">scope</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Self</span><span class="p">]</span>
@@ -2025,7 +2025,7 @@ columns can be namespaced following the same "{scope}.{parameter.name}" rules as
 
 </details>
 <h4 id="set_update_step">set_update_step</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">set_update_step</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_update_step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
@@ -2091,7 +2091,7 @@ columns can be namespaced following the same "{scope}.{parameter.name}" rules as
 
 </details>
 <h4 id="to_dataframe">to_dataframe</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">to_dataframe</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">to_dataframe</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">number_of_update_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pandas</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">DataFrame</span>
@@ -2157,7 +2157,7 @@ columns can be namespaced following the same "{scope}.{parameter.name}" rules as
 
 </details>
 <h4 id="update">update</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span>
 </code></pre></div>

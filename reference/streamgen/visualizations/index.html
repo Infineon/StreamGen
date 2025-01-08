@@ -922,13 +922,13 @@
 <summary>View Source</summary>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;🖼️parameter visualization functions.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">deepcopy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">islice</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">islice</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">IPython</span>
 
@@ -940,307 +940,307 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.utils</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">io</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">io</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">widgets</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">widgets</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">animation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">animation</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Parameter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameter</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter.store</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">ParameterStore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParameterStore</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.samplers.tree</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">SamplingTree</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.samplers.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">SamplingTree</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">values</span><span class="p">:</span><span class="w"> </span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">float</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">list</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span><span class="w"> </span><span class="n">ax</span><span class="p">:</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">ax</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;📈 plots the scheduled values of a parameter.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;📈 plots the scheduled values of a parameter.</span>
 
-<span class="s2">    This function currently supports plotting numeric parameters and probabilities.</span>
+<span class="sd">    This function currently supports plotting numeric parameters and probabilities.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        values (list[int | float | list | np.ndarray]): list of values to plot.</span>
+<span class="sd">        values (list[int | float | list | np.ndarray]): list of values to plot.</span>
 
-<span class="s2">        ax (plt.Axes | None, optional): matplotlib Axes to plot to. Defaults to None.</span>
+<span class="sd">        ax (plt.Axes | None, optional): matplotlib Axes to plot to. Defaults to None.</span>
 
-<span class="s2">        title (str | None, optional): title of the plot. Defaults to None</span>
+<span class="sd">        title (str | None, optional): title of the plot. Defaults to None</span>
 
-<span class="s2">    Raises:</span>
+<span class="sd">    Raises:</span>
 
-<span class="s2">        NotImplementedError: when the type of the parameter values are not yet supported by this function</span>
+<span class="sd">        NotImplementedError: when the type of the parameter values are not yet supported by this function</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        plt.Axes: parameter plot</span>
+<span class="sd">        plt.Axes: parameter plot</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">match</span><span class="w"> </span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+    <span class="k">match</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
 
-<span class="w">        </span><span class="n">case</span><span class="w"> </span><span class="nb">int</span><span class="p">()</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">float</span><span class="p">():</span>
+        <span class="k">case</span> <span class="nb">int</span><span class="p">()</span> <span class="o">|</span> <span class="nb">float</span><span class="p">():</span>
 
-<span class="w">            </span><span class="n">ax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">values</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">case</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">()</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">list</span><span class="p">():</span>
+        <span class="k">case</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">()</span> <span class="o">|</span> <span class="nb">list</span><span class="p">():</span>
 
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">ax</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">                </span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+                <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-<span class="w">            </span><span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
 
-<span class="w">            </span><span class="n">indices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)))</span>
+            <span class="kp">indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)))</span>
 
-<span class="w">            </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="kp">array</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;only arrays with two dimensions can be visualized here&quot;</span><span class="w">  </span><span class="c1"># noqa: S101, PLR2004</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="kp">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;only arrays with two dimensions can be visualized here&quot;</span>  <span class="c1"># noqa: S101, PLR2004</span>
 
-<span class="w">            </span><span class="n">ax</span><span class="o">.</span><span class="n">stackplot</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">stackplot</span><span class="p">(</span><span class="kp">indices</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">case</span><span class="w"> </span><span class="n">_</span><span class="p">:</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">raise</span><span class="w"> </span><span class="n">NotImplementedError</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-<span class="w">    </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ax</span>
+    <span class="k">return</span> <span class="n">ax</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_parameter</span><span class="p">(</span><span class="n">param</span><span class="p">:</span><span class="w"> </span><span class="n">Parameter</span><span class="p">,</span><span class="w"> </span><span class="n">num_values</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">:</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_parameter</span><span class="p">(</span><span class="n">param</span><span class="p">:</span> <span class="n">Parameter</span><span class="p">,</span> <span class="n">num_values</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;⚙️ plots the scheduled values of a parameter.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;⚙️ plots the scheduled values of a parameter.</span>
 
-<span class="s2">    This function currently supports plotting numeric parameters and probabilities.</span>
+<span class="sd">    This function currently supports plotting numeric parameters and probabilities.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        param (Parameter): parameter to plot</span>
+<span class="sd">        param (Parameter): parameter to plot</span>
 
-<span class="s2">        num_values (int | None, optional): number of values to plot.</span>
+<span class="sd">        num_values (int | None, optional): number of values to plot.</span>
 
-<span class="s2">            If None, collect all values from the schedule. Defaults to None.</span>
+<span class="sd">            If None, collect all values from the schedule. Defaults to None.</span>
 
-<span class="s2">        ax (plt.Axes | None, optional): matplotlib Axes to plot to. Defaults to None.</span>
+<span class="sd">        ax (plt.Axes | None, optional): matplotlib Axes to plot to. Defaults to None.</span>
 
-<span class="s2">    Raises:</span>
+<span class="sd">    Raises:</span>
 
-<span class="s2">        NotImplementedError: when the type of the parameter values are not yet supported by this function</span>
+<span class="sd">        NotImplementedError: when the type of the parameter values are not yet supported by this function</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        plt.Axes: parameter plot</span>
+<span class="sd">        plt.Axes: parameter plot</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">match</span><span class="w"> </span><span class="n">num_values</span><span class="p">:</span>
+    <span class="k">match</span> <span class="n">num_values</span><span class="p">:</span>
 
-<span class="w">        </span><span class="n">case</span><span class="w"> </span><span class="nb">int</span><span class="p">():</span>
+        <span class="k">case</span> <span class="nb">int</span><span class="p">():</span>
 
-<span class="w">            </span><span class="k">assert</span><span class="w"> </span><span class="n">num_values</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;at least two value are needed for the plot.&quot;</span><span class="w">  </span><span class="c1"># noqa: S101</span>
+            <span class="k">assert</span> <span class="n">num_values</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;at least two value are needed for the plot.&quot;</span>  <span class="c1"># noqa: S101</span>
 
-<span class="w">            </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">schedule</span><span class="p">),</span><span class="w"> </span><span class="n">num_values</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">))]</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">schedule</span><span class="p">),</span> <span class="n">num_values</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))]</span>
 
-<span class="w">        </span><span class="n">case</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+        <span class="k">case</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">            </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">schedule</span><span class="p">),</span><span class="w"> </span><span class="kc">None</span><span class="p">))]</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="nb">list</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">schedule</span><span class="p">),</span> <span class="kc">None</span><span class="p">))]</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">plot</span><span class="p">(</span><span class="n">values</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">plot</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_parameter_store</span><span class="p">(</span><span class="n">store</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">,</span><span class="w"> </span><span class="n">num_values</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">mpl</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_parameter_store</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="n">ParameterStore</span><span class="p">,</span> <span class="n">num_values</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">mpl</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🗄️ plots every parameter in a `ParameterStore` in one figure.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🗄️ plots every parameter in a `ParameterStore` in one figure.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        store (ParameterStore): parameter store to plot</span>
+<span class="sd">        store (ParameterStore): parameter store to plot</span>
 
-<span class="s2">        num_values (int | None, optional): number of values to plot.</span>
+<span class="sd">        num_values (int | None, optional): number of values to plot.</span>
 
-<span class="s2">            If None, collect all values from the schedule. Defaults to None.</span>
+<span class="sd">            If None, collect all values from the schedule. Defaults to None.</span>
 
-<span class="s2">    Raises:</span>
+<span class="sd">    Raises:</span>
 
-<span class="s2">        NotImplementedError: when the type of the parameter values are not yet supported</span>
+<span class="sd">        NotImplementedError: when the type of the parameter values are not yet supported</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        mpl.figure.Figure: matplotlib figure object</span>
+<span class="sd">        mpl.figure.Figure: matplotlib figure object</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">num_columns</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">)</span>
+    <span class="n">num_columns</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
 
-<span class="w">    </span><span class="n">fig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">param</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">enumerate</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">parameter_names</span><span class="p">):</span>
 
-<span class="w">        </span><span class="n">ax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">num_columns</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">num_columns</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">plot_parameter</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="n">param</span><span class="p">],</span><span class="w"> </span><span class="n">num_values</span><span class="o">=</span><span class="n">num_values</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">plot_parameter</span><span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="n">param</span><span class="p">],</span> <span class="n">num_values</span><span class="o">=</span><span class="n">num_values</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">num_columns</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">3.0</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">num_columns</span> <span class="o">*</span> <span class="mf">3.0</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fig</span>
+    <span class="k">return</span> <span class="n">fig</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">plot_parameter_store_widget</span><span class="p">(</span><span class="n">store</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">,</span><span class="w"> </span><span class="n">num_values</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">widgets</span><span class="o">.</span><span class="n">Tab</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_parameter_store_widget</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="n">ParameterStore</span><span class="p">,</span> <span class="n">num_values</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Tab</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;📂 plots every parameter of each scope in a `ParameterStore` in a separate `ipywidgets.widgets.Tab`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;📂 plots every parameter of each scope in a `ParameterStore` in a separate `ipywidgets.widgets.Tab`.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        store (ParameterStore): parameter store to plot</span>
+<span class="sd">        store (ParameterStore): parameter store to plot</span>
 
-<span class="s2">        num_values (int | None, optional): number of values to plot.</span>
+<span class="sd">        num_values (int | None, optional): number of values to plot.</span>
 
-<span class="s2">            If None, collect all values from the schedule. Defaults to None.</span>
+<span class="sd">            If None, collect all values from the schedule. Defaults to None.</span>
 
-<span class="s2">    Raises:</span>
+<span class="sd">    Raises:</span>
 
-<span class="s2">        NotImplementedError: when the type of the parameter values are not yet supported</span>
+<span class="sd">        NotImplementedError: when the type of the parameter values are not yet supported</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        widgets.Tab: ipywidgets tab widget</span>
+<span class="sd">        widgets.Tab: ipywidgets tab widget</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">scopes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">list</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">scopes</span><span class="p">)</span>
+    <span class="n">scopes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">store</span><span class="o">.</span><span class="n">scopes</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">tabs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">widgets</span><span class="o">.</span><span class="n">Output</span><span class="p">()</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">_</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">scopes</span><span class="p">]</span>
+    <span class="n">tabs</span> <span class="o">=</span> <span class="p">[</span><span class="n">widgets</span><span class="o">.</span><span class="n">Output</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">scopes</span><span class="p">]</span>
 
-<span class="w">    </span><span class="n">widget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">widgets</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">tabs</span><span class="p">)</span>
+    <span class="n">widget</span> <span class="o">=</span> <span class="n">widgets</span><span class="o">.</span><span class="n">Tab</span><span class="p">(</span><span class="n">children</span><span class="o">=</span><span class="n">tabs</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">scope</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">enumerate</span><span class="p">(</span><span class="n">scopes</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">scope</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scopes</span><span class="p">):</span>
 
-<span class="w">        </span><span class="n">widget</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="n">scope</span><span class="p">)</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">with</span><span class="w"> </span><span class="n">tabs</span><span class="p">[</span><span class="n">idx</span><span class="p">]:</span>
+        <span class="k">with</span> <span class="n">tabs</span><span class="p">[</span><span class="n">idx</span><span class="p">]:</span>
 
-<span class="w">            </span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">store</span><span class="o">.</span><span class="n">get_scope</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">get_scope</span><span class="p">(</span><span class="n">scope</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">fig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plot_parameter_store</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="w"> </span><span class="n">num_values</span><span class="o">=</span><span class="n">num_values</span><span class="p">)</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_parameter_store</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">num_values</span><span class="o">=</span><span class="n">num_values</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">widget</span>
+    <span class="k">return</span> <span class="n">widget</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_labeled_samples_grid</span><span class="p">(</span>
 
-<span class="w">    </span><span class="n">tree</span><span class="p">:</span><span class="w"> </span><span class="n">SamplingTree</span><span class="p">,</span>
+    <span class="n">tree</span><span class="p">:</span> <span class="n">SamplingTree</span><span class="p">,</span>
 
-<span class="w">    </span><span class="n">plotting_func</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span>
+    <span class="n">plotting_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span>
 
-<span class="w">    </span><span class="n">columns</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">columns</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
 
-<span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">mpl</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">mpl</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;📟 plots a `columns`x`columns` grid of labeled samples generated from a `SamplingTree` with `ClassLabelNode`s.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;📟 plots a `columns`x`columns` grid of labeled samples generated from a `SamplingTree` with `ClassLabelNode`s.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        tree (SamplingTree): tree to generate samples from</span>
+<span class="sd">        tree (SamplingTree): tree to generate samples from</span>
 
-<span class="s2">        plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.</span>
+<span class="sd">        plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.</span>
 
-<span class="s2">            The function should take a sample and a `plt.Axes` as arguments.</span>
+<span class="sd">            The function should take a sample and a `plt.Axes` as arguments.</span>
 
-<span class="s2">        columns (int, optional): number of samples in the columns (and rows). Defaults to 4.</span>
+<span class="sd">        columns (int, optional): number of samples in the columns (and rows). Defaults to 4.</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        mpl.figure.Figure: matplotlib figure object</span>
+<span class="sd">        mpl.figure.Figure: matplotlib figure object</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">num_samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">columns</span>
+    <span class="n">num_samples</span> <span class="o">=</span> <span class="n">columns</span> <span class="o">*</span> <span class="n">columns</span>
 
-<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">io</span><span class="o">.</span><span class="n">capture_output</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">_captured</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">capture_output</span><span class="p">()</span> <span class="k">as</span> <span class="n">_captured</span><span class="p">:</span>
 
-<span class="w">        </span><span class="n">samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
 
-<span class="w">    </span><span class="n">fig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">idx</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">sample</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">enumerate</span><span class="p">(</span><span class="n">samples</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="kp">sample</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">samples</span><span class="p">):</span>
 
-<span class="w">        </span><span class="n">ax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span><span class="w"> </span><span class="n">columns</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">plotting_func</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">plotting_func</span><span class="p">(</span><span class="kp">sample</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">columns</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">3.0</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_figheight</span><span class="p">(</span><span class="n">columns</span> <span class="o">*</span> <span class="mf">3.0</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="n">columns</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">3.0</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="n">columns</span> <span class="o">*</span> <span class="mf">3.0</span><span class="p">)</span>
 
-<span class="w">    </span><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fig</span>
+    <span class="k">return</span> <span class="n">fig</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">plot_labeled_samples_animation</span><span class="p">(</span>
 
-<span class="w">    </span><span class="n">tree</span><span class="p">:</span><span class="w"> </span><span class="n">SamplingTree</span><span class="p">,</span>
+    <span class="n">tree</span><span class="p">:</span> <span class="n">SamplingTree</span><span class="p">,</span>
 
-<span class="w">    </span><span class="n">plotting_func</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span>
+    <span class="n">plotting_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span>
 
-<span class="w">    </span><span class="n">num_samples</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
 
-<span class="w">    </span><span class="n">interval</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+    <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span><span class="p">,</span>
 
-<span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🎞️ plots several labeled samples generated from a `SamplingTree` with `ClassLabelNode`s as an animation.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🎞️ plots several labeled samples generated from a `SamplingTree` with `ClassLabelNode`s as an animation.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        tree (SamplingTree): tree to generate samples from</span>
+<span class="sd">        tree (SamplingTree): tree to generate samples from</span>
 
-<span class="s2">        plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.</span>
+<span class="sd">        plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.</span>
 
-<span class="s2">            The function should take a sample and a `plt.Axes` as arguments.</span>
+<span class="sd">            The function should take a sample and a `plt.Axes` as arguments.</span>
 
-<span class="s2">        num_samples (int, optional): number of samples to include in the animation. Defaults to 8.</span>
+<span class="sd">        num_samples (int, optional): number of samples to include in the animation. Defaults to 8.</span>
 
-<span class="s2">        interval (int, optional): delay between frames in milliseconds. Defaults to 200.</span>
+<span class="sd">        interval (int, optional): delay between frames in milliseconds. Defaults to 200.</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        IPython.display.HTML: animation player as an ipython HTML output</span>
+<span class="sd">        IPython.display.HTML: animation player as an ipython HTML output</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">with</span><span class="w"> </span><span class="n">io</span><span class="o">.</span><span class="n">capture_output</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">_captured</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">io</span><span class="o">.</span><span class="n">capture_output</span><span class="p">()</span> <span class="k">as</span> <span class="n">_captured</span><span class="p">:</span>
 
-<span class="w">        </span><span class="n">samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">num_samples</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
 
-<span class="w">        </span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 
-<span class="w">        </span><span class="k">def</span><span class="w"> </span><span class="nf">_plotting_func</span><span class="p">(</span><span class="n">idx</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">:</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_plotting_func</span><span class="p">(</span><span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">            </span><span class="n">sample</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">samples</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="kp">sample</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
-<span class="w">            </span><span class="n">ax</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
-<span class="w">            </span><span class="n">plotting_func</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">)</span>
+            <span class="n">plotting_func</span><span class="p">(</span><span class="kp">sample</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">anim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">_plotting_func</span><span class="p">,</span><span class="w"> </span><span class="n">frames</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span><span class="w"> </span><span class="n">fargs</span><span class="o">=</span><span class="p">(</span><span class="n">ax</span><span class="p">,),</span><span class="w"> </span><span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span>
+        <span class="n">anim</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">_plotting_func</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">fargs</span><span class="o">=</span><span class="p">(</span><span class="n">ax</span><span class="p">,),</span> <span class="n">interval</span><span class="o">=</span><span class="n">interval</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_jshtml</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_jshtml</span><span class="p">())</span>
 </code></pre></div>
 
 </details>
 <h2 id="functions">Functions</h2>
 <h3 id="plot">plot</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">plot</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span>
     <span class="n">values</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
     <span class="n">ax</span><span class="p">:</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">Axes</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1369,7 +1369,7 @@
 
 </details>
 <h3 id="plot_labeled_samples_animation">plot_labeled_samples_animation</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">plot_labeled_samples_animation</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_labeled_samples_animation</span><span class="p">(</span>
     <span class="n">tree</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">SamplingTree</span><span class="p">,</span>
     <span class="n">plotting_func</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span>
     <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
@@ -1489,7 +1489,7 @@
 
 </details>
 <h3 id="plot_labeled_samples_grid">plot_labeled_samples_grid</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">plot_labeled_samples_grid</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_labeled_samples_grid</span><span class="p">(</span>
     <span class="n">tree</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">SamplingTree</span><span class="p">,</span>
     <span class="n">plotting_func</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span>
     <span class="n">columns</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
@@ -1602,7 +1602,7 @@
 
 </details>
 <h3 id="plot_parameter">plot_parameter</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">plot_parameter</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_parameter</span><span class="p">(</span>
     <span class="n">param</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">Parameter</span><span class="p">,</span>
     <span class="n">num_values</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">ax</span><span class="p">:</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">Axes</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1717,7 +1717,7 @@
 
 </details>
 <h3 id="plot_parameter_store">plot_parameter_store</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">plot_parameter_store</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_parameter_store</span><span class="p">(</span>
     <span class="n">store</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span><span class="p">,</span>
     <span class="n">num_values</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">Figure</span>
@@ -1824,7 +1824,7 @@
 
 </details>
 <h3 id="plot_parameter_store_widget">plot_parameter_store_widget</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">plot_parameter_store_widget</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_parameter_store_widget</span><span class="p">(</span>
     <span class="n">store</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span><span class="p">,</span>
     <span class="n">num_values</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ipywidgets</span><span class="o">.</span><span class="n">widgets</span><span class="o">.</span><span class="n">widget_selectioncontainer</span><span class="o">.</span><span class="n">Tab</span>

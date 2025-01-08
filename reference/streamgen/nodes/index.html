@@ -1474,11 +1474,11 @@
 <summary>View Source</summary>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;🪢 different node implementations using [anytree](https://anytree.readthedocs.io/en/stable/) `NodeMixin`.&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">deque</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Callable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">Protocol</span><span class="p">,</span><span class="w"> </span><span class="n">runtime_checkable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">runtime_checkable</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">anytree</span>
 
@@ -1488,409 +1488,409 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">beartype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span> <span class="n">beartype</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">logger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">animation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">animation</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.enums</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">ArgumentPassingStrategy</span><span class="p">,</span><span class="w"> </span><span class="n">ArgumentPassingStrategyLit</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">ArgumentPassingStrategy</span><span class="p">,</span> <span class="n">ArgumentPassingStrategyLit</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Parameter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameter</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter.store</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">ParameterStore</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.parameter.store</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParameterStore</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.transforms</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">noop</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">streamgen.transforms</span><span class="w"> </span><span class="kn">import</span> <span class="n">noop</span>
 
 <span class="nd">@runtime_checkable</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">Traverse</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🏃 transform-node traversal protocol `(input: Any) -&gt; (output, anytree.NodeMixin | None)`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🏃 transform-node traversal protocol `(input: Any) -&gt; (output, anytree.NodeMixin | None)`.</span>
 
-<span class="s2">    If a node has children, return the next node to traverse. Otherwise return None and stop traversal.</span>
+<span class="sd">    If a node has children, return the next node to traverse. Otherwise return None and stop traversal.</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span><span class="w"> </span><span class="n">Any</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">anytree</span><span class="o">.</span><span class="n">NodeMixin</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="p">]:</span><span class="w">  </span><span class="c1"># noqa: D102, N805, A002</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">anytree</span><span class="o">.</span><span class="n">NodeMixin</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>  <span class="c1"># noqa: D102, N805, A002</span>
 
-<span class="w">        </span><span class="o">...</span>
+        <span class="o">...</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TransformNode</span><span class="p">(</span><span class="n">anytree</span><span class="o">.</span><span class="n">NodeMixin</span><span class="p">):</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🪢 parametric transform node base class using [anytree](https://anytree.readthedocs.io/en/stable/) `NodeMixin`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🪢 parametric transform node base class using [anytree](https://anytree.readthedocs.io/en/stable/) `NodeMixin`.</span>
 
-<span class="s2">    A node can be linked dynamically to other nodes via the `parent` and `children` attributes.</span>
+<span class="sd">    A node can be linked dynamically to other nodes via the `parent` and `children` attributes.</span>
 
-<span class="s2">    The main idea of a `TransformNode` is that is contains a transformation, which is called when the node is traversed.</span>
+<span class="sd">    The main idea of a `TransformNode` is that is contains a transformation, which is called when the node is traversed.</span>
 
-<span class="s2">    The parameters of the node can be updated.</span>
+<span class="sd">    The parameters of the node can be updated.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        transform (Callable): any callable function</span>
+<span class="sd">        transform (Callable): any callable function</span>
 
-<span class="s2">        params (Parameter | ParameterStore | None, optional): parameters/arguments for the `transform`.</span>
+<span class="sd">        params (Parameter | ParameterStore | None, optional): parameters/arguments for the `transform`.</span>
 
-<span class="s2">            Can by fetched dynamically from a `ParameterStore` using `TransformNode.fetch_params`. Defaults to None.</span>
+<span class="sd">            Can by fetched dynamically from a `ParameterStore` using `TransformNode.fetch_params`. Defaults to None.</span>
 
-<span class="s2">        argument_strategy (ArgumentPassingStrategy | ArgumentPassingStrategyLit, optional):</span>
+<span class="sd">        argument_strategy (ArgumentPassingStrategy | ArgumentPassingStrategyLit, optional):</span>
 
-<span class="s2">            strategy which defines how parameters are passed to functions. Defaults to &quot;unpack&quot;, where params are passed as kwargs.</span>
+<span class="sd">            strategy which defines how parameters are passed to functions. Defaults to &quot;unpack&quot;, where params are passed as kwargs.</span>
 
-<span class="s2">        name (str | None, optional): node name. If none, use `transform.__name__`. Defaults to None.</span>
+<span class="sd">        name (str | None, optional): node name. If none, use `transform.__name__`. Defaults to None.</span>
 
-<span class="s2">        emoji (str, optional): emoji for string representation. Defaults to &quot;➡️&quot;.</span>
+<span class="sd">        emoji (str, optional): emoji for string representation. Defaults to &quot;➡️&quot;.</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="nd">@beartype</span><span class="p">()</span>
+    <span class="nd">@beartype</span><span class="p">()</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="w">  </span><span class="c1"># noqa: D107</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># noqa: D107</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">transform</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">,</span>
+        <span class="n">transform</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">Parameter</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ParameterStore</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">params</span><span class="p">:</span> <span class="n">Parameter</span> <span class="o">|</span> <span class="n">ParameterStore</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">argument_strategy</span><span class="p">:</span><span class="w"> </span><span class="n">ArgumentPassingStrategy</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ArgumentPassingStrategyLit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;unpack&quot;</span><span class="p">,</span>
+        <span class="n">argument_strategy</span><span class="p">:</span> <span class="n">ArgumentPassingStrategy</span> <span class="o">|</span> <span class="n">ArgumentPassingStrategyLit</span> <span class="o">=</span> <span class="s2">&quot;unpack&quot;</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">emoji</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;➡️&quot;</span><span class="p">,</span>
+        <span class="n">emoji</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;➡️&quot;</span><span class="p">,</span>
 
-<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">transform</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">([</span><span class="n">params</span><span class="p">])</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="w"> </span><span class="n">Parameter</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span> <span class="n">ParameterStore</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">ParameterStore</span><span class="p">([</span><span class="n">params</span><span class="p">])</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">Parameter</span><span class="p">)</span> <span class="k">else</span> <span class="n">params</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">argument_strategy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">argument_strategy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">argument_strategy</span> <span class="o">=</span> <span class="n">argument_strategy</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">transform</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">transform</span><span class="o">.</span><span class="vm">__name__</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">emoji</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">emoji</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emoji</span> <span class="o">=</span> <span class="n">emoji</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="nb">input</span><span class="p">:</span><span class="w"> </span><span class="n">Any</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">anytree</span><span class="o">.</span><span class="n">NodeMixin</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="p">]:</span><span class="w">  </span><span class="c1"># noqa: A002, ANN401</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">anytree</span><span class="o">.</span><span class="n">NodeMixin</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]:</span>  <span class="c1"># noqa: A002, ANN401</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🏃 `streamgen.transforms.Traverse` protocol `(input: Any) -&gt; (output, anytree.NodeMixin | None)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🏃 `streamgen.transforms.Traverse` protocol `(input: Any) -&gt; (output, anytree.NodeMixin | None)`.</span>
 
-<span class="s2">        If `self` has children, return the next node to traverse. Otherwise return None and stop traversal.</span>
+<span class="sd">        If `self` has children, return the next node to traverse. Otherwise return None and stop traversal.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            input (Any): any input</span>
+<span class="sd">            input (Any): any input</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            tuple[Any, anytree.NodeMixin | None]: output and potential next node to traverse</span>
+<span class="sd">            tuple[Any, anytree.NodeMixin | None]: output and potential next node to traverse</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">match</span><span class="w"> </span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">argument_strategy</span><span class="p">):</span>
+        <span class="k">match</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">argument_strategy</span><span class="p">):</span>
 
-<span class="w">            </span><span class="n">case</span><span class="w"> </span><span class="p">(</span><span class="kc">None</span><span class="p">,</span><span class="w"> </span><span class="n">_</span><span class="p">):</span>
+            <span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="k">_</span><span class="p">):</span>
 
-<span class="w">                </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">case</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">ArgumentPassingStrategy</span><span class="o">.</span><span class="n">DICT</span><span class="p">):</span>
+            <span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="k">_</span><span class="p">,</span> <span class="n">ArgumentPassingStrategy</span><span class="o">.</span><span class="n">DICT</span><span class="p">):</span>
 
-<span class="w">                </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
 
-<span class="w">            </span><span class="n">case</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">ArgumentPassingStrategy</span><span class="o">.</span><span class="n">UNPACK</span><span class="p">):</span>
+            <span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="k">_</span><span class="p">,</span> <span class="n">ArgumentPassingStrategy</span><span class="o">.</span><span class="n">UNPACK</span><span class="p">):</span>
 
-<span class="w">                </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_params</span><span class="p">())</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_params</span><span class="p">())</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="p">():</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="o">==</span> <span class="p">():</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="kc">None</span>
+            <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="kc">None</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
 
-<span class="w">            </span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Node </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2"> contains more than one child. Only the first one is traversed.&quot;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Node </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2"> contains more than one child. Only the first one is traversed.&quot;</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">output</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🆙 updates every parameter.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🆙 updates every parameter.&quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
 
-<span class="w">            </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">set_update_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_update_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🕐 updates every parameter of `self.params` to a certain update step using `self.params.set_update_step`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🕐 updates every parameter of `self.params` to a certain update step using `self.params.set_update_step`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            idx (int): parameter update step</span>
+<span class="sd">            idx (int): parameter update step</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            None: this function mutates `self`</span>
+<span class="sd">            None: this function mutates `self`</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
 
-<span class="w">            </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">set_update_step</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">set_update_step</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">fetch_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fetch_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">:</span> <span class="n">ParameterStore</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;⚙️ fetches params from a ParameterStore.</span>
 
-<span class="s2">        If the node was explicitly parameterized, use those params.</span>
+<span class="sd">        If the node was explicitly parameterized, use those params.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            params (ParameterStore): _description_</span>
+<span class="sd">            params (ParameterStore): _description_</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">return</span>
+            <span class="k">return</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">scopes</span><span class="p">:</span>
 
-<span class="w">            </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">params</span><span class="o">.</span><span class="n">get_scope</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get_scope</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">ParameterStore</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ParameterStore</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;⚙️ returns current parameters.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;⚙️ returns current parameters.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            ParameterStore | None: parameters. None is there are no parameters.</span>
+<span class="sd">            ParameterStore | None: parameters. None is there are no parameters.</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-<span class="w">        </span><span class="n">store</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParameterStore</span><span class="p">([])</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="n">ParameterStore</span><span class="p">([])</span>
 
-<span class="w">        </span><span class="n">store</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">scopes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">store</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{}</span>
+        <span class="n">store</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">param</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
-<span class="w">            </span><span class="n">store</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">name</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">param</span>
+            <span class="n">store</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span>
 
-<span class="w">            </span><span class="n">store</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">store</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">store</span>
+        <span class="k">return</span> <span class="n">store</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🏷️ Returns the string representation `str(self)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🏷️ Returns the string representation `str(self)`.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            str: string representation of self</span>
+<span class="sd">            str: string representation of self</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">emoji</span><span class="si">}</span><span class="s2"> `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">)`&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">emoji</span><span class="si">}</span><span class="s2"> `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">)`&quot;</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">ClassLabelNode</span><span class="p">(</span><span class="n">TransformNode</span><span class="p">):</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🏷️ node which sets the class label.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🏷️ node which sets the class label.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        label (str | int): class label or index</span>
+<span class="sd">        label (str | int): class label or index</span>
 
-<span class="s2">        label_func (Callable[[Any, str | int], Any], optional): function which adds the label information.</span>
+<span class="sd">        label_func (Callable[[Any, str | int], Any], optional): function which adds the label information.</span>
 
-<span class="s2">            Defaults to `lambda input, label: (input, label)`.</span>
+<span class="sd">            Defaults to `lambda input, label: (input, label)`.</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="w">  </span><span class="c1"># noqa: D107</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># noqa: D107</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">label</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">label_func</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="nb">str</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nb">int</span><span class="p">],</span><span class="w"> </span><span class="n">Any</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">lambda</span><span class="w"> </span><span class="nb">input</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="nb">input</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">),</span><span class="w">  </span><span class="c1"># noqa: A002</span>
+        <span class="n">label_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="nb">input</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">label</span><span class="p">),</span>
 
-<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">label_func</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">label_func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_func</span> <span class="o">=</span> <span class="n">label_func</span>
 
-<span class="w">        </span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">noop</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;label=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">emoji</span><span class="o">=</span><span class="s2">&quot;🏷️&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">noop</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;label=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">emoji</span><span class="o">=</span><span class="s2">&quot;🏷️&quot;</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="nb">input</span><span class="p">:</span><span class="w"> </span><span class="n">Any</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">anytree</span><span class="o">.</span><span class="n">NodeMixin</span><span class="p">]:</span><span class="w">  </span><span class="c1"># noqa: A002, ANN401</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">anytree</span><span class="o">.</span><span class="n">NodeMixin</span><span class="p">]:</span>  <span class="c1"># noqa: A002, ANN401</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -&gt; (output, anytree.NodeMixin | None)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -&gt; (output, anytree.NodeMixin | None)`.</span>
 
-<span class="s2">        During traversal, a label node sets the label in `input` with `self.label_func`.</span>
+<span class="sd">        During traversal, a label node sets the label in `input` with `self.label_func`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            input (Any): any input</span>
+<span class="sd">            input (Any): any input</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            tuple[Any, anytree.NodeMixin | None]: output and next node to traverse</span>
+<span class="sd">            tuple[Any, anytree.NodeMixin | None]: output and next node to traverse</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">label_func</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_func</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🏷️ Returns the string representation `str(self)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🏷️ Returns the string representation `str(self)`.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            str: string representation of self</span>
+<span class="sd">            str: string representation of self</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="sa">f</span><span class="s2">&quot;🏷️ `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">`&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;🏷️ `</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2">`&quot;</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">SampleBufferNode</span><span class="p">(</span><span class="n">TransformNode</span><span class="p">):</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🗃️ node which remembers the last samples.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🗃️ node which remembers the last samples.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        name (str | None, optional): name of the buffer. Defaults to &quot;sample buffer&quot;.</span>
+<span class="sd">        name (str | None, optional): name of the buffer. Defaults to &quot;sample buffer&quot;.</span>
 
-<span class="s2">        num_samples (int, optional): maximum number of samples to store. Defaults to 4.</span>
+<span class="sd">        num_samples (int, optional): maximum number of samples to store. Defaults to 4.</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="w">  </span><span class="c1"># noqa: D107</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>  <span class="c1"># noqa: D107</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">num_samples</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
 
-<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s2">&quot;sample buffer&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;sample buffer&quot;</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="n">num_samples</span><span class="p">)</span>
 
-<span class="w">        </span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">noop</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">emoji</span><span class="o">=</span><span class="s2">&quot;🗃️&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">noop</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">emoji</span><span class="o">=</span><span class="s2">&quot;🗃️&quot;</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="nb">input</span><span class="p">:</span><span class="w"> </span><span class="n">Any</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">anytree</span><span class="o">.</span><span class="n">NodeMixin</span><span class="p">]:</span><span class="w">  </span><span class="c1"># noqa: A002, ANN401</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">anytree</span><span class="o">.</span><span class="n">NodeMixin</span><span class="p">]:</span>  <span class="c1"># noqa: A002, ANN401</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -&gt; (output, anytree.NodeMixin | None)`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -&gt; (output, anytree.NodeMixin | None)`.</span>
 
-<span class="s2">        During traversal, a sample buffer node adds samples to `self.samples`.</span>
+<span class="sd">        During traversal, a sample buffer node adds samples to `self.samples`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            input (Any): any input</span>
+<span class="sd">            input (Any): any input</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            tuple[Any, anytree.NodeMixin | None]: output and next node to traverse</span>
+<span class="sd">            tuple[Any, anytree.NodeMixin | None]: output and next node to traverse</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">_plotting_func_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">idx</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">:</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span><span class="w"> </span><span class="n">plotting_func</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">])</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_plotting_func_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">,</span> <span class="n">plotting_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🖼️ private wrapper for the `plotting_func` argument in `self.plot`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🖼️ private wrapper for the `plotting_func` argument in `self.plot`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            idx (int): index of the frame. Passed into this function by matplotlib.</span>
+<span class="sd">            idx (int): index of the frame. Passed into this function by matplotlib.</span>
 
-<span class="s2">            ax (plt.Axes): artist to draw to</span>
+<span class="sd">            ax (plt.Axes): artist to draw to</span>
 
-<span class="s2">            plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.</span>
+<span class="sd">            plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.</span>
 
-<span class="s2">                The function should take a sample and a `plt.Axes` as arguments</span>
+<span class="sd">                The function should take a sample and a `plt.Axes` as arguments</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">labeled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="nb">tuple</span><span class="p">)</span>
+        <span class="n">labeled</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">)</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">labeled</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">labeled</span><span class="p">:</span>
 
-<span class="w">            </span><span class="n">sample</span><span class="p">,</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">sample</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
-<span class="w">        </span><span class="k">else</span><span class="p">:</span>
+        <span class="k">else</span><span class="p">:</span>
 
-<span class="w">            </span><span class="n">sample</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
-<span class="w">        </span><span class="n">ax</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
 
-<span class="w">        </span><span class="n">plotting_func</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">plotting_func</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">ax</span><span class="o">.</span><span class="n">get_xaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">get_xaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="w">        </span><span class="n">ax</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span>
 
-<span class="w">        </span><span class="bp">self</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">plotting_func</span><span class="p">:</span><span class="w"> </span><span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span>
+        <span class="n">plotting_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Any</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span> <span class="n">plt</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span>
 
-<span class="w">        </span><span class="n">display</span><span class="p">:</span><span class="w"> </span><span class="nb">bool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">True</span><span class="p">,</span><span class="w">  </span><span class="c1"># noqa: FBT001, FBT002</span>
+        <span class="n">display</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># noqa: FBT001, FBT002</span>
 
-<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span> <span class="o">|</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;📹 visualizes the samples in the buffer as an animation.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;📹 visualizes the samples in the buffer as an animation.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.</span>
+<span class="sd">            plotting_func (Callable[[Any, plt.Axes], plt.Axes]): function to visualize a single sample.</span>
 
-<span class="s2">                The function should take a sample and a `plt.Axes` as arguments.</span>
+<span class="sd">                The function should take a sample and a `plt.Axes` as arguments.</span>
 
-<span class="s2">            display (bool, optional): If true, wraps the animation object in an `IPython.display.HTML`. Defaults to True.</span>
+<span class="sd">            display (bool, optional): If true, wraps the animation object in an `IPython.display.HTML`. Defaults to True.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            IPython.display.HTML | animation.FuncAnimation | None: matplotlib animation object</span>
+<span class="sd">            IPython.display.HTML | animation.FuncAnimation | None: matplotlib animation object</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="kc">None</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-<span class="w">        </span><span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">()</span>
 
-<span class="w">        </span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">ax</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">3.2</span><span class="p">,</span><span class="w"> </span><span class="mf">2.4</span><span class="p">))</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">))</span>
 
-<span class="w">        </span><span class="n">anim</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_plotting_func_wrapper</span><span class="p">,</span><span class="w"> </span><span class="n">frames</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">),</span><span class="w"> </span><span class="n">fargs</span><span class="o">=</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="w"> </span><span class="n">plotting_func</span><span class="p">))</span>
+        <span class="n">anim</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plotting_func_wrapper</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="p">),</span> <span class="n">fargs</span><span class="o">=</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">plotting_func</span><span class="p">))</span>
 
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_jshtml</span><span class="p">())</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">display</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">anim</span>
+        <span class="k">return</span> <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">anim</span><span class="o">.</span><span class="n">to_jshtml</span><span class="p">())</span> <span class="k">if</span> <span class="n">display</span> <span class="k">else</span> <span class="n">anim</span>
 </code></pre></div>
 
 </details>
 <h2 id="classes">Classes</h2>
 <h3 id="classlabelnode">ClassLabelNode</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ClassLabelNode</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ClassLabelNode</span><span class="p">(</span>
     <span class="n">label</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span>
-    <span class="n">label_func</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">ClassLabelNode</span><span class="o">.&lt;</span><span class="k">lambda</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x0000027EAF8CC540</span><span class="o">&gt;</span>
+    <span class="n">label_func</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span><span class="p">],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">function</span> <span class="n">ClassLabelNode</span><span class="o">.&lt;</span><span class="k">lambda</span><span class="o">&gt;</span> <span class="n">at</span> <span class="mh">0x0000028F42AD0400</span><span class="o">&gt;</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -1942,7 +1942,7 @@
 
 <span class="w">        </span><span class="n">label</span><span class="o">:</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">int</span><span class="p">,</span>
 
-<span class="w">        </span><span class="n">label_func</span><span class="o">:</span><span class="w"> </span><span class="n">Callable</span><span class="err">[[</span><span class="k">Any</span><span class="p">,</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">int</span><span class="err">]</span><span class="p">,</span><span class="w"> </span><span class="k">Any</span><span class="err">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lambda</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">),</span><span class="w">  </span><span class="c1"># noqa: A002</span>
+<span class="w">        </span><span class="n">label_func</span><span class="o">:</span><span class="w"> </span><span class="n">Callable</span><span class="err">[[</span><span class="k">Any</span><span class="p">,</span><span class="w"> </span><span class="n">str</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kt">int</span><span class="err">]</span><span class="p">,</span><span class="w"> </span><span class="k">Any</span><span class="err">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lambda</span><span class="w"> </span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="p">),</span>
 
 <span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="k">None</span><span class="o">:</span>
 
@@ -2347,7 +2347,7 @@ loui.size
 </blockquote>
 <h4 id="methods">Methods</h4>
 <h4 id="fetch_params">fetch_params</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">fetch_params</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fetch_params</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">params</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
@@ -2399,7 +2399,7 @@ loui.size
 
 </details>
 <h4 id="get_params">get_params</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span> <span class="o">|</span> <span class="kc">None</span>
 </code></pre></div>
@@ -2453,7 +2453,7 @@ loui.size
 
 </details>
 <h4 id="iter_path_reverse">iter_path_reverse</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_path_reverse</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iter_path_reverse</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -2483,58 +2483,58 @@ Node('/Udo')</p>
 </blockquote>
 <details class="example">
 <summary>View Source</summary>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">iter_path_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="codehilite"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">iter_path_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
-<span class="s2">        Iterate up the tree from the current node to the root node.</span>
+<span class="sd">        Iterate up the tree from the current node to the root node.</span>
 
-<span class="s2">        &gt;&gt;&gt; from anytree import Node</span>
+<span class="sd">        &gt;&gt;&gt; from anytree import Node</span>
 
-<span class="s2">        &gt;&gt;&gt; udo = Node(&quot;Udo&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; udo = Node(&quot;Udo&quot;)</span>
 
-<span class="s2">        &gt;&gt;&gt; marc = Node(&quot;Marc&quot;, parent=udo)</span>
+<span class="sd">        &gt;&gt;&gt; marc = Node(&quot;Marc&quot;, parent=udo)</span>
 
-<span class="s2">        &gt;&gt;&gt; lian = Node(&quot;Lian&quot;, parent=marc)</span>
+<span class="sd">        &gt;&gt;&gt; lian = Node(&quot;Lian&quot;, parent=marc)</span>
 
-<span class="s2">        &gt;&gt;&gt; for node in udo.iter_path_reverse():</span>
+<span class="sd">        &gt;&gt;&gt; for node in udo.iter_path_reverse():</span>
 
-<span class="s2">        ...     print(node)</span>
+<span class="sd">        ...     print(node)</span>
 
-<span class="s2">        Node(&#39;/Udo&#39;)</span>
+<span class="sd">        Node(&#39;/Udo&#39;)</span>
 
-<span class="s2">        &gt;&gt;&gt; for node in marc.iter_path_reverse():</span>
+<span class="sd">        &gt;&gt;&gt; for node in marc.iter_path_reverse():</span>
 
-<span class="s2">        ...     print(node)</span>
+<span class="sd">        ...     print(node)</span>
 
-<span class="s2">        Node(&#39;/Udo/Marc&#39;)</span>
+<span class="sd">        Node(&#39;/Udo/Marc&#39;)</span>
 
-<span class="s2">        Node(&#39;/Udo&#39;)</span>
+<span class="sd">        Node(&#39;/Udo&#39;)</span>
 
-<span class="s2">        &gt;&gt;&gt; for node in lian.iter_path_reverse():</span>
+<span class="sd">        &gt;&gt;&gt; for node in lian.iter_path_reverse():</span>
 
-<span class="s2">        ...     print(node)</span>
+<span class="sd">        ...     print(node)</span>
 
-<span class="s2">        Node(&#39;/Udo/Marc/Lian&#39;)</span>
+<span class="sd">        Node(&#39;/Udo/Marc/Lian&#39;)</span>
 
-<span class="s2">        Node(&#39;/Udo/Marc&#39;)</span>
+<span class="sd">        Node(&#39;/Udo/Marc&#39;)</span>
 
-<span class="s2">        Node(&#39;/Udo&#39;)</span>
+<span class="sd">        Node(&#39;/Udo&#39;)</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span>
 
-<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+        <span class="k">while</span> <span class="n">node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">yield</span><span class="w"> </span><span class="n">node</span>
+            <span class="k">yield</span> <span class="n">node</span>
 
-<span class="w">            </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
 </code></pre></div>
 
 </details>
 <h4 id="set_update_step">set_update_step</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">set_update_step</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_update_step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
@@ -2598,7 +2598,7 @@ Node('/Udo')</p>
 
 </details>
 <h4 id="traverse">traverse</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">anytree</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">nodemixin</span><span class="o">.</span><span class="n">NodeMixin</span><span class="p">]</span>
@@ -2665,7 +2665,7 @@ Node('/Udo')</p>
 
 </details>
 <h4 id="update">update</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
@@ -2684,7 +2684,7 @@ Node('/Udo')</p>
 
 </details>
 <h3 id="samplebuffernode">SampleBufferNode</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">SampleBufferNode</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SampleBufferNode</span><span class="p">(</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="p">)</span>
@@ -3201,7 +3201,7 @@ loui.size
 </blockquote>
 <h4 id="methods_1">Methods</h4>
 <h4 id="fetch_params_1">fetch_params</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">fetch_params</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fetch_params</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">params</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
@@ -3253,7 +3253,7 @@ loui.size
 
 </details>
 <h4 id="get_params_1">get_params</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span> <span class="o">|</span> <span class="kc">None</span>
 </code></pre></div>
@@ -3307,7 +3307,7 @@ loui.size
 
 </details>
 <h4 id="iter_path_reverse_1">iter_path_reverse</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_path_reverse</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iter_path_reverse</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3337,58 +3337,58 @@ Node('/Udo')</p>
 </blockquote>
 <details class="example">
 <summary>View Source</summary>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">iter_path_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="codehilite"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">iter_path_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
-<span class="s2">        Iterate up the tree from the current node to the root node.</span>
+<span class="sd">        Iterate up the tree from the current node to the root node.</span>
 
-<span class="s2">        &gt;&gt;&gt; from anytree import Node</span>
+<span class="sd">        &gt;&gt;&gt; from anytree import Node</span>
 
-<span class="s2">        &gt;&gt;&gt; udo = Node(&quot;Udo&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; udo = Node(&quot;Udo&quot;)</span>
 
-<span class="s2">        &gt;&gt;&gt; marc = Node(&quot;Marc&quot;, parent=udo)</span>
+<span class="sd">        &gt;&gt;&gt; marc = Node(&quot;Marc&quot;, parent=udo)</span>
 
-<span class="s2">        &gt;&gt;&gt; lian = Node(&quot;Lian&quot;, parent=marc)</span>
+<span class="sd">        &gt;&gt;&gt; lian = Node(&quot;Lian&quot;, parent=marc)</span>
 
-<span class="s2">        &gt;&gt;&gt; for node in udo.iter_path_reverse():</span>
+<span class="sd">        &gt;&gt;&gt; for node in udo.iter_path_reverse():</span>
 
-<span class="s2">        ...     print(node)</span>
+<span class="sd">        ...     print(node)</span>
 
-<span class="s2">        Node(&#39;/Udo&#39;)</span>
+<span class="sd">        Node(&#39;/Udo&#39;)</span>
 
-<span class="s2">        &gt;&gt;&gt; for node in marc.iter_path_reverse():</span>
+<span class="sd">        &gt;&gt;&gt; for node in marc.iter_path_reverse():</span>
 
-<span class="s2">        ...     print(node)</span>
+<span class="sd">        ...     print(node)</span>
 
-<span class="s2">        Node(&#39;/Udo/Marc&#39;)</span>
+<span class="sd">        Node(&#39;/Udo/Marc&#39;)</span>
 
-<span class="s2">        Node(&#39;/Udo&#39;)</span>
+<span class="sd">        Node(&#39;/Udo&#39;)</span>
 
-<span class="s2">        &gt;&gt;&gt; for node in lian.iter_path_reverse():</span>
+<span class="sd">        &gt;&gt;&gt; for node in lian.iter_path_reverse():</span>
 
-<span class="s2">        ...     print(node)</span>
+<span class="sd">        ...     print(node)</span>
 
-<span class="s2">        Node(&#39;/Udo/Marc/Lian&#39;)</span>
+<span class="sd">        Node(&#39;/Udo/Marc/Lian&#39;)</span>
 
-<span class="s2">        Node(&#39;/Udo/Marc&#39;)</span>
+<span class="sd">        Node(&#39;/Udo/Marc&#39;)</span>
 
-<span class="s2">        Node(&#39;/Udo&#39;)</span>
+<span class="sd">        Node(&#39;/Udo&#39;)</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span>
 
-<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+        <span class="k">while</span> <span class="n">node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">yield</span><span class="w"> </span><span class="n">node</span>
+            <span class="k">yield</span> <span class="n">node</span>
 
-<span class="w">            </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
 </code></pre></div>
 
 </details>
 <h4 id="plot">plot</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">plot</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">plotting_func</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">_axes</span><span class="o">.</span><span class="n">Axes</span><span class="p">],</span>
     <span class="n">display</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
@@ -3479,7 +3479,7 @@ Node('/Udo')</p>
 
 </details>
 <h4 id="set_update_step_1">set_update_step</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">set_update_step</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_update_step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
@@ -3543,7 +3543,7 @@ Node('/Udo')</p>
 
 </details>
 <h4 id="traverse_1">traverse</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">anytree</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">nodemixin</span><span class="o">.</span><span class="n">NodeMixin</span><span class="p">]</span>
@@ -3610,7 +3610,7 @@ Node('/Udo')</p>
 
 </details>
 <h4 id="update_1">update</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
@@ -3629,7 +3629,7 @@ Node('/Udo')</p>
 
 </details>
 <h3 id="transformnode">TransformNode</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">TransformNode</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TransformNode</span><span class="p">(</span>
     <span class="n">transform</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">,</span>
     <span class="n">params</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">Parameter</span> <span class="o">|</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">argument_strategy</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">streamgen</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">ArgumentPassingStrategy</span><span class="p">,</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span> <span class="s1">&#39;unpack&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="s1">&#39;unpack&#39;</span><span class="p">,</span>
@@ -4241,7 +4241,7 @@ loui.size
 </blockquote>
 <h4 id="methods_2">Methods</h4>
 <h4 id="fetch_params_2">fetch_params</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">fetch_params</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fetch_params</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">params</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
@@ -4293,7 +4293,7 @@ loui.size
 
 </details>
 <h4 id="get_params_2">get_params</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span> <span class="o">|</span> <span class="kc">None</span>
 </code></pre></div>
@@ -4347,7 +4347,7 @@ loui.size
 
 </details>
 <h4 id="iter_path_reverse_2">iter_path_reverse</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">iter_path_reverse</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">iter_path_reverse</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4377,58 +4377,58 @@ Node('/Udo')</p>
 </blockquote>
 <details class="example">
 <summary>View Source</summary>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">iter_path_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="codehilite"><pre><span></span><code>    <span class="k">def</span><span class="w"> </span><span class="nf">iter_path_reverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
-<span class="s2">        Iterate up the tree from the current node to the root node.</span>
+<span class="sd">        Iterate up the tree from the current node to the root node.</span>
 
-<span class="s2">        &gt;&gt;&gt; from anytree import Node</span>
+<span class="sd">        &gt;&gt;&gt; from anytree import Node</span>
 
-<span class="s2">        &gt;&gt;&gt; udo = Node(&quot;Udo&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; udo = Node(&quot;Udo&quot;)</span>
 
-<span class="s2">        &gt;&gt;&gt; marc = Node(&quot;Marc&quot;, parent=udo)</span>
+<span class="sd">        &gt;&gt;&gt; marc = Node(&quot;Marc&quot;, parent=udo)</span>
 
-<span class="s2">        &gt;&gt;&gt; lian = Node(&quot;Lian&quot;, parent=marc)</span>
+<span class="sd">        &gt;&gt;&gt; lian = Node(&quot;Lian&quot;, parent=marc)</span>
 
-<span class="s2">        &gt;&gt;&gt; for node in udo.iter_path_reverse():</span>
+<span class="sd">        &gt;&gt;&gt; for node in udo.iter_path_reverse():</span>
 
-<span class="s2">        ...     print(node)</span>
+<span class="sd">        ...     print(node)</span>
 
-<span class="s2">        Node(&#39;/Udo&#39;)</span>
+<span class="sd">        Node(&#39;/Udo&#39;)</span>
 
-<span class="s2">        &gt;&gt;&gt; for node in marc.iter_path_reverse():</span>
+<span class="sd">        &gt;&gt;&gt; for node in marc.iter_path_reverse():</span>
 
-<span class="s2">        ...     print(node)</span>
+<span class="sd">        ...     print(node)</span>
 
-<span class="s2">        Node(&#39;/Udo/Marc&#39;)</span>
+<span class="sd">        Node(&#39;/Udo/Marc&#39;)</span>
 
-<span class="s2">        Node(&#39;/Udo&#39;)</span>
+<span class="sd">        Node(&#39;/Udo&#39;)</span>
 
-<span class="s2">        &gt;&gt;&gt; for node in lian.iter_path_reverse():</span>
+<span class="sd">        &gt;&gt;&gt; for node in lian.iter_path_reverse():</span>
 
-<span class="s2">        ...     print(node)</span>
+<span class="sd">        ...     print(node)</span>
 
-<span class="s2">        Node(&#39;/Udo/Marc/Lian&#39;)</span>
+<span class="sd">        Node(&#39;/Udo/Marc/Lian&#39;)</span>
 
-<span class="s2">        Node(&#39;/Udo/Marc&#39;)</span>
+<span class="sd">        Node(&#39;/Udo/Marc&#39;)</span>
 
-<span class="s2">        Node(&#39;/Udo&#39;)</span>
+<span class="sd">        Node(&#39;/Udo&#39;)</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">self</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span>
 
-<span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+        <span class="k">while</span> <span class="n">node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">            </span><span class="k">yield</span><span class="w"> </span><span class="n">node</span>
+            <span class="k">yield</span> <span class="n">node</span>
 
-<span class="w">            </span><span class="n">node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node</span><span class="o">.</span><span class="n">parent</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
 </code></pre></div>
 
 </details>
 <h4 id="set_update_step_2">set_update_step</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">set_update_step</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_update_step</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
@@ -4492,7 +4492,7 @@ Node('/Udo')</p>
 
 </details>
 <h4 id="traverse_2">traverse</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">anytree</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">nodemixin</span><span class="o">.</span><span class="n">NodeMixin</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span>
@@ -4579,7 +4579,7 @@ Node('/Udo')</p>
 
 </details>
 <h4 id="update_2">update</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
@@ -4598,7 +4598,7 @@ Node('/Udo')</p>
 
 </details>
 <h3 id="traverse_3">Traverse</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Traverse</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Traverse</span><span class="p">(</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span>
@@ -4632,7 +4632,7 @@ Node('/Udo')</p>
 </ul>
 <h4 id="methods_3">Methods</h4>
 <h4 id="traverse_4">traverse</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">traverse</span><span class="p">(</span>
     <span class="nb">input</span><span class="p">:</span> <span class="n">Any</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">anytree</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">nodemixin</span><span class="o">.</span><span class="n">NodeMixin</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span>
 </code></pre></div>

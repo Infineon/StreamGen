@@ -3072,79 +3072,79 @@ good documentation generation.</p>
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Literal</span><span class="p">,</span><span class="w"> </span><span class="n">TypeAlias</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">TypeAlias</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">ParameterOutOfRangeStrategy</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ParameterOutOfRangeStrategy</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;❓ strategy which defines what happens when there is no valid next value.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;❓ strategy which defines what happens when there is no valid next value.&quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">HOLD</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;hold&quot;</span>
+    <span class="n">HOLD</span> <span class="o">=</span> <span class="s2">&quot;hold&quot;</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;Holds/Keeps the last valid value.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Holds/Keeps the last valid value.&quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">CYCLE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;cycle&quot;</span>
+    <span class="n">CYCLE</span> <span class="o">=</span> <span class="s2">&quot;cycle&quot;</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;Use the first valid value.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use the first valid value.&quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">RAISE_EXCEPTION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;raise exception&quot;</span>
+    <span class="n">RAISE_EXCEPTION</span> <span class="o">=</span> <span class="s2">&quot;raise exception&quot;</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;Raises a ParameterOutOfRangeError.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Raises a ParameterOutOfRangeError.&quot;&quot;&quot;</span>
 
-<span class="n">ParameterOutOfRangeStrategyLit</span><span class="p">:</span><span class="w"> </span><span class="n">TypeAlias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Literal</span><span class="p">[</span>
+<span class="n">ParameterOutOfRangeStrategyLit</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span>
 
-<span class="w">    </span><span class="s2">&quot;hold&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hold&quot;</span><span class="p">,</span>
 
-<span class="w">    </span><span class="s2">&quot;cycle&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;cycle&quot;</span><span class="p">,</span>
 
-<span class="w">    </span><span class="s2">&quot;raise exception&quot;</span><span class="p">,</span>
-
-<span class="p">]</span>
-
-<span class="k">class</span><span class="w"> </span><span class="nc">ArgumentPassingStrategy</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Enum</span><span class="p">):</span>
-
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;⚙️ strategy which defines how parameters are passed to functions.&quot;&quot;&quot;</span>
-
-<span class="w">    </span><span class="n">DICT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;dict&quot;</span>
-
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;A dictionary as the second argument.&quot;&quot;&quot;</span>
-
-<span class="w">    </span><span class="n">UNPACK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;unpack&quot;</span>
-
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;Unpack the arguments as kwargs (**params).&quot;&quot;&quot;</span>
-
-<span class="n">ArgumentPassingStrategyLit</span><span class="p">:</span><span class="w"> </span><span class="n">TypeAlias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Literal</span><span class="p">[</span>
-
-<span class="w">    </span><span class="s2">&quot;dict&quot;</span><span class="p">,</span>
-
-<span class="w">    </span><span class="s2">&quot;unpack&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;raise exception&quot;</span><span class="p">,</span>
 
 <span class="p">]</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">SamplingStrategy</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="w"> </span><span class="n">Enum</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ArgumentPassingStrategy</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;🎲 strategy which defines how to sample a `streamgen.samplers.Sampler`.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;⚙️ strategy which defines how parameters are passed to functions.&quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">STOCHASTIC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;stochastic&quot;</span>
+    <span class="n">DICT</span> <span class="o">=</span> <span class="s2">&quot;dict&quot;</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;Samples randomly. -&gt; The class distributions are determined by the probabilities of the decision nodes.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A dictionary as the second argument.&quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">BALANCED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;balanced&quot;</span>
+    <span class="n">UNPACK</span> <span class="o">=</span> <span class="s2">&quot;unpack&quot;</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;Samples evenly/balanced/stratified among all classes.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Unpack the arguments as kwargs (**params).&quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="n">BALANCED_PRUNED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;balanced pruned&quot;</span>
+<span class="n">ArgumentPassingStrategyLit</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;Samples evenly/balanced/stratified among all classes that have a probability greater than zero.&quot;&quot;&quot;</span>
+    <span class="s2">&quot;dict&quot;</span><span class="p">,</span>
 
-<span class="n">SamplingStrategyLit</span><span class="p">:</span><span class="w"> </span><span class="n">TypeAlias</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Literal</span><span class="p">[</span>
+    <span class="s2">&quot;unpack&quot;</span><span class="p">,</span>
 
-<span class="w">    </span><span class="s2">&quot;stochastic&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 
-<span class="w">    </span><span class="s2">&quot;balanced&quot;</span><span class="p">,</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SamplingStrategy</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
 
-<span class="w">    </span><span class="s2">&quot;balanced pruned&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;🎲 strategy which defines how to sample a `streamgen.samplers.Sampler`.&quot;&quot;&quot;</span>
+
+    <span class="n">STOCHASTIC</span> <span class="o">=</span> <span class="s2">&quot;stochastic&quot;</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Samples randomly. -&gt; The class distributions are determined by the probabilities of the decision nodes.&quot;&quot;&quot;</span>
+
+    <span class="n">BALANCED</span> <span class="o">=</span> <span class="s2">&quot;balanced&quot;</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Samples evenly/balanced/stratified among all classes.&quot;&quot;&quot;</span>
+
+    <span class="n">BALANCED_PRUNED</span> <span class="o">=</span> <span class="s2">&quot;balanced pruned&quot;</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Samples evenly/balanced/stratified among all classes that have a probability greater than zero.&quot;&quot;&quot;</span>
+
+<span class="n">SamplingStrategyLit</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span>
+
+    <span class="s2">&quot;stochastic&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;balanced&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;balanced pruned&quot;</span><span class="p">,</span>
 
 <span class="p">]</span>
 </code></pre></div>
@@ -3152,7 +3152,7 @@ good documentation generation.</p>
 </details>
 <h2 id="classes">Classes</h2>
 <h3 id="argumentpassingstrategy">ArgumentPassingStrategy</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ArgumentPassingStrategy</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ArgumentPassingStrategy</span><span class="p">(</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwds</span>
 <span class="p">)</span>
@@ -3198,7 +3198,7 @@ good documentation generation.</p>
 
 <h4 id="static-methods">Static methods</h4>
 <h4 id="maketrans">maketrans</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">maketrans</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">maketrans</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3213,7 +3213,7 @@ character at the same position in y. If there is a third argument, it
 must be a string, whose characters will be mapped to None in the result.</p>
 <h4 id="methods">Methods</h4>
 <h4 id="capitalize">capitalize</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">capitalize</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">capitalize</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3223,7 +3223,7 @@ must be a string, whose characters will be mapped to None in the result.</p>
 <p>More specifically, make the first character have upper case and the rest lower
 case.</p>
 <h4 id="casefold">casefold</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">casefold</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">casefold</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3231,7 +3231,7 @@ case.</p>
 
 <p>Return a version of the string suitable for caseless comparisons.</p>
 <h4 id="center">center</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">center</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">center</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
@@ -3242,7 +3242,7 @@ case.</p>
 <p>Return a centered string of length width.</p>
 <p>Padding is done using the specified fill character (default is a space).</p>
 <h4 id="count">count</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">count</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3252,7 +3252,7 @@ case.</p>
 string S[start:end].  Optional arguments start and end are
 interpreted as in slice notation.</p>
 <h4 id="encode">encode</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
@@ -3270,7 +3270,7 @@ errors
   'xmlcharrefreplace' as well as any other name registered with
   codecs.register_error that can handle UnicodeEncodeErrors.</p>
 <h4 id="endswith">endswith</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">endswith</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">endswith</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3281,7 +3281,7 @@ With optional start, test S beginning at that position.
 With optional end, stop comparing S at that position.
 suffix can also be a tuple of strings to try.</p>
 <h4 id="expandtabs">expandtabs</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">expandtabs</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">expandtabs</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">tabsize</span><span class="o">=</span><span class="mi">8</span>
@@ -3291,7 +3291,7 @@ suffix can also be a tuple of strings to try.</p>
 <p>Return a copy where all tab characters are expanded using spaces.</p>
 <p>If tabsize is not given, a tab size of 8 characters is assumed.</p>
 <h4 id="find">find</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3302,7 +3302,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Return -1 on failure.</p>
 <h4 id="format">format</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3311,7 +3311,7 @@ arguments start and end are interpreted as in slice notation.</p>
 <p>Return a formatted version of S, using substitutions from args and kwargs.
 The substitutions are identified by braces ('{' and '}').</p>
 <h4 id="format_map">format_map</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format_map</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format_map</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3320,7 +3320,7 @@ The substitutions are identified by braces ('{' and '}').</p>
 <p>Return a formatted version of S, using substitutions from mapping.
 The substitutions are identified by braces ('{' and '}').</p>
 <h4 id="index">index</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">index</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3331,7 +3331,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Raises ValueError when the substring is not found.</p>
 <h4 id="isalnum">isalnum</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalnum</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isalnum</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3341,7 +3341,7 @@ arguments start and end are interpreted as in slice notation.</p>
 <p>A string is alpha-numeric if all characters in the string are alpha-numeric and
 there is at least one character in the string.</p>
 <h4 id="isalpha">isalpha</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalpha</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isalpha</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3351,7 +3351,7 @@ there is at least one character in the string.</p>
 <p>A string is alphabetic if all characters in the string are alphabetic and there
 is at least one character in the string.</p>
 <h4 id="isascii">isascii</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isascii</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isascii</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3361,7 +3361,7 @@ is at least one character in the string.</p>
 <p>ASCII characters have code points in the range U+0000-U+007F.
 Empty string is ASCII too.</p>
 <h4 id="isdecimal">isdecimal</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdecimal</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isdecimal</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3371,7 +3371,7 @@ Empty string is ASCII too.</p>
 <p>A string is a decimal string if all characters in the string are decimal and
 there is at least one character in the string.</p>
 <h4 id="isdigit">isdigit</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdigit</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isdigit</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3381,7 +3381,7 @@ there is at least one character in the string.</p>
 <p>A string is a digit string if all characters in the string are digits and there
 is at least one character in the string.</p>
 <h4 id="isidentifier">isidentifier</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isidentifier</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isidentifier</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3391,7 +3391,7 @@ is at least one character in the string.</p>
 <p>Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
 such as "def" or "class".</p>
 <h4 id="islower">islower</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">islower</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">islower</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3401,7 +3401,7 @@ such as "def" or "class".</p>
 <p>A string is lowercase if all cased characters in the string are lowercase and
 there is at least one cased character in the string.</p>
 <h4 id="isnumeric">isnumeric</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isnumeric</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isnumeric</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3411,7 +3411,7 @@ there is at least one cased character in the string.</p>
 <p>A string is numeric if all characters in the string are numeric and there is at
 least one character in the string.</p>
 <h4 id="isprintable">isprintable</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isprintable</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isprintable</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3421,7 +3421,7 @@ least one character in the string.</p>
 <p>A string is printable if all of its characters are considered printable in
 repr() or if it is empty.</p>
 <h4 id="isspace">isspace</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isspace</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isspace</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3431,7 +3431,7 @@ repr() or if it is empty.</p>
 <p>A string is whitespace if all characters in the string are whitespace and there
 is at least one character in the string.</p>
 <h4 id="istitle">istitle</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">istitle</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">istitle</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3441,7 +3441,7 @@ is at least one character in the string.</p>
 <p>In a title-cased string, upper- and title-case characters may only
 follow uncased characters and lowercase characters only cased ones.</p>
 <h4 id="isupper">isupper</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isupper</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isupper</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3451,7 +3451,7 @@ follow uncased characters and lowercase characters only cased ones.</p>
 <p>A string is uppercase if all cased characters in the string are uppercase and
 there is at least one cased character in the string.</p>
 <h4 id="join">join</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">join</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">join</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">iterable</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3463,7 +3463,7 @@ there is at least one cased character in the string.</p>
 The result is returned as a new string.</p>
 <p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p>
 <h4 id="ljust">ljust</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">ljust</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ljust</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
@@ -3474,7 +3474,7 @@ The result is returned as a new string.</p>
 <p>Return a left-justified string of length width.</p>
 <p>Padding is done using the specified fill character (default is a space).</p>
 <h4 id="lower">lower</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lower</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lower</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3482,7 +3482,7 @@ The result is returned as a new string.</p>
 
 <p>Return a copy of the string converted to lowercase.</p>
 <h4 id="lstrip">lstrip</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lstrip</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lstrip</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3492,7 +3492,7 @@ The result is returned as a new string.</p>
 <p>Return a copy of the string with leading whitespace removed.</p>
 <p>If chars is given and not None, remove characters in chars instead.</p>
 <h4 id="partition">partition</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">partition</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sep</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3506,7 +3506,7 @@ itself, and the part after it.</p>
 <p>If the separator is not found, returns a 3-tuple containing the original string
 and two empty strings.</p>
 <h4 id="removeprefix">removeprefix</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removeprefix</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">removeprefix</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">prefix</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3517,7 +3517,7 @@ and two empty strings.</p>
 <p>If the string starts with the prefix string, return string[len(prefix):].
 Otherwise, return a copy of the original string.</p>
 <h4 id="removesuffix">removesuffix</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removesuffix</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">removesuffix</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">suffix</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3529,7 +3529,7 @@ Otherwise, return a copy of the original string.</p>
 return string[:-len(suffix)]. Otherwise, return a copy of the original
 string.</p>
 <h4 id="replace">replace</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">replace</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">replace</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">old</span><span class="p">,</span>
     <span class="n">new</span><span class="p">,</span>
@@ -3545,7 +3545,7 @@ string.</p>
 <p>If the optional argument count is given, only the first count occurrences are
 replaced.</p>
 <h4 id="rfind">rfind</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rfind</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rfind</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3556,7 +3556,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Return -1 on failure.</p>
 <h4 id="rindex">rindex</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rindex</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rindex</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3567,7 +3567,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Raises ValueError when the substring is not found.</p>
 <h4 id="rjust">rjust</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rjust</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rjust</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
@@ -3578,7 +3578,7 @@ arguments start and end are interpreted as in slice notation.</p>
 <p>Return a right-justified string of length width.</p>
 <p>Padding is done using the specified fill character (default is a space).</p>
 <h4 id="rpartition">rpartition</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rpartition</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rpartition</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sep</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3592,7 +3592,7 @@ separator, the separator itself, and the part after it.</p>
 <p>If the separator is not found, returns a 3-tuple containing two empty strings
 and the original string.</p>
 <h4 id="rsplit">rsplit</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rsplit</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rsplit</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -3613,7 +3613,7 @@ empty strings from the result.
     -1 (the default value) means no limit.</p>
 <p>Splitting starts at the end of the string and works to the front.</p>
 <h4 id="rstrip">rstrip</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rstrip</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rstrip</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3623,7 +3623,7 @@ empty strings from the result.
 <p>Return a copy of the string with trailing whitespace removed.</p>
 <p>If chars is given and not None, remove characters in chars instead.</p>
 <h4 id="split">split</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -3646,7 +3646,7 @@ empty strings from the result.
 delimited.  With natural text that includes punctuation, consider using
 the regular expression module.</p>
 <h4 id="splitlines">splitlines</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">splitlines</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">splitlines</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">keepends</span><span class="o">=</span><span class="kc">False</span>
@@ -3657,7 +3657,7 @@ the regular expression module.</p>
 <p>Line breaks are not included in the resulting list unless keepends is given and
 true.</p>
 <h4 id="startswith">startswith</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">startswith</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">startswith</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3668,7 +3668,7 @@ With optional start, test S beginning at that position.
 With optional end, stop comparing S at that position.
 prefix can also be a tuple of strings to try.</p>
 <h4 id="strip">strip</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">strip</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">strip</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3678,7 +3678,7 @@ prefix can also be a tuple of strings to try.</p>
 <p>Return a copy of the string with leading and trailing whitespace removed.</p>
 <p>If chars is given and not None, remove characters in chars instead.</p>
 <h4 id="swapcase">swapcase</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">swapcase</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">swapcase</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3686,7 +3686,7 @@ prefix can also be a tuple of strings to try.</p>
 
 <p>Convert uppercase characters to lowercase and lowercase characters to uppercase.</p>
 <h4 id="title">title</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">title</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">title</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3696,7 +3696,7 @@ prefix can also be a tuple of strings to try.</p>
 <p>More specifically, words start with uppercased characters and all remaining
 cased characters have lower case.</p>
 <h4 id="translate">translate</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">translate</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">table</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3711,7 +3711,7 @@ cased characters have lower case.</p>
 dictionary or list.  If this operation raises LookupError, the character is
 left untouched.  Characters mapped to None are deleted.</p>
 <h4 id="upper">upper</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">upper</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">upper</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3719,7 +3719,7 @@ left untouched.  Characters mapped to None are deleted.</p>
 
 <p>Return a copy of the string converted to uppercase.</p>
 <h4 id="zfill">zfill</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">zfill</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">zfill</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="o">/</span>
@@ -3729,7 +3729,7 @@ left untouched.  Characters mapped to None are deleted.</p>
 <p>Pad a numeric string with zeros on the left, to fill a field of the given width.</p>
 <p>The string is never truncated.</p>
 <h3 id="parameteroutofrangestrategy">ParameterOutOfRangeStrategy</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">ParameterOutOfRangeStrategy</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">ParameterOutOfRangeStrategy</span><span class="p">(</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwds</span>
 <span class="p">)</span>
@@ -3783,7 +3783,7 @@ left untouched.  Characters mapped to None are deleted.</p>
 
 <h4 id="static-methods_1">Static methods</h4>
 <h4 id="maketrans_1">maketrans</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">maketrans</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">maketrans</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3798,7 +3798,7 @@ character at the same position in y. If there is a third argument, it
 must be a string, whose characters will be mapped to None in the result.</p>
 <h4 id="methods_1">Methods</h4>
 <h4 id="capitalize_1">capitalize</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">capitalize</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">capitalize</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3808,7 +3808,7 @@ must be a string, whose characters will be mapped to None in the result.</p>
 <p>More specifically, make the first character have upper case and the rest lower
 case.</p>
 <h4 id="casefold_1">casefold</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">casefold</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">casefold</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3816,7 +3816,7 @@ case.</p>
 
 <p>Return a version of the string suitable for caseless comparisons.</p>
 <h4 id="center_1">center</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">center</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">center</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
@@ -3827,7 +3827,7 @@ case.</p>
 <p>Return a centered string of length width.</p>
 <p>Padding is done using the specified fill character (default is a space).</p>
 <h4 id="count_1">count</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">count</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3837,7 +3837,7 @@ case.</p>
 string S[start:end].  Optional arguments start and end are
 interpreted as in slice notation.</p>
 <h4 id="encode_1">encode</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
@@ -3855,7 +3855,7 @@ errors
   'xmlcharrefreplace' as well as any other name registered with
   codecs.register_error that can handle UnicodeEncodeErrors.</p>
 <h4 id="endswith_1">endswith</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">endswith</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">endswith</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3866,7 +3866,7 @@ With optional start, test S beginning at that position.
 With optional end, stop comparing S at that position.
 suffix can also be a tuple of strings to try.</p>
 <h4 id="expandtabs_1">expandtabs</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">expandtabs</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">expandtabs</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">tabsize</span><span class="o">=</span><span class="mi">8</span>
@@ -3876,7 +3876,7 @@ suffix can also be a tuple of strings to try.</p>
 <p>Return a copy where all tab characters are expanded using spaces.</p>
 <p>If tabsize is not given, a tab size of 8 characters is assumed.</p>
 <h4 id="find_1">find</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3887,7 +3887,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Return -1 on failure.</p>
 <h4 id="format_1">format</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3896,7 +3896,7 @@ arguments start and end are interpreted as in slice notation.</p>
 <p>Return a formatted version of S, using substitutions from args and kwargs.
 The substitutions are identified by braces ('{' and '}').</p>
 <h4 id="format_map_1">format_map</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format_map</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format_map</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3905,7 +3905,7 @@ The substitutions are identified by braces ('{' and '}').</p>
 <p>Return a formatted version of S, using substitutions from mapping.
 The substitutions are identified by braces ('{' and '}').</p>
 <h4 id="index_1">index</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">index</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -3916,7 +3916,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Raises ValueError when the substring is not found.</p>
 <h4 id="isalnum_1">isalnum</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalnum</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isalnum</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3926,7 +3926,7 @@ arguments start and end are interpreted as in slice notation.</p>
 <p>A string is alpha-numeric if all characters in the string are alpha-numeric and
 there is at least one character in the string.</p>
 <h4 id="isalpha_1">isalpha</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalpha</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isalpha</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3936,7 +3936,7 @@ there is at least one character in the string.</p>
 <p>A string is alphabetic if all characters in the string are alphabetic and there
 is at least one character in the string.</p>
 <h4 id="isascii_1">isascii</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isascii</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isascii</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3946,7 +3946,7 @@ is at least one character in the string.</p>
 <p>ASCII characters have code points in the range U+0000-U+007F.
 Empty string is ASCII too.</p>
 <h4 id="isdecimal_1">isdecimal</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdecimal</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isdecimal</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3956,7 +3956,7 @@ Empty string is ASCII too.</p>
 <p>A string is a decimal string if all characters in the string are decimal and
 there is at least one character in the string.</p>
 <h4 id="isdigit_1">isdigit</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdigit</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isdigit</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3966,7 +3966,7 @@ there is at least one character in the string.</p>
 <p>A string is a digit string if all characters in the string are digits and there
 is at least one character in the string.</p>
 <h4 id="isidentifier_1">isidentifier</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isidentifier</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isidentifier</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3976,7 +3976,7 @@ is at least one character in the string.</p>
 <p>Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
 such as "def" or "class".</p>
 <h4 id="islower_1">islower</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">islower</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">islower</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3986,7 +3986,7 @@ such as "def" or "class".</p>
 <p>A string is lowercase if all cased characters in the string are lowercase and
 there is at least one cased character in the string.</p>
 <h4 id="isnumeric_1">isnumeric</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isnumeric</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isnumeric</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -3996,7 +3996,7 @@ there is at least one cased character in the string.</p>
 <p>A string is numeric if all characters in the string are numeric and there is at
 least one character in the string.</p>
 <h4 id="isprintable_1">isprintable</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isprintable</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isprintable</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4006,7 +4006,7 @@ least one character in the string.</p>
 <p>A string is printable if all of its characters are considered printable in
 repr() or if it is empty.</p>
 <h4 id="isspace_1">isspace</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isspace</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isspace</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4016,7 +4016,7 @@ repr() or if it is empty.</p>
 <p>A string is whitespace if all characters in the string are whitespace and there
 is at least one character in the string.</p>
 <h4 id="istitle_1">istitle</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">istitle</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">istitle</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4026,7 +4026,7 @@ is at least one character in the string.</p>
 <p>In a title-cased string, upper- and title-case characters may only
 follow uncased characters and lowercase characters only cased ones.</p>
 <h4 id="isupper_1">isupper</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isupper</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isupper</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4036,7 +4036,7 @@ follow uncased characters and lowercase characters only cased ones.</p>
 <p>A string is uppercase if all cased characters in the string are uppercase and
 there is at least one cased character in the string.</p>
 <h4 id="join_1">join</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">join</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">join</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">iterable</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4048,7 +4048,7 @@ there is at least one cased character in the string.</p>
 The result is returned as a new string.</p>
 <p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p>
 <h4 id="ljust_1">ljust</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">ljust</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ljust</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
@@ -4059,7 +4059,7 @@ The result is returned as a new string.</p>
 <p>Return a left-justified string of length width.</p>
 <p>Padding is done using the specified fill character (default is a space).</p>
 <h4 id="lower_1">lower</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lower</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lower</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4067,7 +4067,7 @@ The result is returned as a new string.</p>
 
 <p>Return a copy of the string converted to lowercase.</p>
 <h4 id="lstrip_1">lstrip</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lstrip</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lstrip</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4077,7 +4077,7 @@ The result is returned as a new string.</p>
 <p>Return a copy of the string with leading whitespace removed.</p>
 <p>If chars is given and not None, remove characters in chars instead.</p>
 <h4 id="partition_1">partition</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">partition</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sep</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4091,7 +4091,7 @@ itself, and the part after it.</p>
 <p>If the separator is not found, returns a 3-tuple containing the original string
 and two empty strings.</p>
 <h4 id="removeprefix_1">removeprefix</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removeprefix</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">removeprefix</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">prefix</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4102,7 +4102,7 @@ and two empty strings.</p>
 <p>If the string starts with the prefix string, return string[len(prefix):].
 Otherwise, return a copy of the original string.</p>
 <h4 id="removesuffix_1">removesuffix</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removesuffix</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">removesuffix</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">suffix</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4114,7 +4114,7 @@ Otherwise, return a copy of the original string.</p>
 return string[:-len(suffix)]. Otherwise, return a copy of the original
 string.</p>
 <h4 id="replace_1">replace</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">replace</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">replace</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">old</span><span class="p">,</span>
     <span class="n">new</span><span class="p">,</span>
@@ -4130,7 +4130,7 @@ string.</p>
 <p>If the optional argument count is given, only the first count occurrences are
 replaced.</p>
 <h4 id="rfind_1">rfind</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rfind</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rfind</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4141,7 +4141,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Return -1 on failure.</p>
 <h4 id="rindex_1">rindex</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rindex</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rindex</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4152,7 +4152,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Raises ValueError when the substring is not found.</p>
 <h4 id="rjust_1">rjust</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rjust</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rjust</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
@@ -4163,7 +4163,7 @@ arguments start and end are interpreted as in slice notation.</p>
 <p>Return a right-justified string of length width.</p>
 <p>Padding is done using the specified fill character (default is a space).</p>
 <h4 id="rpartition_1">rpartition</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rpartition</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rpartition</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sep</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4177,7 +4177,7 @@ separator, the separator itself, and the part after it.</p>
 <p>If the separator is not found, returns a 3-tuple containing two empty strings
 and the original string.</p>
 <h4 id="rsplit_1">rsplit</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rsplit</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rsplit</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -4198,7 +4198,7 @@ empty strings from the result.
     -1 (the default value) means no limit.</p>
 <p>Splitting starts at the end of the string and works to the front.</p>
 <h4 id="rstrip_1">rstrip</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rstrip</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rstrip</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4208,7 +4208,7 @@ empty strings from the result.
 <p>Return a copy of the string with trailing whitespace removed.</p>
 <p>If chars is given and not None, remove characters in chars instead.</p>
 <h4 id="split_1">split</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -4231,7 +4231,7 @@ empty strings from the result.
 delimited.  With natural text that includes punctuation, consider using
 the regular expression module.</p>
 <h4 id="splitlines_1">splitlines</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">splitlines</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">splitlines</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">keepends</span><span class="o">=</span><span class="kc">False</span>
@@ -4242,7 +4242,7 @@ the regular expression module.</p>
 <p>Line breaks are not included in the resulting list unless keepends is given and
 true.</p>
 <h4 id="startswith_1">startswith</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">startswith</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">startswith</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4253,7 +4253,7 @@ With optional start, test S beginning at that position.
 With optional end, stop comparing S at that position.
 prefix can also be a tuple of strings to try.</p>
 <h4 id="strip_1">strip</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">strip</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">strip</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4263,7 +4263,7 @@ prefix can also be a tuple of strings to try.</p>
 <p>Return a copy of the string with leading and trailing whitespace removed.</p>
 <p>If chars is given and not None, remove characters in chars instead.</p>
 <h4 id="swapcase_1">swapcase</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">swapcase</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">swapcase</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4271,7 +4271,7 @@ prefix can also be a tuple of strings to try.</p>
 
 <p>Convert uppercase characters to lowercase and lowercase characters to uppercase.</p>
 <h4 id="title_1">title</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">title</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">title</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4281,7 +4281,7 @@ prefix can also be a tuple of strings to try.</p>
 <p>More specifically, words start with uppercased characters and all remaining
 cased characters have lower case.</p>
 <h4 id="translate_1">translate</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">translate</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">table</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4296,7 +4296,7 @@ cased characters have lower case.</p>
 dictionary or list.  If this operation raises LookupError, the character is
 left untouched.  Characters mapped to None are deleted.</p>
 <h4 id="upper_1">upper</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">upper</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">upper</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4304,7 +4304,7 @@ left untouched.  Characters mapped to None are deleted.</p>
 
 <p>Return a copy of the string converted to uppercase.</p>
 <h4 id="zfill_1">zfill</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">zfill</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">zfill</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4314,7 +4314,7 @@ left untouched.  Characters mapped to None are deleted.</p>
 <p>Pad a numeric string with zeros on the left, to fill a field of the given width.</p>
 <p>The string is never truncated.</p>
 <h3 id="samplingstrategy">SamplingStrategy</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">SamplingStrategy</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SamplingStrategy</span><span class="p">(</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwds</span>
 <span class="p">)</span>
@@ -4368,7 +4368,7 @@ left untouched.  Characters mapped to None are deleted.</p>
 
 <h4 id="static-methods_2">Static methods</h4>
 <h4 id="maketrans_2">maketrans</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">maketrans</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">maketrans</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4383,7 +4383,7 @@ character at the same position in y. If there is a third argument, it
 must be a string, whose characters will be mapped to None in the result.</p>
 <h4 id="methods_2">Methods</h4>
 <h4 id="capitalize_2">capitalize</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">capitalize</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">capitalize</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4393,7 +4393,7 @@ must be a string, whose characters will be mapped to None in the result.</p>
 <p>More specifically, make the first character have upper case and the rest lower
 case.</p>
 <h4 id="casefold_2">casefold</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">casefold</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">casefold</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4401,7 +4401,7 @@ case.</p>
 
 <p>Return a version of the string suitable for caseless comparisons.</p>
 <h4 id="center_2">center</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">center</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">center</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
@@ -4412,7 +4412,7 @@ case.</p>
 <p>Return a centered string of length width.</p>
 <p>Padding is done using the specified fill character (default is a space).</p>
 <h4 id="count_2">count</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">count</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">count</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4422,7 +4422,7 @@ case.</p>
 string S[start:end].  Optional arguments start and end are
 interpreted as in slice notation.</p>
 <h4 id="encode_2">encode</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">encode</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
@@ -4440,7 +4440,7 @@ errors
   'xmlcharrefreplace' as well as any other name registered with
   codecs.register_error that can handle UnicodeEncodeErrors.</p>
 <h4 id="endswith_2">endswith</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">endswith</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">endswith</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4451,7 +4451,7 @@ With optional start, test S beginning at that position.
 With optional end, stop comparing S at that position.
 suffix can also be a tuple of strings to try.</p>
 <h4 id="expandtabs_2">expandtabs</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">expandtabs</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">expandtabs</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">tabsize</span><span class="o">=</span><span class="mi">8</span>
@@ -4461,7 +4461,7 @@ suffix can also be a tuple of strings to try.</p>
 <p>Return a copy where all tab characters are expanded using spaces.</p>
 <p>If tabsize is not given, a tab size of 8 characters is assumed.</p>
 <h4 id="find_2">find</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4472,7 +4472,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Return -1 on failure.</p>
 <h4 id="format_2">format</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4481,7 +4481,7 @@ arguments start and end are interpreted as in slice notation.</p>
 <p>Return a formatted version of S, using substitutions from args and kwargs.
 The substitutions are identified by braces ('{' and '}').</p>
 <h4 id="format_map_2">format_map</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">format_map</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">format_map</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4490,7 +4490,7 @@ The substitutions are identified by braces ('{' and '}').</p>
 <p>Return a formatted version of S, using substitutions from mapping.
 The substitutions are identified by braces ('{' and '}').</p>
 <h4 id="index_2">index</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">index</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4501,7 +4501,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Raises ValueError when the substring is not found.</p>
 <h4 id="isalnum_2">isalnum</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalnum</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isalnum</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4511,7 +4511,7 @@ arguments start and end are interpreted as in slice notation.</p>
 <p>A string is alpha-numeric if all characters in the string are alpha-numeric and
 there is at least one character in the string.</p>
 <h4 id="isalpha_2">isalpha</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isalpha</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isalpha</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4521,7 +4521,7 @@ there is at least one character in the string.</p>
 <p>A string is alphabetic if all characters in the string are alphabetic and there
 is at least one character in the string.</p>
 <h4 id="isascii_2">isascii</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isascii</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isascii</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4531,7 +4531,7 @@ is at least one character in the string.</p>
 <p>ASCII characters have code points in the range U+0000-U+007F.
 Empty string is ASCII too.</p>
 <h4 id="isdecimal_2">isdecimal</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdecimal</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isdecimal</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4541,7 +4541,7 @@ Empty string is ASCII too.</p>
 <p>A string is a decimal string if all characters in the string are decimal and
 there is at least one character in the string.</p>
 <h4 id="isdigit_2">isdigit</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isdigit</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isdigit</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4551,7 +4551,7 @@ there is at least one character in the string.</p>
 <p>A string is a digit string if all characters in the string are digits and there
 is at least one character in the string.</p>
 <h4 id="isidentifier_2">isidentifier</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isidentifier</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isidentifier</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4561,7 +4561,7 @@ is at least one character in the string.</p>
 <p>Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
 such as "def" or "class".</p>
 <h4 id="islower_2">islower</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">islower</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">islower</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4571,7 +4571,7 @@ such as "def" or "class".</p>
 <p>A string is lowercase if all cased characters in the string are lowercase and
 there is at least one cased character in the string.</p>
 <h4 id="isnumeric_2">isnumeric</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isnumeric</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isnumeric</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4581,7 +4581,7 @@ there is at least one cased character in the string.</p>
 <p>A string is numeric if all characters in the string are numeric and there is at
 least one character in the string.</p>
 <h4 id="isprintable_2">isprintable</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isprintable</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isprintable</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4591,7 +4591,7 @@ least one character in the string.</p>
 <p>A string is printable if all of its characters are considered printable in
 repr() or if it is empty.</p>
 <h4 id="isspace_2">isspace</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isspace</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isspace</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4601,7 +4601,7 @@ repr() or if it is empty.</p>
 <p>A string is whitespace if all characters in the string are whitespace and there
 is at least one character in the string.</p>
 <h4 id="istitle_2">istitle</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">istitle</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">istitle</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4611,7 +4611,7 @@ is at least one character in the string.</p>
 <p>In a title-cased string, upper- and title-case characters may only
 follow uncased characters and lowercase characters only cased ones.</p>
 <h4 id="isupper_2">isupper</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isupper</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isupper</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4621,7 +4621,7 @@ follow uncased characters and lowercase characters only cased ones.</p>
 <p>A string is uppercase if all cased characters in the string are uppercase and
 there is at least one cased character in the string.</p>
 <h4 id="join_2">join</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">join</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">join</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">iterable</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4633,7 +4633,7 @@ there is at least one cased character in the string.</p>
 The result is returned as a new string.</p>
 <p>Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'</p>
 <h4 id="ljust_2">ljust</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">ljust</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ljust</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
@@ -4644,7 +4644,7 @@ The result is returned as a new string.</p>
 <p>Return a left-justified string of length width.</p>
 <p>Padding is done using the specified fill character (default is a space).</p>
 <h4 id="lower_2">lower</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lower</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lower</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4652,7 +4652,7 @@ The result is returned as a new string.</p>
 
 <p>Return a copy of the string converted to lowercase.</p>
 <h4 id="lstrip_2">lstrip</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lstrip</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">lstrip</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4662,7 +4662,7 @@ The result is returned as a new string.</p>
 <p>Return a copy of the string with leading whitespace removed.</p>
 <p>If chars is given and not None, remove characters in chars instead.</p>
 <h4 id="partition_2">partition</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">partition</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sep</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4676,7 +4676,7 @@ itself, and the part after it.</p>
 <p>If the separator is not found, returns a 3-tuple containing the original string
 and two empty strings.</p>
 <h4 id="removeprefix_2">removeprefix</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removeprefix</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">removeprefix</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">prefix</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4687,7 +4687,7 @@ and two empty strings.</p>
 <p>If the string starts with the prefix string, return string[len(prefix):].
 Otherwise, return a copy of the original string.</p>
 <h4 id="removesuffix_2">removesuffix</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">removesuffix</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">removesuffix</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">suffix</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4699,7 +4699,7 @@ Otherwise, return a copy of the original string.</p>
 return string[:-len(suffix)]. Otherwise, return a copy of the original
 string.</p>
 <h4 id="replace_2">replace</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">replace</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">replace</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">old</span><span class="p">,</span>
     <span class="n">new</span><span class="p">,</span>
@@ -4715,7 +4715,7 @@ string.</p>
 <p>If the optional argument count is given, only the first count occurrences are
 replaced.</p>
 <h4 id="rfind_2">rfind</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rfind</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rfind</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4726,7 +4726,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Return -1 on failure.</p>
 <h4 id="rindex_2">rindex</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rindex</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rindex</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4737,7 +4737,7 @@ such that sub is contained within S[start:end].  Optional
 arguments start and end are interpreted as in slice notation.</p>
 <p>Raises ValueError when the substring is not found.</p>
 <h4 id="rjust_2">rjust</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rjust</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rjust</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="n">fillchar</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span>
@@ -4748,7 +4748,7 @@ arguments start and end are interpreted as in slice notation.</p>
 <p>Return a right-justified string of length width.</p>
 <p>Padding is done using the specified fill character (default is a space).</p>
 <h4 id="rpartition_2">rpartition</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rpartition</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rpartition</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">sep</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4762,7 +4762,7 @@ separator, the separator itself, and the part after it.</p>
 <p>If the separator is not found, returns a 3-tuple containing two empty strings
 and the original string.</p>
 <h4 id="rsplit_2">rsplit</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rsplit</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rsplit</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -4783,7 +4783,7 @@ empty strings from the result.
     -1 (the default value) means no limit.</p>
 <p>Splitting starts at the end of the string and works to the front.</p>
 <h4 id="rstrip_2">rstrip</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">rstrip</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">rstrip</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4793,7 +4793,7 @@ empty strings from the result.
 <p>Return a copy of the string with trailing whitespace removed.</p>
 <p>If chars is given and not None, remove characters in chars instead.</p>
 <h4 id="split_2">split</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">split</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">split</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">sep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -4816,7 +4816,7 @@ empty strings from the result.
 delimited.  With natural text that includes punctuation, consider using
 the regular expression module.</p>
 <h4 id="splitlines_2">splitlines</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">splitlines</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">splitlines</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span><span class="p">,</span>
     <span class="n">keepends</span><span class="o">=</span><span class="kc">False</span>
@@ -4827,7 +4827,7 @@ the regular expression module.</p>
 <p>Line breaks are not included in the resulting list unless keepends is given and
 true.</p>
 <h4 id="startswith_2">startswith</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">startswith</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">startswith</span><span class="p">(</span>
     <span class="o">...</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -4838,7 +4838,7 @@ With optional start, test S beginning at that position.
 With optional end, stop comparing S at that position.
 prefix can also be a tuple of strings to try.</p>
 <h4 id="strip_2">strip</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">strip</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">strip</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">chars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4848,7 +4848,7 @@ prefix can also be a tuple of strings to try.</p>
 <p>Return a copy of the string with leading and trailing whitespace removed.</p>
 <p>If chars is given and not None, remove characters in chars instead.</p>
 <h4 id="swapcase_2">swapcase</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">swapcase</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">swapcase</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4856,7 +4856,7 @@ prefix can also be a tuple of strings to try.</p>
 
 <p>Convert uppercase characters to lowercase and lowercase characters to uppercase.</p>
 <h4 id="title_2">title</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">title</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">title</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4866,7 +4866,7 @@ prefix can also be a tuple of strings to try.</p>
 <p>More specifically, words start with uppercased characters and all remaining
 cased characters have lower case.</p>
 <h4 id="translate_2">translate</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">translate</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">table</span><span class="p">,</span>
     <span class="o">/</span>
@@ -4881,7 +4881,7 @@ cased characters have lower case.</p>
 dictionary or list.  If this operation raises LookupError, the character is
 left untouched.  Characters mapped to None are deleted.</p>
 <h4 id="upper_2">upper</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">upper</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">upper</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="o">/</span>
 <span class="p">)</span>
@@ -4889,7 +4889,7 @@ left untouched.  Characters mapped to None are deleted.</p>
 
 <p>Return a copy of the string converted to uppercase.</p>
 <h4 id="zfill_2">zfill</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">zfill</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">zfill</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">width</span><span class="p">,</span>
     <span class="o">/</span>

@@ -882,33 +882,33 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">beartype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span> <span class="n">beartype</span>
 
-<span class="n">EXTRAS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="n">EXTRAS</span> <span class="o">=</span> <span class="p">{</span>
 
-<span class="w">    </span><span class="s2">&quot;examples&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;perlin_numpy&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;polars&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ipymlp&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;examples&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;perlin_numpy&quot;</span><span class="p">,</span> <span class="s2">&quot;polars&quot;</span><span class="p">,</span> <span class="s2">&quot;ipymlp&quot;</span><span class="p">],</span>
 
-<span class="w">    </span><span class="s2">&quot;cl&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+    <span class="s2">&quot;cl&quot;</span><span class="p">:</span> <span class="p">[</span>
 
-<span class="w">        </span><span class="c1"># &quot;avalanche&quot;,</span>
+        <span class="c1"># &quot;avalanche&quot;,</span>
 
-<span class="w">        </span><span class="s2">&quot;continuum&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;continuum&quot;</span><span class="p">,</span>
 
-<span class="w">    </span><span class="p">],</span>
+    <span class="p">],</span>
 
-<span class="w">    </span><span class="s2">&quot;all&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+    <span class="s2">&quot;all&quot;</span><span class="p">:</span> <span class="p">[</span>
 
-<span class="w">        </span><span class="s2">&quot;perlin_numpy&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;perlin_numpy&quot;</span><span class="p">,</span>
 
-<span class="w">        </span><span class="s2">&quot;polars&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;polars&quot;</span><span class="p">,</span>
 
-<span class="w">        </span><span class="s2">&quot;ipympl&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ipympl&quot;</span><span class="p">,</span>
 
-<span class="w">        </span><span class="s2">&quot;avalanche&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;avalanche&quot;</span><span class="p">,</span>
 
-<span class="w">        </span><span class="s2">&quot;continuum&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;continuum&quot;</span><span class="p">,</span>
 
-<span class="w">    </span><span class="p">],</span>
+    <span class="p">],</span>
 
 <span class="p">}</span>
 
@@ -920,21 +920,21 @@
 
 <span class="nd">@beartype</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">is_extra_installed</span><span class="p">(</span><span class="n">extra</span><span class="p">:</span><span class="w"> </span><span class="nb">str</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">bool</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_extra_installed</span><span class="p">(</span><span class="n">extra</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;📦❓ check if setuptools/pip extra is installed in the current Python environment.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;📦❓ check if setuptools/pip extra is installed in the current Python environment.</span>
 
-<span class="s2">    Args:</span>
+<span class="sd">    Args:</span>
 
-<span class="s2">        extra (str): name of the extra.</span>
+<span class="sd">        extra (str): name of the extra.</span>
 
-<span class="s2">    Returns:</span>
+<span class="sd">    Returns:</span>
 
-<span class="s2">        bool: True if extra is installed.</span>
+<span class="sd">        bool: True if extra is installed.</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">all</span><span class="p">(</span><span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="n">package</span><span class="p">)</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="kc">None</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">EXTRAS</span><span class="p">[</span><span class="n">extra</span><span class="p">])</span>
+    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="n">package</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">EXTRAS</span><span class="p">[</span><span class="n">extra</span><span class="p">])</span>
 </code></pre></div>
 
 </details>
@@ -957,7 +957,7 @@
 <p>This dictionary has to stay in sync with <code>[tool.poetry.EXTRAS]</code> in <code>pyproject.toml</code>.</p>
 <h2 id="functions">Functions</h2>
 <h3 id="is_extra_installed">is_extra_installed</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">is_extra_installed</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_extra_installed</span><span class="p">(</span>
     <span class="n">extra</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
 </code></pre></div>

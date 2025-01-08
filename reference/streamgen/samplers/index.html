@@ -969,53 +969,53 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Iterator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span><span class="w"> </span><span class="n">Any</span><span class="p">,</span><span class="w"> </span><span class="n">Protocol</span><span class="p">,</span><span class="w"> </span><span class="n">runtime_checkable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">,</span> <span class="n">runtime_checkable</span>
 
 <span class="nd">@runtime_checkable</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">Sampler</span><span class="p">(</span><span class="n">Iterator</span><span class="p">,</span><span class="w"> </span><span class="n">Protocol</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Sampler</span><span class="p">(</span><span class="n">Iterator</span><span class="p">,</span> <span class="n">Protocol</span><span class="p">):</span>
 
-<span class="w">    </span><span class="s2">&quot;&quot;&quot;📊 sampler protocol `() -&gt; sample`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;📊 sampler protocol `() -&gt; sample`.</span>
 
-<span class="s2">    Sampler also implement the iterator protocol.</span>
+<span class="sd">    Sampler also implement the iterator protocol.</span>
 
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Any</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: ANN401</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>  <span class="c1"># noqa: ANN401</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🎲 sample from the `Sampler`s distribution.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🎲 sample from the `Sampler`s distribution.</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            Any: a sample</span>
+<span class="sd">            Any: a sample</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="o">...</span>
+        <span class="o">...</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="n">num_samples</span><span class="p">:</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Any</span><span class="p">:</span><span class="w">  </span><span class="c1"># noqa: ANN401</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">collect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>  <span class="c1"># noqa: ANN401</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🪺 collect and concatenate `num_samples` using `sample()`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🪺 collect and concatenate `num_samples` using `sample()`.</span>
 
-<span class="s2">        Args:</span>
+<span class="sd">        Args:</span>
 
-<span class="s2">            num_samples (int): number of samples to collect</span>
+<span class="sd">            num_samples (int): number of samples to collect</span>
 
-<span class="s2">        Returns:</span>
+<span class="sd">        Returns:</span>
 
-<span class="s2">            Any: collection of samples</span>
+<span class="sd">            Any: collection of samples</span>
 
-<span class="s2">        &quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="o">...</span>
+        <span class="o">...</span>
 
-<span class="w">    </span><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 
-<span class="w">        </span><span class="s2">&quot;&quot;&quot;🆙 updates every parameter.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;🆙 updates every parameter.&quot;&quot;&quot;</span>
 
-<span class="w">        </span><span class="o">...</span>
+        <span class="o">...</span>
 </code></pre></div>
 
 </details>
@@ -1025,7 +1025,7 @@
 </ul>
 <h2 id="classes">Classes</h2>
 <h3 id="sampler">Sampler</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">class</span> <span class="nc">Sampler</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Sampler</span><span class="p">(</span>
     <span class="o">*</span><span class="n">args</span><span class="p">,</span>
     <span class="o">**</span><span class="n">kwargs</span>
 <span class="p">)</span>
@@ -1095,7 +1095,7 @@
 </ul>
 <h4 id="methods">Methods</h4>
 <h4 id="collect">collect</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">collect</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">collect</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">num_samples</span><span class="p">:</span> <span class="nb">int</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
@@ -1157,7 +1157,7 @@
 
 </details>
 <h4 id="sample">sample</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">sample</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sample</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span>
 </code></pre></div>
@@ -1195,7 +1195,7 @@
 
 </details>
 <h4 id="update">update</h4>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span>
     <span class="bp">self</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </code></pre></div>
