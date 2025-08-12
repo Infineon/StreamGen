@@ -117,7 +117,9 @@ class BranchingNode(TransformNode):
             probs = list(params.get_scope(self.name).parameters.values())
             assert (  # noqa: S101
                 len(probs) == 1
-            ), f'Make sure to only have a single parameter in the scope "{self.name}" when setting the parameters of a `BranchingNode` through `fetch_params`.'  # noqa: E501
+            ), (
+                f'Make sure to only have a single parameter in the scope "{self.name}" when setting the parameters of a `BranchingNode` through `fetch_params`.'  # noqa: E501
+            )
             self.probs = probs[0]
 
         for branch in self.branches.values():
@@ -195,9 +197,11 @@ def construct_tree(
                 graph.append(string_node(node))
 
     # connect the nodes to enable traversal and parameter fetching and updating
-    for node, next_node in pairwise(graph):
-        match (node, next_node):
-            case (BranchingNode(), _):
+    # * we connect from leaves to root (by reversing graph) to correctly handle the connections
+    # * when performing the `deepcopy`s in the branches of each `BranchingNode`
+    for next_node, node in pairwise(reversed(graph)):
+        match (next_node, node):
+            case (_, BranchingNode()):
                 # * This is a special shorthand conveninence behaviour:
                 # * when we sequentially combine a `BranchingNode` with another node,
                 # * we add the other node to every leaf of the branches in the `BranchingNode`

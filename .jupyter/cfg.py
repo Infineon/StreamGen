@@ -1,4 +1,4 @@
-"""🪐 jupyter configurations."""  # noqa: INP001"
+"""🪐 jupyter configurations."""
 
 c = get_config()  # noqa: F821
 c.NbConvertApp.notebooks = [

@@ -327,17 +327,23 @@ def test_merging_after_branching():
         [
             lambda input: 0,  # noqa: ARG005
             {
-                "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
+                "probs": Parameter("probs", schedule=[[1.0, 0.0], [1.0, 0.0], [0.0, 1.0]]),
                 "1": [
-                    TransformNode(add, Parameter("number", 1)),
-                    "one",
+                    noop,
+                    {
+                        "probs": Parameter("probs", schedule=[[1.0, 0.0], [0.0, 1.0]]),
+                        "1": [TransformNode(add, Parameter("number", 1)), "one",],
+                        "10": [TransformNode(add, Parameter("number", 10)), "two",],
+                    },
                 ],
                 "2": [
                     TransformNode(add, Parameter("number", 2)),
-                    "two",
+                    "three",
                 ],
             },
+            noop,
             TransformNode(operate_on_index()(add), Parameter("number", 3)),
+            noop,
         ],
     )
 
@@ -349,8 +355,14 @@ def test_merging_after_branching():
     tree.update()
     output, target = tree.sample()
 
-    assert output == 5
+    assert output == 13
     assert target == "two"
+
+    tree.update()
+    output, target = tree.sample()
+
+    assert output == 5
+    assert target == "three"
 
 
 def test_tree_visualization(tmp_path):

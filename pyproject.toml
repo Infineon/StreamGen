@@ -117,6 +117,8 @@ docstring-code-format = true
 [tool.ruff.lint]
 select = ["ALL"]
 ignore = [
+    "INP001",
+    "A006",
     "RUF001",
     "D211",
     "D213",

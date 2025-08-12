@@ -79,8 +79,8 @@ class ParameterStore:
                         # check if the dictionary contains a value or a schedule key
                         if is_parameter(value):
                             name = key
-                            parameters[key].pop("name", None)
-                            self.parameters[name] = Parameter(name=name, **parameters[key])
+                            value.pop("name", None)
+                            self.parameters[name] = Parameter(name=name, **value)
                             self.parameter_names.add(name)
                         else:  # must be a scope:
                             scope = key
