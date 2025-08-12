@@ -1124,9 +1124,9 @@
 
                             <span class="n">name</span> <span class="o">=</span> <span class="n">key</span>
 
-                            <span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                            <span class="n">value</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
-                            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">value</span><span class="p">)</span>
 
                             <span class="bp">self</span><span class="o">.</span><span class="n">parameter_names</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
@@ -1619,9 +1619,9 @@ All top-level parameters are considered as having <code>scope=None</code>.</p>
 
 <span class="w">                            </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">key</span>
 
-<span class="w">                            </span><span class="k">parameters</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="ss">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
+<span class="w">                            </span><span class="k">value</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="ss">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">None</span><span class="p">)</span>
 
-<span class="w">                            </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="k">parameters</span><span class="o">[</span><span class="n">key</span><span class="o">]</span><span class="p">)</span>
+<span class="w">                            </span><span class="n">self</span><span class="p">.</span><span class="k">parameters</span><span class="o">[</span><span class="n">name</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="k">value</span><span class="p">)</span>
 
 <span class="w">                            </span><span class="n">self</span><span class="p">.</span><span class="n">parameter_names</span><span class="p">.</span><span class="k">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 

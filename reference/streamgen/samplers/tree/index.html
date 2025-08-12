@@ -1424,7 +1424,11 @@
 
                 <span class="nb">len</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
 
-            <span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;Make sure to only have a single parameter in the scope &quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot; when setting the parameters of a `BranchingNode` through `fetch_params`.&#39;</span>  <span class="c1"># noqa: E501</span>
+            <span class="p">),</span> <span class="p">(</span>
+
+                <span class="sa">f</span><span class="s1">&#39;Make sure to only have a single parameter in the scope &quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot; when setting the parameters of a `BranchingNode` through `fetch_params`.&#39;</span>  <span class="c1"># noqa: E501</span>
+
+            <span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">probs</span> <span class="o">=</span> <span class="n">probs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1550,11 +1554,15 @@
 
     <span class="c1"># connect the nodes to enable traversal and parameter fetching and updating</span>
 
-    <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">next_node</span> <span class="ow">in</span> <span class="n">pairwise</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="c1"># * we connect from leaves to root (by reversing graph) to correctly handle the connections</span>
 
-        <span class="k">match</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">next_node</span><span class="p">):</span>
+    <span class="c1"># * when performing the `deepcopy`s in the branches of each `BranchingNode`</span>
 
-            <span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">BranchingNode</span><span class="p">(),</span> <span class="k">_</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">next_node</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">pairwise</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">graph</span><span class="p">)):</span>
+
+        <span class="k">match</span> <span class="p">(</span><span class="n">next_node</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+
+            <span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="k">_</span><span class="p">,</span> <span class="n">BranchingNode</span><span class="p">()):</span>
 
                 <span class="c1"># * This is a special shorthand conveninence behaviour:</span>
 
@@ -2145,11 +2153,15 @@
 
 <span class="w">    </span><span class="c1"># connect the nodes to enable traversal and parameter fetching and updating</span>
 
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="n">next_node</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">pairwise</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span><span class="o">:</span>
+<span class="w">    </span><span class="c1"># * we connect from leaves to root (by reversing graph) to correctly handle the connections</span>
 
-<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="n">next_node</span><span class="p">)</span><span class="o">:</span>
+<span class="w">    </span><span class="c1"># * when performing the `deepcopy`s in the branches of each `BranchingNode`</span>
 
-<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">BranchingNode</span><span class="p">(),</span><span class="w"> </span><span class="n">_</span><span class="p">)</span><span class="o">:</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">next_node</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">pairwise</span><span class="p">(</span><span class="n">reversed</span><span class="p">(</span><span class="n">graph</span><span class="p">))</span><span class="o">:</span>
+
+<span class="w">        </span><span class="k">match</span><span class="w"> </span><span class="p">(</span><span class="n">next_node</span><span class="p">,</span><span class="w"> </span><span class="n">node</span><span class="p">)</span><span class="o">:</span>
+
+<span class="w">            </span><span class="k">case</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="w"> </span><span class="n">BranchingNode</span><span class="p">())</span><span class="o">:</span>
 
 <span class="w">                </span><span class="c1"># * This is a special shorthand conveninence behaviour:</span>
 
@@ -2379,7 +2391,11 @@
 
 <span class="w">                </span><span class="n">len</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span>
 
-<span class="w">            </span><span class="p">),</span><span class="w"> </span><span class="n">f</span><span class="s1">&#39;Make sure to only have a single parameter in the scope &quot;{self.name}&quot; when setting the parameters of a `BranchingNode` through `fetch_params`.&#39;</span><span class="w">  </span><span class="c1"># noqa: E501</span>
+<span class="w">            </span><span class="p">),</span><span class="w"> </span><span class="p">(</span>
+
+<span class="w">                </span><span class="n">f</span><span class="s1">&#39;Make sure to only have a single parameter in the scope &quot;{self.name}&quot; when setting the parameters of a `BranchingNode` through `fetch_params`.&#39;</span><span class="w">  </span><span class="c1"># noqa: E501</span>
+
+<span class="w">            </span><span class="p">)</span>
 
 <span class="w">            </span><span class="bp">self</span><span class="o">.</span><span class="n">probs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2832,7 +2848,11 @@ loui.size
 
 <span class="w">                </span><span class="n">len</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">1</span>
 
-<span class="w">            </span><span class="p">),</span><span class="w"> </span><span class="n">f</span><span class="s1">&#39;Make sure to only have a single parameter in the scope &quot;{self.name}&quot; when setting the parameters of a `BranchingNode` through `fetch_params`.&#39;</span><span class="w">  </span><span class="c1"># noqa: E501</span>
+<span class="w">            </span><span class="p">),</span><span class="w"> </span><span class="p">(</span>
+
+<span class="w">                </span><span class="n">f</span><span class="s1">&#39;Make sure to only have a single parameter in the scope &quot;{self.name}&quot; when setting the parameters of a `BranchingNode` through `fetch_params`.&#39;</span><span class="w">  </span><span class="c1"># noqa: E501</span>
+
+<span class="w">            </span><span class="p">)</span>
 
 <span class="w">            </span><span class="n">self</span><span class="p">.</span><span class="n">probs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">probs</span><span class="err">[</span><span class="mi">0</span><span class="err">]</span>
 
