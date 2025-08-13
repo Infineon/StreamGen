@@ -62,7 +62,7 @@ class BranchingNode(TransformNode):
 
         self.branches = {branch_name: construct_tree(nodes, string_node) for branch_name, nodes in branches.items()}
 
-        self.children = [branch[0] for branch in self.branches.values()]
+        self.children = [branch_nodes[0] for branch_nodes in self.branches.values()]
 
         super().__init__(transform=noop, name=self.name, emoji="🪴")
 
@@ -165,7 +165,7 @@ def construct_tree(
     4. `str` are passed to the `string_node` constructor, which allows to configure which Node type is used for them.
     5. dictionaries are interpreted as `BranchingNode`s, where each value represents a branch.
         The keys `name`, `probs` and `seed` are reserved to describe the node itself.
-    6. If there is a node after a `BranchingNode`, then every branch will be connected to a **copy** of this node.
+    6. If there is a node after a `BranchingNode`, then every branch will be connected to a **deepcopy** of this node.
         This ensures that the structure of the tree is preserved (Otherwise we would create a more generic directed acyclic graph),
         which is not supported by `anytree`.
 
@@ -205,15 +205,15 @@ def construct_tree(
                 # * This is a special shorthand conveninence behaviour:
                 # * when we sequentially combine a `BranchingNode` with another node,
                 # * we add the other node to every leaf of the branches in the `BranchingNode`
-                for branch in node.branches.values():
+                for branch_nodes in node.branches.values():
                     # * the copy operation is needed, since `anytree` does not allow merged branches
                     # * (merged branches are different branches with a common child -> creates a DAG instead of a tree).
                     # * we have to add the copy to the leaf's children to enable traversal
-                    for leaf in branch[-1].leaves:
+                    for leaf in branch_nodes[0].leaves:
                         next_node_copy = deepcopy(next_node)
                         leaf.children = [next_node_copy]
                         # * we have to add the copy to the branch to handle parameter fetching and updating
-                        branch.append(next_node_copy)
+                        branch_nodes.append(next_node_copy)
             case (_, _):
                 node.children = [next_node]
 
