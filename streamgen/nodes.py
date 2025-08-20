@@ -3,6 +3,7 @@
 import inspect
 from collections import deque
 from collections.abc import Callable
+from copy import deepcopy
 from typing import Any, Protocol, runtime_checkable
 
 import anytree
@@ -134,7 +135,7 @@ class TransformNode(anytree.NodeMixin):
         # if those missing arguments are in the top-level scope, add those parameters
         for param_name in missing_arguments:
             if param_name in params.parameter_names:
-                self.params[param_name] = params[param_name]
+                self.params[param_name] = deepcopy(params[param_name])
 
     def get_params(self) -> ParameterStore | None:
         """⚙️ returns current parameters.

@@ -94,6 +94,39 @@ def test_parameter_fetching_from_global_scope():
     assert target == "two"
 
 
+def test_parameter_updating_from_global_scope():
+    """Tests if `tree.update()` does not cause multiple updates of global parameters."""
+    def f1(input, size=10):
+        return input + size
+
+    def f2(input, size=10):
+        return input + size
+
+    tree = SamplingTree(
+        [
+            lambda input: 0,  # noqa: ARG005
+            f1,
+            f2,
+        ],
+        {
+            "size": {
+                "schedule": [0, 1, 10]
+            }
+        }
+    )
+
+    output = tree.sample()
+    assert output == 0
+
+    assert tree.params["size"].value == 0, "The initial value should be 0"
+
+    tree.update()
+    output = tree.sample()
+    assert output == 2
+
+    assert tree.nodes[1].params["size"].value==1 and tree.nodes[2].params["size"].value==1, "Calling `tree.update()` should only cause `size` to be updated once, even though it is used by multiple nodes."
+
+
 def test_sampling_tree_decision_node_with_probs():
     """Tests the initialization, sampling and parameter fetching of a `SamplingTree`."""
     params = {
