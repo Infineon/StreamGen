@@ -118,7 +118,7 @@ class Parameter(Generic[T]):
         return ParameterStore([self, param])
 
 
-class ParameterDict(Generic[T], TypedDict, total=False):
+class ParameterDict(TypedDict, Generic[T], total=False):
     """📖 typed dictionary of `streamgen.parameter.Parameter`."""
 
     name: str | None

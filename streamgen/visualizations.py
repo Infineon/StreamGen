@@ -40,7 +40,7 @@ def plot(values: list[int | float | list | np.ndarray], ax: plt.Axes | None = No
             ax = sns.lineplot(values, ax=ax, marker="o")
         case np.ndarray() | list():
             if ax is None:
-                fig, ax = plt.subplots()
+                _fig, ax = plt.subplots()
             sns.set_theme()
             indices = list(range(len(values)))
             values = np.array(values).T

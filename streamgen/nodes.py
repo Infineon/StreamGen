@@ -251,7 +251,7 @@ class SampleBufferNode(TransformNode):
         """
         labeled = isinstance(self.samples[0], tuple)
         if labeled:
-            sample, target = self.samples[idx]
+            sample, _target = self.samples[idx]
         else:
             sample = self.samples[idx]
         ax.clear()
