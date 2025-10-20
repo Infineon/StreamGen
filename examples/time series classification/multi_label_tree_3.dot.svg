@@ -12,7 +12,7 @@
 <!-- 0x0 -->
 <g id="node1" class="node">
 <title>0x0</title>
-<g id="a_node1"><a xlink:title="None">
+<g id="a_node1"><a xlink:title="{}">
 <ellipse fill="none" stroke="black" cx="73.02" cy="-234" rx="62.54" ry="18"/>
 <text text-anchor="middle" x="73.02" y="-228.57" font-family="Times New Roman,serif" font-size="14.00">➡️ &lt;lambda&gt;</text>
 </a>

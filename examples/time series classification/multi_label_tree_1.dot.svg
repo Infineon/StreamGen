@@ -12,7 +12,7 @@
 <!-- 0x0 -->
 <g id="node1" class="node">
 <title>0x0</title>
-<g id="a_node1"><a xlink:title="None">
+<g id="a_node1"><a xlink:title="{}">
 <ellipse fill="none" stroke="black" cx="238.08" cy="-450" rx="62.54" ry="18"/>
 <text text-anchor="middle" x="238.08" y="-444.57" font-family="Times New Roman,serif" font-size="14.00">➡️ &lt;lambda&gt;</text>
 </a>
@@ -51,7 +51,7 @@
 <!-- 0x3 -->
 <g id="node4" class="node">
 <title>0x3</title>
-<g id="a_node4"><a xlink:title="None">
+<g id="a_node4"><a xlink:title="{}">
 <ellipse fill="none" stroke="black" cx="44.08" cy="-234" rx="44.08" ry="18"/>
 <text text-anchor="middle" x="44.08" y="-228.57" font-family="Times New Roman,serif" font-size="14.00">➡️ noop</text>
 </a>

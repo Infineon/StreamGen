@@ -1,5 +1,5 @@
 digraph tree {
-    "0x0" [label="➡️ <lambda>" tooltip="None"];
+    "0x0" [label="➡️ <lambda>" tooltip="{}"];
     "0x1" [label="➡️ background" tooltip="{
     'background.offset': 0.0,
     'background.signal_length': 512,
