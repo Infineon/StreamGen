@@ -16,6 +16,7 @@ from IPython.display import SVG
 from IPython.utils import io
 from matplotlib import animation
 from matplotlib import pyplot as plt
+from numpy.random import Generator
 from pandas import DataFrame
 from rich.progress import track
 
@@ -49,7 +50,7 @@ class BranchingNode(TransformNode):
         branches: dict,
         probs: Parameter | list[float] | None = None,
         name: str | None = None,
-        seed: int = 42,
+        seed: int = 42,  # noqa: ARG002
         string_node: Callable[[str], TransformNode] = ClassLabelNode,
     ) -> None:
         self.name = name if name else "branching_node"
@@ -58,7 +59,6 @@ class BranchingNode(TransformNode):
             probs = Parameter(name="probs", value=probs)
 
         self.probs = probs
-        self.rng = np.random.default_rng(seed)
 
         self.branches = {branch_name: construct_tree(nodes, string_node) for branch_name, nodes in branches.items()}
 
@@ -66,18 +66,19 @@ class BranchingNode(TransformNode):
 
         super().__init__(transform=noop, name=self.name, emoji="🪴")
 
-    def traverse(self, input: Any) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
+    def traverse(self, input: Any, rng: Generator) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
         """🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
 
         During traversal, a branching node samples the next node from its children.
 
         Args:
             input (Any): any input
+            rng (Generator): numpy random number generator
 
         Returns:
             tuple[Any, anytree.NodeMixin | None]: output and next node to traverse
         """
-        key = self.rng.choice(list(self.branches.keys()), p=self.probs.value if self.probs else None)
+        key = rng.choice(list(self.branches.keys()), p=self.probs.value if self.probs else None)
         next_node = self.branches[key][0]
 
         return input, next_node
@@ -243,6 +244,7 @@ class SamplingTree(Sampler):
         params: ParameterStore | dict | DataFrame | None = None,
         collate_func: Callable[[list[Any]], Any] | None = None,
         string_node: Callable[[str], TransformNode] = ClassLabelNode,
+        rng: Generator | int = 42,
     ) -> None:
         self.nodes = construct_tree(nodes, string_node)
 
@@ -264,6 +266,8 @@ class SamplingTree(Sampler):
 
         self.collate_func = collate_func
 
+        self.rng = np.random.default_rng(rng) if isinstance(rng, int) else rng
+
     def sample(self) -> Any:  # noqa: ANN401
         """🎲 generates a sample by traversing the tree from root to one leaf.
 
@@ -274,7 +278,7 @@ class SamplingTree(Sampler):
         out = None
 
         while node is not None:
-            out, node = node.traverse(out)
+            out, node = node.traverse(out, self.rng)
 
         return out
 

@@ -2,6 +2,7 @@
 # ruff: noqa: S101, D103, ANN001, ANN201, PLR2004
 
 import pytest
+import numpy as np
 
 from streamgen.nodes import ClassLabelNode, SampleBufferNode, TransformNode
 from streamgen.parameter import Parameter
@@ -59,7 +60,7 @@ def test_pure_transform() -> None:
     assert node.name == "pure_transform"
     assert str(node) == "➡️ `pure_transform()`"
 
-    out, next_node = node.traverse(0)
+    out, next_node = node.traverse(0, np.random.default_rng(42))
 
     assert next_node is None
     assert out == 1
@@ -72,14 +73,14 @@ def test_parametric_transform(single_param):
     assert node.name == "increment"
     assert str(node) == "👆 `increment(inc=2)`"
 
-    out, next_node = node.traverse(0)
+    out, next_node = node.traverse(0, np.random.default_rng(42))
 
     assert next_node is None
     assert out == 2
 
     node.update()
 
-    out, next_node = node.traverse(0)
+    out, next_node = node.traverse(0, np.random.default_rng(42))
 
     assert next_node is None
     assert out == 3
@@ -93,12 +94,12 @@ def test_connected_nodes(single_param):
     # connect node2 to node1
     node2.parent = node1
 
-    out, next_node = node1.traverse(0)
+    out, next_node = node1.traverse(0, np.random.default_rng(42))
 
     assert next_node is node2
     assert out == 1
 
-    out, next_node = node2.traverse(out)
+    out, next_node = node2.traverse(out, np.random.default_rng(42))
 
     assert next_node is None
     assert out == 3

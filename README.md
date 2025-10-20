@@ -16,18 +16,14 @@ a 🐍 Python framework for generating streams of labelled data
     <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed." /></a>
     <a href="https://github.com/Infineon/StreamGen/actions/workflows/python-package-ubuntu.yaml"><img alt="🐍 Python package" src="https://github.com/Infineon/StreamGen/actions/workflows/python-package-ubuntu.yaml/badge.svg"></a>
     <img alt="Static Badge" src="https://img.shields.io/badge/Coverage-89%25-yellow?logo=codecov">
+    <a href="https://github.com/astral-sh/ruff"><img alt="Ruff" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json"></a>
 </p>
 
 <p align="center">
-    <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.11|3.12-yellow?logo=python"></a>
+    <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python->=3.11-yellow?logo=python"></a>
     <a href="https://python-poetry.org/"><img alt="Poetry" src="https://img.shields.io/badge/Poetry-2.0.0-blue?logo=Poetry"></a>
     <a href="https://joss.theoj.org/papers/4b6bac90bd1eb54700f8afb9f32caebe"><img src="https://joss.theoj.org/papers/4b6bac90bd1eb54700f8afb9f32caebe/status.svg"></a>
     <a href="https://zenodo.org/records/14273611"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.14273611.svg"></a>
-</p>
-
-<p align="center">
-    <a href="https://github.com/astral-sh/ruff"><img alt="Ruff" src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json"></a>
-    <a href="https://github.com/beartype/beartype"><img alt="Beartype" src="https://raw.githubusercontent.com/beartype/beartype-assets/main/badge/bear-ified.svg"></a>
 </p>
 
 <p align="center">

@@ -13,6 +13,7 @@ import seaborn as sns
 from beartype import beartype
 from loguru import logger
 from matplotlib import animation
+from numpy.random import Generator
 
 from streamgen.enums import ArgumentPassingStrategy, ArgumentPassingStrategyLit
 from streamgen.parameter import Parameter
@@ -22,13 +23,23 @@ from streamgen.transforms import noop
 
 @runtime_checkable
 class Traverse(Protocol):
-    """🏃 transform-node traversal protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
+    """🏃 transform-node traversal protocol `(input: Any, rng: numpy.random.Generator) -> (output, anytree.NodeMixin | None)`.
 
     If a node has children, return the next node to traverse. Otherwise return None and stop traversal.
+
+    Since `streamgen` v1.2.0, `rng` is an explicit part of the protocol to solve reproducibility issues.
     """
 
-    def traverse(input: Any) -> tuple[Any, anytree.NodeMixin | None]:  # noqa: D102, N805, A002
+    def traverse(input: Any, rng: Generator) -> tuple[Any, anytree.NodeMixin | None]:  # noqa: D102, N805, A002
         ...
+
+
+def contains_kwarg(func: Callable, argument_name: str) -> bool:
+    """❓ checks if `func` contains the keyword argument `argument_name`."""
+    return any(
+        param_name == argument_name and param.kind in (inspect.Parameter.KEYWORD_ONLY, inspect.Parameter.POSITIONAL_OR_KEYWORD)
+        for param_name, param in inspect.signature(func).parameters.items()
+    )
 
 
 class TransformNode(anytree.NodeMixin):
@@ -67,24 +78,31 @@ class TransformNode(anytree.NodeMixin):
         self.emoji = emoji
         self.parent = None
 
-    def traverse(self, input: Any) -> tuple[Any, anytree.NodeMixin | None]:  # noqa: A002, ANN401
+    def traverse(self, input: Any, rng: Generator) -> tuple[Any, anytree.NodeMixin | None]:  # noqa: A002, ANN401
         """🏃 `streamgen.transforms.Traverse` protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
 
         If `self` has children, return the next node to traverse. Otherwise return None and stop traversal.
 
         Args:
             input (Any): any input
+            rng (Generator): numpy random number generator
 
         Returns:
             tuple[Any, anytree.NodeMixin | None]: output and potential next node to traverse
         """
-        match (self.params, self.argument_strategy):
-            case (None, _):
+        match (self.params, self.argument_strategy, contains_kwarg(self.transform, "rng")):
+            case (None, _, False):
                 output = self.transform(input)
-            case (_, ArgumentPassingStrategy.DICT):
+            case (None, _, True):
+                output = self.transform(input, rng=rng)
+            case (_, ArgumentPassingStrategy.DICT, False):
                 output = self.transform(input, self.params)
-            case (_, ArgumentPassingStrategy.UNPACK):
+            case (_, ArgumentPassingStrategy.DICT, True):
+                output = self.transform(input, self.params | {"rng": rng})
+            case (_, ArgumentPassingStrategy.UNPACK, False):
                 output = self.transform(input, **self.params.get_params())
+            case (_, ArgumentPassingStrategy.UNPACK, True):
+                output = self.transform(input, rng=rng, **self.params.get_params())
 
         if self.children == ():
             return output, None
@@ -183,20 +201,21 @@ class ClassLabelNode(TransformNode):
 
         super().__init__(transform=noop, name=f"label={self.label}", emoji="🏷️")
 
-    def traverse(self, input: Any) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
+    def traverse(self, input: Any, rng: Generator) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
         """🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
 
         During traversal, a label node sets the label in `input` with `self.label_func`.
 
         Args:
             input (Any): any input
+            rng (Generator): numpy random number generator
 
         Returns:
             tuple[Any, anytree.NodeMixin | None]: output and next node to traverse
         """
         output = self.label_func(input, self.label)
 
-        return super().traverse(output)
+        return super().traverse(output, rng)
 
     def __repr__(self) -> str:
         """🏷️ Returns the string representation `str(self)`.
@@ -225,20 +244,21 @@ class SampleBufferNode(TransformNode):
 
         super().__init__(transform=noop, name=name, emoji="🗃️")
 
-    def traverse(self, input: Any) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
+    def traverse(self, input: Any, rng: Generator) -> tuple[Any, anytree.NodeMixin]:  # noqa: A002, ANN401
         """🏃🎲 `streamgen.transforms.Traverse` protocol `(input: Any) -> (output, anytree.NodeMixin | None)`.
 
         During traversal, a sample buffer node adds samples to `self.samples`.
 
         Args:
             input (Any): any input
+            rng (Generator): numpy random number generator
 
         Returns:
             tuple[Any, anytree.NodeMixin | None]: output and next node to traverse
         """
         self.samples.append(input)
 
-        return super().traverse(input)
+        return super().traverse(input, rng)
 
     def _plotting_func_wrapper(self, idx: int, ax: plt.Axes, plotting_func: Callable[[Any, plt.Axes], plt.Axes]) -> None:
         """🖼️ private wrapper for the `plotting_func` argument in `self.plot`.
