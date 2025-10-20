@@ -8,6 +8,13 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/) to build the 
 
 <!-- towncrier release notes start -->
 
+## [1.2.0](https://github.com/Infineon/StreamGen/tree/1.2.0) - 2025-10-20
+
+### ✨ Changed
+
+- 🎲 made `rng` generators part of the `traverse` protocol and `SamplingTree`s. ([#12](https://github.com/Infineon/StreamGen/issues/12))
+
+
 ## [1.1.0](https://github.com/Infineon/StreamGen/tree/1.1.0) - 2025-01-08
 
 ### ➕ Added
