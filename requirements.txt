@@ -146,7 +146,7 @@ pathspec==0.12.1 ; python_version >= "3.11" and python_version < "4.0"
 pdocs==1.2.0 ; python_version >= "3.11" and python_version < "4.0"
 pep8-naming==0.10.0 ; python_version >= "3.11" and python_version < "4.0"
 pexpect==4.9.0 ; python_version >= "3.11" and python_version < "4.0" and (sys_platform != "win32" and sys_platform != "emscripten")
-pillow==11.3.0 ; python_version >= "3.11" and python_version < "4.0"
+pillow==12.1.1 ; python_version >= "3.11" and python_version < "4.0"
 platformdirs==4.3.8 ; python_version >= "3.11" and python_version < "4.0"
 pluggy==1.6.0 ; python_version >= "3.11" and python_version < "4.0"
 poethepoet==0.37.0 ; python_version >= "3.11" and python_version < "4.0"
