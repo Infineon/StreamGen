@@ -698,20 +698,6 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/streamgen/streams/" class="md-nav__link">
-        Streams
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="reference/streamgen/transforms/" class="md-nav__link">
         Transforms
       </a>
@@ -743,18 +729,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_8" type="checkbox" id="__nav_7_1_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_7" type="checkbox" id="__nav_7_1_7" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_7_1_8">
+        <label class="md-nav__link" for="__nav_7_1_7">
           Parameter
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Parameter" data-md-level="3">
-        <label class="md-nav__title" for="__nav_7_1_8">
+        <label class="md-nav__title" for="__nav_7_1_7">
           <span class="md-nav__icon md-icon"></span>
           Parameter
         </label>
@@ -804,18 +790,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_9" type="checkbox" id="__nav_7_1_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_8" type="checkbox" id="__nav_7_1_8" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_7_1_9">
+        <label class="md-nav__link" for="__nav_7_1_8">
           Samplers
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Samplers" data-md-level="3">
-        <label class="md-nav__title" for="__nav_7_1_9">
+        <label class="md-nav__title" for="__nav_7_1_8">
           <span class="md-nav__icon md-icon"></span>
           Samplers
         </label>
@@ -1087,8 +1073,8 @@ This requires such systems to acquire and preserve knowledge continually.</p>
 <li>class dependencies</li>
 <li>class composition (for multi-label modelling)</li>
 </ul>
-<p>A more economical alternative to collecting and labelling streams with desired properties is the <strong>generation</strong> of synthetic streams<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">3</a></sup>.
-Some mentionable efforts in that direction include augmentation based dataset generation like <a href="https://github.com/hendrycks/robustness">ImageNet-C</a><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">4</a></sup> or simulation-based approaches like the <a href="https://arxiv.org/abs/2106.02585">EndlessCLSim</a><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">5</a></sup>, where semantically labeled street-view images are generated (and labeled) by a game engine, that procedurally generates the city environment and simulates drift by modifying parameters (like the weather and illumination conditions) over time.</p>
+<p>A more economical alternative to collecting and labelling streams with desired properties is the <strong>generation</strong> of synthetic streams<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>.
+Some mentionable efforts in that direction include augmentation based dataset generation like <a href="https://github.com/hendrycks/robustness">ImageNet-C</a><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> or simulation-based approaches like the <a href="https://arxiv.org/abs/2106.02585">EndlessCLSim</a><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>, where semantically labeled street-view images are generated (and labeled) by a game engine, that procedurally generates the city environment and simulates drift by modifying parameters (like the weather and illumination conditions) over time.</p>
 <details>
 <summary>ImageNet-C [3]</summary>
 <img src="https://github.com/Infineon/StreamGen/blob/main/docs/images/imagenet-c.png?raw=true">
@@ -1221,39 +1207,8 @@ In python, you can use `functools.reduce` to create simple monoids:
 <li>windows: <code>choco install graphviz</code></li>
 <li>macOs: <code>brew install graphviz</code></li>
 </ul>
-<p>The basic version of the package can be installed from <a href="https://pypi.org/project/streamgen/">PyPi</a> with:</p>
+<p>The package can be installed from <a href="https://pypi.org/project/streamgen/">PyPi</a> with:</p>
 <div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>streamgen
-</code></pre></div>
-
-<p><code>streamgen</code> provides a few (pip) extras:</p>
-<table>
-<thead>
-<tr>
-<th>extras group</th>
-<th>needed for</th>
-<th>additional dependencies</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>examples</strong></td>
-<td>running the example notebooks with their application specific dependencies</td>
-<td><code>perlin-numpy</code>, <code>polars</code></td>
-</tr>
-<tr>
-<td><strong>cl</strong></td>
-<td>continual learning frameworks</td>
-<td><code>continuum</code></td>
-</tr>
-<tr>
-<td><strong>all</strong></td>
-<td>shortcut for installing every extra</td>
-<td>*</td>
-</tr>
-</tbody>
-</table>
-<p>To install the package with specific extras execute:</p>
-<div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>streamgen<span class="o">[</span>&lt;name_of_extra&gt;<span class="o">]</span>
 </code></pre></div>
 
 <blockquote>
@@ -1272,7 +1227,7 @@ In python, you can use `functools.reduce` to create simple monoids:
 <li><a href="https://github.com/Infineon/StreamGen/blob/main/examples/time%20series%20classification/04-multi-label-generation.ipynb">🏷️ multi-label generation</a></li>
 </ul>
 </li>
-<li>🖼️ analog wafer map streams based on the <a href="https://www.kaggle.com/datasets/qingyi/wm811k-wafer-map">wm811k dataset</a><sup id="fnref:5"><a class="footnote-ref" href="#fn:5">6</a></sup> in <a href="https://github.com/Infineon/StreamGen/blob/main/examples/wafer_map_generation.ipynb">🌐 wafer map generation</a></li>
+<li>🖼️ analog wafer map streams based on the <a href="https://www.kaggle.com/datasets/qingyi/wm811k-wafer-map">wm811k dataset</a><sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> in <a href="https://github.com/Infineon/StreamGen/blob/main/examples/wafer_map_generation.ipynb">🌐 wafer map generation</a></li>
 </ul>
 <p>Here is a preview of what we will create in the time series examples:</p>
 <p align="center">
@@ -1302,17 +1257,17 @@ In python, you can use `functools.reduce` to create simple monoids:
 <li id="fn:2">
 <p>A. Douillard and T. Lesort, “Continuum: Simple Management of Complex Continual Learning Scenarios.” arXiv, Feb. 11, 2021. doi: 10.48550/arXiv.2102.06253.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
-<li id="fn:6">
-<p>J. Lu, A. Liu, F. Dong, F. Gu, J. Gama, and G. Zhang, “Learning under Concept Drift: A Review” IEEE Trans. Knowl. Data Eng., pp. 1–1, 2018, doi: 10.1109/TKDE.2018.2876857.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 3 in the text">&#8617;</a></p>
-</li>
 <li id="fn:3">
-<p>D. Hendrycks and T. Dietterich, “Benchmarking Neural Network Robustness to Common Corruptions and Perturbations.” arXiv, Mar. 28, 2019. doi: 10.48550/arXiv.1903.12261.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p>D. Hendrycks and T. Dietterich, “Benchmarking Neural Network Robustness to Common Corruptions and Perturbations.” arXiv, Mar. 28, 2019. doi: 10.48550/arXiv.1903.12261.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:4">
-<p>T. Hess, M. Mundt, I. Pliushch, and V. Ramesh, “A Procedural World Generation Framework for Systematic Evaluation of Continual Learning.” arXiv, Dec. 13, 2021. doi: 10.48550/arXiv.2106.02585.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p>T. Hess, M. Mundt, I. Pliushch, and V. Ramesh, “A Procedural World Generation Framework for Systematic Evaluation of Continual Learning.” arXiv, Dec. 13, 2021. doi: 10.48550/arXiv.2106.02585.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:5">
-<p>Wu, Ming-Ju, Jyh-Shing R. Jang, and Jui-Long Chen. “Wafer Map Failure Pattern Recognition and Similarity Ranking for Large-Scale Data Sets.” IEEE Transactions on Semiconductor Manufacturing 28, no. 1 (February 2015): 1–12.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p>Wu, Ming-Ju, Jyh-Shing R. Jang, and Jui-Long Chen. “Wafer Map Failure Pattern Recognition and Similarity Ranking for Large-Scale Data Sets.” IEEE Transactions on Semiconductor Manufacturing 28, no. 1 (February 2015): 1–12.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>J. Lu, A. Liu, F. Dong, F. Gu, J. Gama, and G. Zhang, “Learning under Concept Drift: A Review” IEEE Trans. Knowl. Data Eng., pp. 1–1, 2018, doi: 10.1109/TKDE.2018.2876857.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:7">
 <p>“Function composition,” Wikipedia. Feb. 16, 2024. Accessed: Apr. 17, 2024. [Online]. Available: https://en.wikipedia.org/w/index.php?title=Function_composition&amp;oldid=1207989326&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>

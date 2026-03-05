@@ -555,20 +555,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../streams/" class="md-nav__link">
-        Streams
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../transforms/" class="md-nav__link">
         Transforms
       </a>
@@ -600,18 +586,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_8" type="checkbox" id="__nav_7_1_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_7" type="checkbox" id="__nav_7_1_7" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_7_1_8">
+        <label class="md-nav__link" for="__nav_7_1_7">
           Parameter
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Parameter" data-md-level="3">
-        <label class="md-nav__title" for="__nav_7_1_8">
+        <label class="md-nav__title" for="__nav_7_1_7">
           <span class="md-nav__icon md-icon"></span>
           Parameter
         </label>
@@ -663,18 +649,18 @@
     <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_9" type="checkbox" id="__nav_7_1_9" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_8" type="checkbox" id="__nav_7_1_8" checked>
       
       
       
       
-        <label class="md-nav__link" for="__nav_7_1_9">
+        <label class="md-nav__link" for="__nav_7_1_8">
           Samplers
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Samplers" data-md-level="3">
-        <label class="md-nav__title" for="__nav_7_1_9">
+        <label class="md-nav__title" for="__nav_7_1_8">
           <span class="md-nav__icon md-icon"></span>
           Samplers
         </label>
@@ -3188,7 +3174,7 @@ Node('/Udo')</p>
 <h3 id="samplingtree">SamplingTree</h3>
 <div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SamplingTree</span><span class="p">(</span>
     <span class="n">nodes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span> <span class="o">|</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">TransformNode</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span><span class="p">],</span>
-    <span class="n">params</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">|</span> <span class="n">pandas</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">:</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">ParameterStore</span> <span class="o">|</span> <span class="nb">dict</span> <span class="o">|</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">collate_func</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">list</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]],</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">string_node</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">streamgen</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">TransformNode</span><span class="p">]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">class</span><span class="w"> </span><span class="err">&#39;</span><span class="nc">streamgen</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">ClassLabelNode</span><span class="s1">&#39;&gt;,</span>
     <span class="n">rng</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">_generator</span><span class="o">.</span><span class="n">Generator</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>

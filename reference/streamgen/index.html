@@ -567,33 +567,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#variables" class="md-nav__link">
-    Variables
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#functions" class="md-nav__link">
-    Functions
-  </a>
-  
-    <nav class="md-nav" aria-label="Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#is_extra_installed" class="md-nav__link">
-    is_extra_installed
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -611,20 +584,6 @@
     <li class="md-nav__item">
       <a href="nodes/" class="md-nav__link">
         Nodes
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="streams/" class="md-nav__link">
-        Streams
       </a>
     </li>
   
@@ -668,18 +627,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_8" type="checkbox" id="__nav_7_1_8" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_7" type="checkbox" id="__nav_7_1_7" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_7_1_8">
+        <label class="md-nav__link" for="__nav_7_1_7">
           Parameter
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Parameter" data-md-level="3">
-        <label class="md-nav__title" for="__nav_7_1_8">
+        <label class="md-nav__title" for="__nav_7_1_7">
           <span class="md-nav__icon md-icon"></span>
           Parameter
         </label>
@@ -729,18 +688,18 @@
     <li class="md-nav__item md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_9" type="checkbox" id="__nav_7_1_9" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1_8" type="checkbox" id="__nav_7_1_8" >
       
       
       
       
-        <label class="md-nav__link" for="__nav_7_1_9">
+        <label class="md-nav__link" for="__nav_7_1_8">
           Samplers
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <nav class="md-nav" aria-label="Samplers" data-md-level="3">
-        <label class="md-nav__title" for="__nav_7_1_9">
+        <label class="md-nav__title" for="__nav_7_1_8">
           <span class="md-nav__icon md-icon"></span>
           Samplers
         </label>
@@ -827,33 +786,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#variables" class="md-nav__link">
-    Variables
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#functions" class="md-nav__link">
-    Functions
-  </a>
-  
-    <nav class="md-nav" aria-label="Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#is_extra_installed" class="md-nav__link">
-    is_extra_installed
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -878,63 +810,7 @@
 <p>🐍📦 a framework and implementation for simulating stream datasets.</p>
 <details class="example">
 <summary>View Source</summary>
-<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;🐍📦 a framework and implementation for simulating stream datasets.&quot;&quot;&quot;</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">beartype</span><span class="w"> </span><span class="kn">import</span> <span class="n">beartype</span>
-
-<span class="n">EXTRAS</span> <span class="o">=</span> <span class="p">{</span>
-
-    <span class="s2">&quot;examples&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;perlin_numpy&quot;</span><span class="p">,</span> <span class="s2">&quot;polars&quot;</span><span class="p">,</span> <span class="s2">&quot;ipymlp&quot;</span><span class="p">],</span>
-
-    <span class="s2">&quot;cl&quot;</span><span class="p">:</span> <span class="p">[</span>
-
-        <span class="c1"># &quot;avalanche&quot;,</span>
-
-        <span class="s2">&quot;continuum&quot;</span><span class="p">,</span>
-
-    <span class="p">],</span>
-
-    <span class="s2">&quot;all&quot;</span><span class="p">:</span> <span class="p">[</span>
-
-        <span class="s2">&quot;perlin_numpy&quot;</span><span class="p">,</span>
-
-        <span class="s2">&quot;polars&quot;</span><span class="p">,</span>
-
-        <span class="s2">&quot;ipympl&quot;</span><span class="p">,</span>
-
-        <span class="s2">&quot;avalanche&quot;</span><span class="p">,</span>
-
-        <span class="s2">&quot;continuum&quot;</span><span class="p">,</span>
-
-    <span class="p">],</span>
-
-<span class="p">}</span>
-
-<span class="sd">&quot;&quot;&quot;🧾 Dictionary mapping pip EXTRAS to their corresponding dependencies.</span>
-
-<span class="sd">This dictionary has to stay in sync with `[tool.poetry.EXTRAS]` in `pyproject.toml`.</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="nd">@beartype</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">is_extra_installed</span><span class="p">(</span><span class="n">extra</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;📦❓ check if setuptools/pip extra is installed in the current Python environment.</span>
-
-<span class="sd">    Args:</span>
-
-<span class="sd">        extra (str): name of the extra.</span>
-
-<span class="sd">    Returns:</span>
-
-<span class="sd">        bool: True if extra is installed.</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="n">package</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">EXTRAS</span><span class="p">[</span><span class="n">extra</span><span class="p">])</span>
+<div class="codehilite"><pre><span></span><code><span class="s">&quot;&quot;&quot;🐍📦 a framework and implementation for simulating stream datasets.&quot;&quot;&quot;</span>
 </code></pre></div>
 
 </details>
@@ -945,80 +821,9 @@
 <li><a href="nodes/">streamgen.nodes</a></li>
 <li><a href="parameter/">streamgen.parameter</a></li>
 <li><a href="samplers/">streamgen.samplers</a></li>
-<li><a href="streams/">streamgen.streams</a></li>
 <li><a href="transforms/">streamgen.transforms</a></li>
 <li><a href="visualizations/">streamgen.visualizations</a></li>
 </ul>
-<h2 id="variables">Variables</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">EXTRAS</span>
-</code></pre></div>
-
-<p>🧾 Dictionary mapping pip EXTRAS to their corresponding dependencies.</p>
-<p>This dictionary has to stay in sync with <code>[tool.poetry.EXTRAS]</code> in <code>pyproject.toml</code>.</p>
-<h2 id="functions">Functions</h2>
-<h3 id="is_extra_installed">is_extra_installed</h3>
-<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_extra_installed</span><span class="p">(</span>
-    <span class="n">extra</span><span class="p">:</span> <span class="nb">str</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
-</code></pre></div>
-
-<p>📦❓ check if setuptools/pip extra is installed in the current Python environment.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-<th>Default</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>extra</td>
-<td>str</td>
-<td>name of the extra.</td>
-<td>None</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>bool</td>
-<td>True if extra is installed.</td>
-</tr>
-</tbody>
-</table>
-<details class="example">
-<summary>View Source</summary>
-<div class="codehilite"><pre><span></span><code><span class="nv">@beartype</span>
-
-<span class="n">def</span><span class="w"> </span><span class="n">is_extra_installed</span><span class="p">(</span><span class="nl">extra</span><span class="p">:</span><span class="w"> </span><span class="nf">str</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nl">bool</span><span class="p">:</span>
-
-<span class="w">    </span><span class="ss">&quot;&quot;&quot;📦❓ check if setuptools/pip extra is installed in the current Python environment.</span>
-
-<span class="ss">    Args:</span>
-
-<span class="ss">        extra (str): name of the extra.</span>
-
-<span class="ss">    Returns:</span>
-
-<span class="ss">        bool: True if extra is installed.</span>
-
-<span class="ss">    &quot;&quot;&quot;</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="ow">all</span><span class="p">(</span><span class="n">importlib</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">find_spec</span><span class="p">(</span><span class="n">package</span><span class="p">)</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="k">None</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">EXTRAS</span><span class="o">[</span><span class="n">extra</span><span class="o">]</span><span class="p">)</span>
-</code></pre></div>
-
-</details>
 
 
 
