@@ -205,23 +205,9 @@ The graph visualizations require [Graphviz](https://www.graphviz.org/download/) 
 - windows: `choco install graphviz`
 - macOs: `brew install graphviz`
 
-The basic version of the package can be installed from [PyPi](https://pypi.org/project/streamgen/) with:
+The package can be installed from [PyPi](https://pypi.org/project/streamgen/) with:
 ```sh
 pip install streamgen
-```
-
-`streamgen` provides a few (pip) extras:
-
-| extras group | needed for                                                                 | additional dependencies      |
-| ------------ | -------------------------------------------------------------------------- | ---------------------------- |
-| **examples** | running the example notebooks with their application specific dependencies | `perlin-numpy`, `polars`     |
-| **cl**       | continual learning frameworks                                              | `continuum`                  |
-| **all**      | shortcut for installing every extra                                        | *                            |
-
-To install the package with specific extras execute:
-
-```sh
-pip install streamgen[<name_of_extra>]
 ```
 
 > 🧑‍💻 to install a development environment (which you need if you want to work on the package, instead of just using the package), `cd` into the project's root directory and call:
