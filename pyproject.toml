@@ -1,6 +1,6 @@
 [project]
 name = "streamgen"
-version = "2.0.0"
+version = "2.0.1"
 description = "🌌 a framework for generating streams of labeled data."
 authors = [
     {name = "Laurenz Farthofer", email = "laurenz@hey.com"}

@@ -325,10 +325,33 @@ class SamplingTree(Sampler):
 
         return tuple(map(self.collate_func, zip(*samples, strict=True))) if self.collate_func else samples
 
+    def _get_unique_parameters(self) -> list[Parameter]:
+        """Collect every unique parameter object referenced by the tree nodes."""
+        unique_parameters = []
+        seen_parameter_ids = set()
+
+        for node in anytree.PreOrderIter(self.root):
+            if isinstance(node, BranchingNode) and node.probs is not None:
+                parameter_id = id(node.probs)
+                if parameter_id not in seen_parameter_ids:
+                    seen_parameter_ids.add(parameter_id)
+                    unique_parameters.append(node.probs)
+
+            if isinstance(node, TransformNode) and node.params is not None:
+                for parameter_name in node.params.parameter_names:
+                    parameter = node.params[parameter_name]
+                    parameter_id = id(parameter)
+                    if parameter_id in seen_parameter_ids:
+                        continue
+                    seen_parameter_ids.add(parameter_id)
+                    unique_parameters.append(parameter)
+
+        return unique_parameters
+
     def update(self) -> None:
         """🆙 updates every parameter."""
-        for node in self.nodes:
-            node.update()
+        for parameter in self._get_unique_parameters():
+            parameter.update()
 
     def set_update_step(self, idx: int) -> None:
         """🕐 updates every parameter to a certain update step using `param[idx]`.
@@ -339,8 +362,8 @@ class SamplingTree(Sampler):
         Returns:
             None: this function mutates `self`
         """
-        for node in self.nodes:
-            node.set_update_step(idx)
+        for parameter in self._get_unique_parameters():
+            parameter[idx]
 
     def get_params(self) -> ParameterStore | None:
         """⚙️ collects parameters from every node.

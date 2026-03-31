@@ -8,6 +8,15 @@ This project uses [*towncrier*](https://towncrier.readthedocs.io/) to build the 
 
 <!-- towncrier release notes start -->
 
+## [2.0.1](https://github.com/Infineon/StreamGen/tree/2.0.1) - 2026-03-31
+
+### 🐛 Fixed
+
+- fixed `SamplingTree.update` and `SamplingTree.set_update_step` so shared parameters in branching trees are updated exactly once per step.
+- added regression tests for branching update behavior to ensure schedule progression stays consistent.
+- stabilized plotting tests by forcing a non-interactive matplotlib backend during test runs.
+
+
 ## [2.0.0](https://github.com/Infineon/StreamGen/tree/2.0.0) - 2026-03-05
 
 ### ➖ Removed
