@@ -45,7 +45,7 @@ seaborn = ">=0.13.2"
 # ✍️ Typing
 beartype = ">=0.18"
 # 🖨️ Logging
-loguru = ">=0.7.2"
+loguru = ">=0.7.3"
 rich = ">=13.7.1"
 
 [tool.poetry.group.dev.dependencies]
