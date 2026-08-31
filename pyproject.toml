@@ -37,7 +37,7 @@ python = "^3.11"
 anytree = ">=2.7.0"
 graphviz = ">=0.20.3"
 # 📄 Data handling
-numpy = ">=1.26.4"
+numpy = ">=2.4.4"
 pandas = ">=2.2.1"
 # 🖼️ Visualizations
 matplotlib = ">=3.8.3"
