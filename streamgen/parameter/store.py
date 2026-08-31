@@ -53,7 +53,7 @@ class ParameterStore:
             })
     """
 
-    def __init__(self, parameters: None | list[Parameter] | ScopedParameterDict = None) -> None:  # noqa: D107
+    def __init__(self, parameters: list[Parameter] | ScopedParameterDict | None = None) -> None:  # noqa: D107
         self.scopes: set[str] = set()
         match parameters:
             case None:

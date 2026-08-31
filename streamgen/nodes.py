@@ -74,7 +74,7 @@ class TransformNode(anytree.NodeMixin):
         self.params: ParameterStore | None = ParameterStore([params]) if isinstance(params, Parameter) else params
         self.argument_strategy = argument_strategy
 
-        self.name = name if name else transform.__name__
+        self.name = name or transform.__name__
         self.emoji = emoji
         self.parent = None
 

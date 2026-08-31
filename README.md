@@ -88,11 +88,13 @@ A common practice to increase the variability of such datasets is the use of **s
 ```python
 from torchvision.transforms import v2
 
-transforms = v2.Compose([
-    v2.RandomResizedCrop(size=(224, 224), antialias=True),
-    v2.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    # ...
-])
+transforms = v2.Compose(
+    [
+        v2.RandomResizedCrop(size=(224, 224), antialias=True),
+        v2.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        # ...
+    ]
+)
 
 while generating_data:
     # option 1 - sample from a dataset
@@ -130,9 +132,11 @@ In python, you can use `functools.reduce` to create simple monoids:
 from functools import reduce
 from typing import Callable
 
+
 def compose(*funcs) -> Callable[[int], int]:
     """Compose a group of functions (f(g(h(...)))) into a single composite func."""
     return reduce(lambda f, g: lambda x: f(g(x)), funcs)
+
 
 distribution = compose(sample, filter, augment)
 ```

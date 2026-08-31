@@ -6,11 +6,11 @@ In every function that excepts a custom `streamgen` enum as an argument, use the
 good documentation generation.
 """
 
-from enum import Enum
+from enum import StrEnum
 from typing import Literal, TypeAlias
 
 
-class ParameterOutOfRangeStrategy(str, Enum):
+class ParameterOutOfRangeStrategy(StrEnum):
     """❓ strategy which defines what happens when there is no valid next value."""
 
     HOLD = "hold"
@@ -28,7 +28,7 @@ ParameterOutOfRangeStrategyLit: TypeAlias = Literal[
 ]
 
 
-class ArgumentPassingStrategy(str, Enum):
+class ArgumentPassingStrategy(StrEnum):
     """⚙️ strategy which defines how parameters are passed to functions."""
 
     DICT = "dict"
@@ -43,7 +43,7 @@ ArgumentPassingStrategyLit: TypeAlias = Literal[
 ]
 
 
-class SamplingStrategy(str, Enum):
+class SamplingStrategy(StrEnum):
     """🎲 strategy which defines how to sample a `streamgen.samplers.Sampler`."""
 
     STOCHASTIC = "stochastic"

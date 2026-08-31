@@ -53,7 +53,7 @@ class BranchingNode(TransformNode):
         seed: int = 42,  # noqa: ARG002
         string_node: Callable[[str], TransformNode] = ClassLabelNode,
     ) -> None:
-        self.name = name if name else "branching_node"
+        self.name = name or "branching_node"
 
         if isinstance(probs, list):
             probs = Parameter(name="probs", value=probs)
