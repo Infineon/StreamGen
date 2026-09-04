@@ -40,7 +40,7 @@ graphviz = ">=0.20.3"
 numpy = ">=2.4.4"
 pandas = ">=2.2.1"
 # 🖼️ Visualizations
-matplotlib = ">=3.8.3"
+matplotlib = ">=3.11.1"
 seaborn = ">=0.13.2"
 # ✍️ Typing
 beartype = ">=0.18"
