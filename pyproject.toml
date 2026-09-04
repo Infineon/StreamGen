@@ -38,7 +38,7 @@ anytree = ">=2.7.0"
 graphviz = ">=0.20.3"
 # 📄 Data handling
 numpy = ">=2.4.4"
-pandas = ">=2.2.1"
+pandas = ">=3.0.5"
 # 🖼️ Visualizations
 matplotlib = ">=3.8.3"
 seaborn = ">=0.13.2"
