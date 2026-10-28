@@ -3,6 +3,7 @@
 
 import numpy as np
 import pandas as pd
+import pytest
 from loguru import logger
 
 from streamgen.parameter import Parameter
@@ -138,6 +139,34 @@ def test_updating_parameters_by_index() -> None:
 
     assert store["var1"].value == 3
     assert store["var2"].value == 0.3
+
+
+@pytest.mark.parametrize("include_unscoped", [False, True])
+def test_updating_scoped_parameters_by_index(include_unscoped) -> None:
+    params = {
+        "scope1": {"rate": {"schedule": [10, 20, 30]}},
+        "scope2": {"rate": {"schedule": [100, 200, 300]}, "fixed": 42},
+    }
+    if include_unscoped:
+        params["rate"] = {"schedule": [1, 2, 3]}
+    store = ParameterStore(params)
+
+    store.set_update_step(2)
+    assert store["scope1.rate"].value == 30
+    assert store["scope2.rate"].value == 300
+    assert store["scope2.fixed"].value == 42
+    if include_unscoped:
+        assert store["rate"].value == 3
+
+    store.set_update_step(0)
+    assert store["scope1.rate"].value == 10
+    assert store["scope2.rate"].value == 100
+    store.update()
+    assert store["scope1.rate"].value == 20
+    assert store["scope2.rate"].value == 200
+    assert store["scope2.fixed"].value == 42
+    if include_unscoped:
+        assert store["rate"].value == 2
 
 
 def test_scoped_parameter_dict_initialization() -> None:
