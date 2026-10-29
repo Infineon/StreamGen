@@ -160,7 +160,7 @@ class ParameterStore:
             self.parameter_names.add(f"{name}")
 
     def set_update_step(self, idx: int) -> None:
-        """🕐 updates every parameter of `self` to a certain update step using `param[idx]`.
+        """🕐 updates every parameter of `self`, including scoped parameters, to a certain update step using `param[idx]`.
 
         Args:
             idx (int): parameter update step
@@ -168,9 +168,9 @@ class ParameterStore:
         Returns:
             None: this function mutates `self`
         """
-        for param in self.parameters.values():
+        for name in self.parameter_names:
             # indexing of parameters mutates their internal state, so we do not have to set anything
-            param[idx]
+            self[name][idx]
 
     def get_scope(self, scope: str) -> Self | None:
         """🔭 get all parameters in a scope as a new `ParameterStore`.
