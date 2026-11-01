@@ -35,7 +35,7 @@ build_paper = "docker run --rm --volume $PWD/docs:/data --env JOURNAL=joss openj
 python = "^3.11"
 # 🌳 Graphs and Trees
 anytree = ">=2.13.0"
-graphviz = ">=0.20.3"
+graphviz = ">=0.21"
 # 📄 Data handling
 numpy = ">=2.4.6"
 pandas = ">=3.0.6"
